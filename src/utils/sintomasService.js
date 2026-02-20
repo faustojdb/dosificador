@@ -11,6 +11,20 @@ export function getSintomasDisponibles() {
 }
 
 /**
+ * Retorna todos los cuadros clínicos disponibles (para la sección de selección directa).
+ */
+export function getCuadrosDisponibles() {
+  return sintomasData.cuadrosClinicos.map(cuadro => ({
+    id: cuadro.id,
+    nombre: cuadro.nombre,
+    descripcion: cuadro.descripcion,
+    medicamentosRecomendados: cuadro.medicamentosRecomendados,
+    notasClinicas: cuadro.notasClinicas,
+    esEmergencia: cuadro.esEmergencia || false
+  }));
+}
+
+/**
  * Evalúa cuadros clínicos según los síntomas activos.
  * Score = (requeridos_coincidentes × 2 + opcionales_coincidentes × 1) / total_ponderado × 100
  * Solo retorna cuadros que cumplen el umbral mínimo de requeridos.

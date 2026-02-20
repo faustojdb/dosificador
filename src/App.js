@@ -15,7 +15,7 @@ import FdaInfoPanel from './FdaInfoPanel';
 import SintomasSelector from './SintomasSelector';
 import CuadroClinicoPanel from './CuadroClinicoPanel';
 import AlertaEpidemiologica from './AlertaEpidemiologica';
-import { evaluarCuadrosClinicos } from './utils/sintomasService';
+import { evaluarCuadrosClinicos, getCuadrosDisponibles } from './utils/sintomasService';
 import { evaluarAlertasEpidemiologicas, verificarProhibicionEpidemiologica } from './utils/alertaEpidemiologicaService';
 
 // Componente principal
@@ -130,6 +130,9 @@ const App = () => {
       setLidocainaActiva(false);
     }
   }, [lidocainaEvaluacion.compatibilidad.disponible]);
+
+  // Lista completa de cuadros para selección directa
+  const cuadrosDisponibles = useMemo(() => getCuadrosDisponibles(), []);
 
   // Evaluar cuadros clínicos coincidentes según síntomas
   const cuadrosCoincidentes = useMemo(() => evaluarCuadrosClinicos(sintomasPaciente), [sintomasPaciente]);
@@ -1799,7 +1802,71 @@ const App = () => {
         </div>
       )}
 
-      {/* Nota: Los cuadros clínicos ahora se sugieren dinámicamente en el panel derecho según los síntomas seleccionados */}
+      {/* Cuadros Clínicos Comunes - selección directa */}
+      <div className={`mt-12 ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} rounded-lg p-6`}>
+        <h2 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          Cuadros Clínicos Comunes
+        </h2>
+        <p className={`mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          Seleccione un cuadro clínico para cargar automáticamente los medicamentos recomendados.
+          También puede usar el selector de síntomas (panel izquierdo) para que el sistema sugiera cuadros automáticamente.
+        </p>
+
+        <div className="grid gap-4">
+          {cuadrosDisponibles.map((cuadro, idx) => (
+            <div key={cuadro.id} className={`${cuadro.esEmergencia ? 'border-2' : 'border'} ${
+              cuadro.esEmergencia
+                ? (darkMode ? 'border-red-700' : 'border-red-400')
+                : (darkMode ? 'border-gray-700' : 'border-gray-300')
+            } rounded-lg p-4`}>
+              <div className="flex justify-between items-start mb-3">
+                <h3 className={`text-lg font-semibold ${
+                  cuadro.esEmergencia
+                    ? (darkMode ? 'text-red-300' : 'text-red-700')
+                    : (darkMode ? 'text-white' : 'text-gray-900')
+                }`}>
+                  {idx + 1}. {cuadro.nombre}
+                </h3>
+                <button
+                  onClick={() => aplicarRecomendacion(cuadro)}
+                  className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
+                    cuadro.esEmergencia
+                      ? 'bg-red-600 hover:bg-red-700 text-white'
+                      : darkMode
+                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                        : 'bg-blue-500 hover:bg-blue-600 text-white'
+                  } transition-colors`}
+                >
+                  Cargar Combo
+                </button>
+              </div>
+              <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
+                Presentación: {cuadro.descripcion}
+              </p>
+              {cuadro.notasClinicas && (
+                <p className={`text-sm ${
+                  cuadro.esEmergencia
+                    ? (darkMode ? 'text-red-400' : 'text-red-600')
+                    : (darkMode ? 'text-yellow-400' : 'text-yellow-600')
+                } mb-1`}>
+                  {cuadro.notasClinicas}
+                </p>
+              )}
+              <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
+                Medicamentos: {cuadro.medicamentosRecomendados.map(m => `${m.id} (${m.rol})`).join(' + ')}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className={`mt-6 p-4 ${darkMode ? 'bg-yellow-900/30' : 'bg-yellow-100'} rounded-lg`}>
+          <p className={`text-sm ${darkMode ? 'text-yellow-200' : 'text-yellow-800'}`}>
+            <strong>Importante:</strong> Estas combinaciones reflejan prácticas comunes pero deben ser prescritas y supervisadas por profesionales médicos.
+            La administración parenteral requiere capacitación específica. Algunas combinaciones presentan interacciones que requieren precaución,
+            especialmente en población pediátrica.
+          </p>
+        </div>
+      </div>
 
       <footer className={`mt-8 py-4 text-center ${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
         <p>ADVERTENCIA: Esta herramienta es solo educativa. Siempre busque atención médica profesional.</p>

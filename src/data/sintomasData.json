@@ -4,73 +4,73 @@
       "id": "generales",
       "nombre": "Generales",
       "sintomas": [
-        { "id": "fiebre", "nombre": "Fiebre" },
-        { "id": "malestar_general", "nombre": "Malestar general" },
-        { "id": "escalofrios", "nombre": "Escalofríos" }
+        { "id": "fiebre", "nombre": "Fiebre", "descripcion": "Temperatura corporal mayor a 37.5°C" },
+        { "id": "malestar_general", "nombre": "Malestar general", "descripcion": "Sensación de estar enfermo, cansancio, decaimiento" },
+        { "id": "escalofrios", "nombre": "Escalofríos", "descripcion": "Temblores con sensación de frío, suelen acompañar a la fiebre" }
       ]
     },
     {
       "id": "neurologicos",
       "nombre": "Neurológicos",
       "sintomas": [
-        { "id": "cefalea", "nombre": "Cefalea" },
-        { "id": "dolor_retroorbital", "nombre": "Dolor retroorbital" },
-        { "id": "convulsiones", "nombre": "Convulsiones" },
-        { "id": "alteracion_sensorio", "nombre": "Alteración del sensorio" }
+        { "id": "cefalea", "nombre": "Cefalea", "descripcion": "Dolor de cabeza de cualquier tipo o intensidad" },
+        { "id": "dolor_retroorbital", "nombre": "Dolor retroorbital", "descripcion": "Dolor detrás de los ojos, se siente al mover la mirada" },
+        { "id": "convulsiones", "nombre": "Convulsiones", "descripcion": "Movimientos involuntarios con pérdida de conciencia, sacudidas del cuerpo" },
+        { "id": "alteracion_sensorio", "nombre": "Alteración del sensorio", "descripcion": "Confusión, somnolencia excesiva, desorientación o dificultad para responder" }
       ]
     },
     {
       "id": "digestivos",
       "nombre": "Digestivos",
       "sintomas": [
-        { "id": "dolor_abdominal", "nombre": "Dolor abdominal" },
-        { "id": "nauseas_vomitos", "nombre": "Náuseas/Vómitos" },
-        { "id": "diarrea", "nombre": "Diarrea" },
-        { "id": "odinofagia", "nombre": "Odinofagia" }
+        { "id": "dolor_abdominal", "nombre": "Dolor abdominal", "descripcion": "Dolor en la zona del estómago, barriga o vientre" },
+        { "id": "nauseas_vomitos", "nombre": "Náuseas/Vómitos", "descripcion": "Ganas de vomitar o vómitos efectivos" },
+        { "id": "diarrea", "nombre": "Diarrea", "descripcion": "Deposiciones líquidas o muy frecuentes (3 o más por día)" },
+        { "id": "odinofagia", "nombre": "Odinofagia", "descripcion": "Dolor al tragar alimentos o saliva, dolor de garganta" }
       ]
     },
     {
       "id": "respiratorios",
       "nombre": "Respiratorios",
       "sintomas": [
-        { "id": "disnea", "nombre": "Disnea" },
-        { "id": "sibilancias", "nombre": "Sibilancias" },
-        { "id": "tos", "nombre": "Tos" }
+        { "id": "disnea", "nombre": "Disnea", "descripcion": "Dificultad para respirar, sensación de falta de aire o ahogo" },
+        { "id": "sibilancias", "nombre": "Sibilancias", "descripcion": "Silbido o pitido al respirar (como un silbato), típico del asma" },
+        { "id": "tos", "nombre": "Tos", "descripcion": "Tos seca o con flema, de cualquier duración" }
       ]
     },
     {
       "id": "cardiovasculares",
       "nombre": "Cardiovasculares",
       "sintomas": [
-        { "id": "hipotension", "nombre": "Hipotensión" },
-        { "id": "taquicardia", "nombre": "Taquicardia" }
+        { "id": "hipotension", "nombre": "Hipotensión", "descripcion": "Presión arterial baja, mareos al ponerse de pie, palidez" },
+        { "id": "taquicardia", "nombre": "Taquicardia", "descripcion": "Corazón acelerado, palpitaciones (más de 100 latidos por minuto)" }
       ]
     },
     {
       "id": "dermatologicos",
       "nombre": "Dermatológicos / Alérgicos",
       "sintomas": [
-        { "id": "exantema_rash", "nombre": "Exantema / Rash" },
-        { "id": "prurito", "nombre": "Prurito" },
-        { "id": "urticaria", "nombre": "Urticaria" },
-        { "id": "angioedema", "nombre": "Angioedema" }
+        { "id": "exantema_rash", "nombre": "Exantema / Rash", "descripcion": "Erupción en la piel: manchas rojas, sarpullido, puntitos" },
+        { "id": "prurito", "nombre": "Prurito", "descripcion": "Picazón intensa en la piel" },
+        { "id": "urticaria", "nombre": "Urticaria", "descripcion": "Ronchas elevadas en la piel que pican, tipo picadura, pueden cambiar de lugar" },
+        { "id": "angioedema", "nombre": "Angioedema", "descripcion": "Hinchazón rápida de labios, párpados, lengua o garganta (puede ser grave)" }
       ]
     },
     {
       "id": "urinarios",
       "nombre": "Urinarios",
       "sintomas": [
-        { "id": "dolor_lumbar", "nombre": "Dolor lumbar" },
-        { "id": "disuria", "nombre": "Disuria" }
+        { "id": "dolor_lumbar", "nombre": "Dolor lumbar", "descripcion": "Dolor en la zona baja de la espalda, a los costados de la columna" },
+        { "id": "disuria", "nombre": "Disuria", "descripcion": "Dolor o ardor al orinar" }
       ]
     },
     {
       "id": "musculoesqueleticos",
       "nombre": "Musculoesqueléticos",
       "sintomas": [
-        { "id": "mialgias", "nombre": "Mialgias" },
-        { "id": "artralgias", "nombre": "Artralgias" },
-        { "id": "dolor_postraumatico", "nombre": "Dolor postraumático" }
+        { "id": "mialgias", "nombre": "Mialgias", "descripcion": "Dolor muscular, dolor en el cuerpo, como después de hacer ejercicio intenso" },
+        { "id": "artralgias", "nombre": "Artralgias", "descripcion": "Dolor en las articulaciones (rodillas, codos, muñecas, etc.)" },
+        { "id": "dolor_postraumatico", "nombre": "Dolor postraumático", "descripcion": "Dolor por golpe, caída, accidente o lesión reciente" }
       ]
     }
   ],

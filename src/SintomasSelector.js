@@ -4,6 +4,7 @@ import { getSintomasDisponibles } from './utils/sintomasService';
 const SintomasSelector = ({ darkMode, sintomasActivos, onChange }) => {
   const { grupos } = getSintomasDisponibles();
   const [gruposColapsados, setGruposColapsados] = useState({});
+  const [sintomaInfo, setSintomaInfo] = useState(null);
 
   const toggleSintoma = (id) => {
     if (sintomasActivos.includes(id)) {
@@ -24,7 +25,29 @@ const SintomasSelector = ({ darkMode, sintomasActivos, onChange }) => {
       </h3>
       <p className={`text-xs mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
         Seleccione síntomas para sugerir cuadros clínicos y detectar alertas epidemiológicas.
+        Toque el icono <span className="inline-block w-4 text-center font-bold">?</span> para ver qué significa cada síntoma.
       </p>
+
+      {/* Tooltip de descripción */}
+      {sintomaInfo && (
+        <div className={`mb-2 p-2 rounded-md text-xs border ${
+          darkMode ? 'bg-purple-900/40 border-purple-700 text-purple-200' : 'bg-purple-50 border-purple-300 text-purple-800'
+        }`}>
+          <div className="flex justify-between items-start">
+            <div>
+              <span className="font-semibold">{sintomaInfo.nombre}:</span>{' '}
+              {sintomaInfo.descripcion}
+            </div>
+            <button
+              onClick={() => setSintomaInfo(null)}
+              className={`ml-2 flex-shrink-0 text-xs px-1 rounded ${darkMode ? 'text-purple-400 hover:text-purple-200' : 'text-purple-600 hover:text-purple-900'}`}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="space-y-1">
         {grupos.map(grupo => (
           <div key={grupo.id}>
@@ -47,24 +70,40 @@ const SintomasSelector = ({ darkMode, sintomasActivos, onChange }) => {
             {!gruposColapsados[grupo.id] && (
               <div className="ml-2 space-y-0.5">
                 {grupo.sintomas.map(sintoma => (
-                  <label
+                  <div
                     key={sintoma.id}
-                    className={`flex items-center gap-1.5 p-1 rounded cursor-pointer text-sm transition-colors ${
+                    className={`flex items-center gap-1 p-1 rounded transition-colors ${
                       sintomasActivos.includes(sintoma.id)
                         ? darkMode ? 'bg-purple-900 bg-opacity-40 border border-purple-700' : 'bg-purple-100 border border-purple-300'
                         : darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
                     }`}
                   >
-                    <input
-                      type="checkbox"
-                      checked={sintomasActivos.includes(sintoma.id)}
-                      onChange={() => toggleSintoma(sintoma.id)}
-                      className="rounded text-purple-500 focus:ring-purple-500 flex-shrink-0"
-                    />
-                    <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>
-                      {sintoma.nombre}
-                    </span>
-                  </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer flex-1 min-w-0">
+                      <input
+                        type="checkbox"
+                        checked={sintomasActivos.includes(sintoma.id)}
+                        onChange={() => toggleSintoma(sintoma.id)}
+                        className="rounded text-purple-500 focus:ring-purple-500 flex-shrink-0"
+                      />
+                      <span className={`text-sm truncate ${darkMode ? 'text-gray-300' : 'text-gray-700'}`} title={sintoma.descripcion}>
+                        {sintoma.nombre}
+                      </span>
+                    </label>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSintomaInfo(sintomaInfo?.id === sintoma.id ? null : sintoma);
+                      }}
+                      className={`flex-shrink-0 w-5 h-5 rounded-full text-xs font-bold flex items-center justify-center transition-colors ${
+                        sintomaInfo?.id === sintoma.id
+                          ? (darkMode ? 'bg-purple-600 text-white' : 'bg-purple-500 text-white')
+                          : (darkMode ? 'bg-gray-600 text-gray-300 hover:bg-purple-700 hover:text-white' : 'bg-gray-300 text-gray-600 hover:bg-purple-400 hover:text-white')
+                      }`}
+                      title={sintoma.descripcion}
+                    >
+                      ?
+                    </button>
+                  </div>
                 ))}
               </div>
             )}
