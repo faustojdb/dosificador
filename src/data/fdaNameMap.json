@@ -1,0 +1,17 @@
+{
+  "metamizol": { "en": "dipyrone", "nota": "No aprobado por FDA en EEUU. Usar datos de EMA/ANVISA." },
+  "metoclopramida": { "en": "metoclopramide", "brandNames": ["Reglan"] },
+  "dexametasona": { "en": "dexamethasone", "brandNames": ["Decadron"] },
+  "diazepam": { "en": "diazepam", "brandNames": ["Valium"] },
+  "diclofenac": { "en": "diclofenac", "brandNames": ["Voltaren"] },
+  "penicilina": { "en": "penicillin g benzathine", "brandNames": ["Bicillin L-A"] },
+  "lorazepam": { "en": "lorazepam", "brandNames": ["Ativan"] },
+  "ketorolaco": { "en": "ketorolac", "brandNames": ["Toradol"] },
+  "ceftriaxona": { "en": "ceftriaxone", "brandNames": ["Rocephin"] },
+  "adrenalina": { "en": "epinephrine", "brandNames": ["EpiPen", "Adrenalin"] },
+  "ondansetron": { "en": "ondansetron", "brandNames": ["Zofran"] },
+  "hidrocortisona": { "en": "hydrocortisone", "brandNames": ["Solu-Cortef"] },
+  "tramadol": { "en": "tramadol", "brandNames": ["Ultram"] },
+  "difenhidramina": { "en": "diphenhydramine", "brandNames": ["Benadryl"] },
+  "atropina": { "en": "atropine", "brandNames": ["AtroPen"] }
+}

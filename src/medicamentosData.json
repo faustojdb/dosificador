@@ -1,0 +1,1312 @@
+{
+  "medicamentos": [
+    {
+      "id": "metamizol",
+      "nombre": "Metamizol/Dipirona (Novalgina)",
+      "tipoMedicamento": "Analgésico y antipirético",
+      "descripcion": "Analgésico y antipirético potente derivado de las pirazolonas con efecto analgésico, antipirético y espasmolítico leve. Es especialmente eficaz para reducir la fiebre cuando otros antipiréticos han fallado.",
+      "usos": "Dolor severo (postoperatorio, cólico, oncológico), fiebre alta resistente a otros antipiréticos. Como antipirético de segunda línea en fiebre refractaria a paracetamol o ibuprofeno.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla estándar",
+          "concentracion": 1000,
+          "unidad": "mg",
+          "volumenMl": 2,
+          "principal": true
+        },
+        {
+          "nombre": "Ampolla pediátrica",
+          "concentracion": 500,
+          "unidad": "mg",
+          "volumenMl": 1,
+          "principal": false
+        }
+      ],
+      "dosisAdultos": "1 gramo cada 6-8 horas IM o IV (máximo 4 gramos/día). La administración IV debe ser lenta (máximo 1 ml/minuto).",
+      "dosisNinos": {
+        "contraindicado": "Menores de 3 meses",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 1, "unidad": "meses", "cantidad": "No recomendado, uso con extrema precaución bajo supervisión médica especializada" },
+          { "edadMin": 3, "edadMax": 11, "unidad": "meses", "cantidad": "5-8 mg/kg cada 6-8 horas IM; 6,4-17 mg/kg cada 6 horas IM (práctica clínica)" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "10-15 mg/kg cada 6-8 horas IM/IV lenta (máximo 60 mg/kg/día)" },
+          { "edadMin": 6, "edadMax": 14, "unidad": "años", "cantidad": "10-15 mg/kg cada 6-8 horas IM/IV lenta (máximo 3g/día)" }
+        ]
+      },
+      "precaucionesNinos": "Monitorización hematológica recomendada en tratamientos prolongados (>7 días). Vigilar signos vitales durante administración IV por riesgo de hipotensión. Vigilar signos de agranulocitosis (fiebre, dolor de garganta, infecciones). Los niños pueden presentar reacciones alérgicas con mayor frecuencia que los adultos.",
+      "efectosAdversosNinos": "Agranulocitosis (rara pero potencialmente fatal, incidencia estimada 1:1,000-1:1,000,000), hipotensión con administración IV rápida (especialmente en niños deshidratados), náuseas, oliguria transitoria.",
+      "ajustesDosisEspeciales": "En insuficiencia renal severa, reducir dosis al 50%. En prematuros (uso excepcional), 2.5-5 mg/kg/dosis bajo supervisión especializada. En niños obesos, calcular dosis basada en peso corporal ideal.",
+      "compatibilidadPediatrica": "Mezclar con lidocaína en la misma jeringa puede reducir el dolor de la inyección IM. No mezclar con otros medicamentos en la misma infusión IV.",
+      "tecnicasAdministracionPediatrica": "IV: Diluir en solución fisiológica o glucosada, administrar a máximo 10 mg/kg/minuto. IM: En lactantes y niños pequeños, administrar en la cara anterolateral del muslo.",
+      "precauciones": "El riesgo de agranulocitosis, aunque raro, es potencialmente mortal y puede aparecer sin previo aviso. Las reacciones anafilácticas pueden ser graves. La administración IV rápida puede causar hipotensión severa.",
+      "contraindicaciones": ["Hipersensibilidad a pirazolonas", "Porfiria aguda", "Deficiencia de glucosa-6-fosfato deshidrogenasa"],
+      "interacciones": ["ketorolaco", "diclofenac"],
+      "viasAdministracion": ["IM", "IV lenta"],
+      "viasAlternativas": [
+        {"via": "rectal", "formato": "Supositorios rectales (250-500 mg)", "comentario": "Útil cuando la vía oral no es posible"},
+        {"via": "sublingual", "formato": "Medicamentos que se disuelven bajo la lengua", "comentario": "Absorción rápida"}
+      ],
+      "tecnicaAdministracion": {
+        "IM": "Administrar en glúteo (adultos) o muslo (niños). Insertar aguja a 90° y aspirar antes de inyectar.",
+        "IV": "Diluir en 100ml de solución fisiológica o glucosada. Administrar lentamente (máximo 1 ml/minuto)."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 1000, "dosisMaxMg": 1000, "frecuenciaHoras": [6, 8], "maxDosisDiaria": 4000, "porPeso": false },
+          "ancianos": { "factorReduccion": 0.5, "dosisMinMg": 500, "dosisMaxMg": 500 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 3, "edadMaxMeses": 11, "dosisMinMgKg": 5, "dosisMaxMgKg": 8, "frecuenciaHoras": [6, 8], "vias": ["IM"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 10, "dosisMaxMgKg": 15, "frecuenciaHoras": [6, 8], "maxDosisDiaria": 3600, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 168, "dosisMinMgKg": 10, "dosisMaxMgKg": 15, "frecuenciaHoras": [6, 8], "maxDosisDiaria": 3000, "vias": ["IM", "IV"] }
+        ]
+      }
+    },
+    {
+      "id": "metoclopramida",
+      "nombre": "Metoclopramida (Reliveran)",
+      "tipoMedicamento": "Antiemético y procinético gastrointestinal",
+      "descripcion": "Antiemético y procinético gastrointestinal que actúa como antagonista de receptores dopaminérgicos D2 y serotoninérgicos 5-HT3.",
+      "usos": "Náuseas, vómitos, reflujo gastroesofágico, gastroparesia.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla",
+          "concentracion": 10,
+          "unidad": "mg",
+          "volumenMl": 2,
+          "principal": true
+        }
+      ],
+      "dosisAdultos": "10 mg (una ampolla) cada 8 horas IM o IV lenta (1-2 minutos). Máximo 30 mg/día por máximo 5 días.",
+      "dosisNinos": {
+        "contraindicado": "Menores de 1 año (oficialmente), pero se usa con precaución en neonatos para ERGE e intolerancia alimentaria",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 1, "unidad": "meses", "cantidad": "0.1 mg/kg/dosis cada 8-12 horas (uso off-label, solo bajo supervisión especializada)" },
+          { "edadMin": 1, "edadMax": 12, "unidad": "meses", "cantidad": "0.1-0.2 mg/kg/dosis cada 6-8 horas (máximo 0.5 mg/kg/día)" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "0.1 mg/kg/dosis cada 6-8 horas (máximo 0.5 mg/kg/día)", "limitaciones": "Uso limitado a ERGE, náuseas/vómitos por quimioterapia o postoperatorios" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "0.1 mg/kg/dosis cada 6-8 horas (máximo 10 mg/dosis)", "limitaciones": "Uso limitado a ERGE, náuseas/vómitos por quimioterapia, intubación intestinal" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "5-10 mg cada 6-8 horas (máximo 10 mg/dosis, 30 mg/día)" }
+        ]
+      },
+      "precaucionesNinos": "Monitorización constante de síntomas extrapiramidales (los niños tienen hasta 5 veces más riesgo que los adultos). Limitar duración del tratamiento a máximo 5 días. Especial precaución en niños con trastornos neurológicos. En neonatos prematuros, usar dosis más bajas y monitorizar posible metahemoglobinemia.",
+      "efectosAdversosNinos": "Efectos extrapiramidales (incidencia 4-25% en niños): distonía aguda, crisis oculogírica, tortícolis, discinesia tardía. Sedación más pronunciada en niños pequeños. Posible síndrome neuroléptico maligno (raro pero grave).",
+      "ajustesDosisEspeciales": "Insuficiencia renal moderada-severa: reducir dosis al 50%. Insuficiencia hepática: reducir dosis al 50%. Prematuros: 0.1 mg/kg/dosis cada 8-12 horas con monitorización de signos vitales.",
+      "compatibilidadPediatrica": "No mezclar con fenotiazinas u otras medicaciones que puedan causar efectos extrapiramidales. Compatibilidad limitada con otros medicamentos en la misma jeringa o infusión.",
+      "tecnicasAdministracionPediatrica": "IV: administrar muy lentamente (mínimo 3 minutos) para reducir riesgo de efectos adversos. En neonatos y lactantes, considerar dilución adicional y administración más lenta.",
+      "precauciones": "Riesgo significativo de efectos extrapiramidales especialmente en niños y adultos jóvenes. La administración IV debe ser lenta para evitar ansiedad y somnolencia.",
+      "contraindicaciones": ["Hemorragia gastrointestinal", "Obstrucción mecánica", "Perforación intestinal"],
+      "interacciones": ["diazepam", "lorazepam"],
+      "viasAdministracion": ["IM", "IV lenta"],
+      "viasAlternativas": [
+        {"via": "sublingual", "formato": "Gotas sublinguales", "comentario": "Alternativa cuando la vía parenteral no es posible"},
+        {"via": "rectal", "formato": "Supositorios rectales", "comentario": "Menos utilizados pero efectivos"}
+      ],
+      "tecnicaAdministracion": {
+        "IM": "Administrar preferentemente en glúteo. Insertar aguja a 90° y aspirar antes de inyectar.",
+        "IV": "Administrar sin diluir en 1-2 minutos."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 10, "dosisMaxMg": 10, "frecuenciaHoras": [8], "maxDosisDiaria": 30, "porPeso": false },
+          "ancianos": { "factorReduccion": 0.5, "dosisMinMg": 5, "dosisMaxMg": 5 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 1, "dosisMinMgKg": 0.1, "dosisMaxMgKg": 0.1, "frecuenciaHoras": [8, 12], "vias": ["IV"] },
+          { "edadMinMeses": 1, "edadMaxMeses": 12, "dosisMinMgKg": 0.1, "dosisMaxMgKg": 0.2, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 5, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.1, "dosisMaxMgKg": 0.2, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 5, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 0.1, "dosisMaxMgKg": 0.2, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 10, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMgKg": 0.1, "dosisMaxMgKg": 0.2, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 10, "vias": ["IM", "IV"] }
+        ]
+      }
+    },
+    {
+      "id": "dexametasona",
+      "nombre": "Dexametasona (Decadron)",
+      "tipoMedicamento": "Corticosteroide",
+      "descripcion": "Corticosteroide sintético de acción prolongada con potentes efectos antiinflamatorios e inmunosupresores.",
+      "usos": "Edema cerebral, asma severo, reacciones alérgicas graves, inflamación articular, COVID-19, cuadros respiratorios.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla 4mg",
+          "concentracion": 4,
+          "unidad": "mg",
+          "volumenMl": 1,
+          "principal": true
+        },
+        {
+          "nombre": "Ampolla 8mg",
+          "concentracion": 8,
+          "unidad": "mg",
+          "volumenMl": 2,
+          "principal": false
+        }
+      ],
+      "dosisAdultos": "Variable según patología (0,5-24 mg/día). Para edema cerebral: 8 mg IV inicial, luego 4 mg/6h IM. Para cuadros respiratorios: 0.15 mg/kg/día IV o IM (habitualmente 8-12 mg/día).",
+      "dosisNinos": {
+        "contraindicado": "No específicamente contraindicado, pero uso con precaución en neonatos por riesgo de efectos en el neurodesarrollo",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 1, "unidad": "meses", "cantidad": "Extubación/DBP: 0.15-0.5 mg/kg/día. Crup: 0.15-0.6 mg/kg dosis única (máximo 10 mg). Cuadros respiratorios: 0.15 mg/kg/día durante 3-5 días", "afeccion": "Uso neonatal" },
+          { "edadMin": 1, "edadMax": 12, "unidad": "meses", "cantidad": "Crup: 0.6 mg/kg dosis única (máximo 10 mg). Exacerbación asmática: 0.6 mg/kg dosis única (máximo 16 mg). Cuadros respiratorios: 0.15 mg/kg/día durante 3-5 días", "afeccion": "Cuadros respiratorios e inflamatorios" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "Crup: 0.6 mg/kg dosis única (máximo 12 mg). Exacerbación asmática: 0.6 mg/kg dosis única (máximo 16 mg). Cuadros respiratorios: 0.15 mg/kg/día durante 3-5 días", "afeccion": "Cuadros respiratorios e inflamatorios" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "Exacerbación asmática: 0.6 mg/kg dosis única (máximo 16 mg). Meningitis bacteriana: 0.15 mg/kg cada 6 horas por 2-4 días. Cuadros respiratorios: 0.15 mg/kg/día durante 3-5 días", "afeccion": "Cuadros respiratorios e inflamatorios" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "Exacerbación asmática: 0.6 mg/kg dosis única (máximo 16 mg). Edema cerebral: 10 mg IV dosis carga, luego 4-6 mg cada 6 horas. Cuadros respiratorios: 0.15 mg/kg/día durante 3-5 días", "afeccion": "Cuadros respiratorios e inflamatorios" }
+        ]
+      },
+      "precaucionesNinos": "Monitorización del crecimiento durante tratamientos prolongados. Vigilancia de la función adrenal (niveles de cortisol matutino para cursos >2 semanas). Monitorización de glucemia, presión arterial y electrolitos. Examen oftalmológico para cursos >6 semanas por riesgo de cataratas/glaucoma. En cuadros respiratorios, considerar riesgo/beneficio si se sospecha infección bacteriana no tratada.",
+      "efectosAdversosNinos": "Supresión adrenal (con cursos >7-14 días o cursos cortos repetidos). Deterioro del crecimiento lineal. Efectos en el neurodesarrollo en prematuros (mayor riesgo de parálisis cerebral). Hiperglucemia (más común en neonatos). Cambios de humor, irritabilidad, trastornos del sueño (más pronunciados en escolares).",
+      "ajustesDosisEspeciales": "Insuficiencia hepática severa: reducir dosis 25%. Prematuros: dosis reducidas para DBP (iniciar con 0.15 mg/kg/día). Niños críticamente enfermos <3 meses: reducción 40-60% de la dosis estándar. Para cuadros respiratorios leves-moderados en niños con comorbilidades: usar la dosis mínima efectiva de 0.15 mg/kg/día.",
+      "compatibilidadPediatrica": "Generalmente compatible con la mayoría de medicamentos para administración IV. En caso de mezclas, verificar compatibilidad específica con farmacia.",
+      "tecnicasAdministracionPediatrica": "IV: Puede administrarse sin diluir en bolo lento o diluida en solución para infusión. IM: usar sitio apropiado según edad (vastolateral en lactantes, deltoides en niños más grandes). Para cuadros respiratorios: preferir administración oral cuando sea posible y vía IV/IM solo en casos de compromiso moderado-severo.",
+      "precauciones": "Nunca suspender bruscamente tras tratamientos de más de 2 semanas. Monitorear glucemia, presión arterial y potasio sérico. Aumento del riesgo de infecciones.",
+      "contraindicaciones": ["Infecciones sistémicas sin tratamiento antibiótico", "Vacunación con virus vivos"],
+      "interacciones": ["diclofenac", "ketorolaco"],
+      "viasAdministracion": ["IM", "IV"],
+      "viasAlternativas": [
+        {"via": "oral", "formato": "Solución oral (gotas)", "comentario": "Útil para niños y cuando la vía parenteral no es necesaria"},
+        {"via": "rectal", "formato": "Supositorios rectales", "comentario": "Alternativa en casos de emergencia"}
+      ],
+      "tecnicaAdministracion": {
+        "IM": "Administrar en glúteo o deltoides. Aspirar antes de inyectar.",
+        "IV": "Se puede administrar sin diluir en bolo lento o diluida en solución para infusión."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 4, "dosisMaxMg": 8, "frecuenciaHoras": [6, 8], "porPeso": false },
+          "ancianos": { "factorReduccion": 0.6, "dosisMinMg": 2.4, "dosisMaxMg": 4.8 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 1, "dosisMinMgKg": 0.15, "dosisMaxMgKg": 0.5, "frecuenciaHoras": [12, 24], "maxDosisPorToma": 10, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 1, "edadMaxMeses": 12, "dosisMinMgKg": 0.15, "dosisMaxMgKg": 0.6, "frecuenciaHoras": [12, 24], "maxDosisPorToma": 10, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.15, "dosisMaxMgKg": 0.6, "frecuenciaHoras": [8, 24], "maxDosisPorToma": 12, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 0.15, "dosisMaxMgKg": 0.6, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 16, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMgKg": 0.15, "dosisMaxMgKg": 0.6, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 16, "vias": ["IM", "IV"] }
+        ]
+      }
+    },
+    {
+      "id": "diazepam",
+      "nombre": "Diazepam (Valium)",
+      "tipoMedicamento": "Benzodiazepina",
+      "descripcion": "Benzodiazepina que actúa facilitando la acción del neurotransmisor GABA en el sistema nervioso central.",
+      "usos": "Ansiedad severa, sedación preoperatoria, convulsiones, espasmos musculares, síndrome de abstinencia alcohólica.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla",
+          "concentracion": 10,
+          "unidad": "mg",
+          "volumenMl": 2,
+          "principal": true
+        }
+      ],
+      "dosisAdultos": "Ansiedad: 5-10 mg IM o IV cada 3-4 horas según necesidad. Status epilepticus: 0,15-0,25 mg/kg IV (máximo 3 mg/kg/día).",
+      "dosisNinos": {
+        "contraindicado": "Recién nacidos (0-28 días) y prematuros (oficialmente, aunque se usa con extrema precaución en casos seleccionados)",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 1, "unidad": "meses", "cantidad": "Convulsiones: 0.1-0.3 mg/kg IV lento durante 3-5 minutos (máximo 2 mg/dosis). Rectal: 1.25-2.5 mg para convulsiones prolongadas", "afeccion": "Uso excepcional bajo supervisión especializada" },
+          { "edadMin": 1, "edadMax": 12, "unidad": "meses", "cantidad": "Convulsiones: 0.2-0.5 mg/kg IV lentamente (2-5 minutos); máximo 5 mg. Rectal: 0.5 mg/kg; repetible una vez tras 4-12 horas" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "Convulsiones: 0.2-0.5 mg/kg IV (máximo 5 mg). Gel rectal: 0.5 mg/kg. Espasmo muscular: 0.1-0.3 mg/kg oral cada 6-8 horas", "afeccion": "Status epilepticus" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "Convulsiones: 0.2-0.3 mg/kg (1 mg/dosis lentamente cada 2-5 minutos hasta máximo 10 mg). Espasmo muscular: 1-2 mg/kg/día dividido en 3-4 dosis. Ansiedad: 0.04-0.2 mg/kg/dosis 3-4 veces/día", "afeccion": "Múltiples indicaciones" },
+          { "edadMin": 0.5, "edadMax": 18, "unidad": "años", "cantidad": "0,2-0,3 mg/kg IV (máximo 10 mg)", "afeccion": "Status epilepticus" }
+        ]
+      },
+      "precaucionesNinos": "Monitorización respiratoria continua durante y después de la administración IV, especialmente en neonatos y lactantes. Monitorización ECG recomendada. Evaluación regular del nivel de sedación mediante escalas apropiadas para la edad. Vigilar reacciones paradójicas (excitación, agitación).",
+      "efectosAdversosNinos": "Depresión respiratoria (más común en neonatos y lactantes pequeños). Hipotensión con administración IV rápida. Excitación paradójica que puede requerir reducción de dosis. Mioclonía y movimientos anormales más comunes en neonatos. Menor eficacia en etapas tempranas de la vida (diferentes gradientes de cloruro).",
+      "ajustesDosisEspeciales": "Insuficiencia hepática: reducir 50% en insuficiencia moderada, evitar en insuficiencia severa. Obesidad: dosificar según peso corporal ideal. Prematuros: menor eficacia y mayor sensibilidad a depresión respiratoria.",
+      "compatibilidadPediatrica": "No mezclar con otros medicamentos en la misma jeringa o infusión. Incompatible con numerosas soluciones incluyendo midazolam, morfina y varios antibióticos.",
+      "tecnicasAdministracionPediatrica": "IV: Administrar muy lentamente (3-5 minutos) para evitar efectos adversos. Rectal: En posición lateral, jeringas precargadas con cánula rectal (sin aguja) o microenemas comerciales.",
+      "precauciones": "La administración IV rápida puede causar depresión respiratoria o paro cardíaco. Riesgo de dependencia física y psicológica con uso prolongado.",
+      "contraindicaciones": ["Miastenia gravis", "Insuficiencia respiratoria severa", "Apnea del sueño"],
+      "interacciones": ["lorazepam", "metoclopramida"],
+      "viasAdministracion": ["IM", "IV muy lenta"],
+      "viasAlternativas": [
+        {"via": "rectal", "formato": "Microenemas rectales", "comentario": "Útil en crisis convulsivas cuando no hay acceso IV"},
+        {"via": "sublingual", "formato": "Tabletas bucales o sublinguales", "comentario": "Alternativa para ansiedad aguda"}
+      ],
+      "tecnicaAdministracion": {
+        "IM": "Administrar en glúteo. Evitar inyección intravascular, que puede causar tromboflebitis.",
+        "IV": "Administrar muy lentamente (no más de 1 mg/minuto). No mezclar con otros medicamentos en la misma jeringa."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 5, "dosisMaxMg": 10, "frecuenciaHoras": [3, 4], "maxDosisPorToma": 10, "porPeso": false },
+          "ancianos": { "factorReduccion": 0.5, "dosisMinMg": 2.5, "dosisMaxMg": 5 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 1, "dosisMinMgKg": 0.1, "dosisMaxMgKg": 0.3, "maxDosisPorToma": 2, "vias": ["IV"] },
+          { "edadMinMeses": 1, "edadMaxMeses": 12, "dosisMinMgKg": 0.2, "dosisMaxMgKg": 0.5, "maxDosisPorToma": 5, "vias": ["IV"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.2, "dosisMaxMgKg": 0.5, "maxDosisPorToma": 5, "vias": ["IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 0.2, "dosisMaxMgKg": 0.3, "maxDosisPorToma": 10, "vias": ["IV"] },
+          { "edadMinMeses": 6, "edadMaxMeses": 216, "dosisMinMgKg": 0.2, "dosisMaxMgKg": 0.3, "maxDosisPorToma": 10, "vias": ["IV"] }
+        ]
+      }
+    },
+    {
+      "id": "diclofenac",
+      "nombre": "Diclofenac (Voltaren)",
+      "tipoMedicamento": "Antiinflamatorio no esteroideo (AINE)",
+      "descripcion": "AINE que inhibe la síntesis de prostaglandinas con efectos antiinflamatorios, analgésicos y antipiréticos.",
+      "usos": "Enfermedades reumáticas, artrosis, lumbalgia, migraña, cólicos, dolor post-operatorio.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla",
+          "concentracion": 75,
+          "unidad": "mg",
+          "volumenMl": 3,
+          "principal": true
+        }
+      ],
+      "dosisAdultos": "75 mg IM una vez al día (máximo 150 mg/día). Tratamiento inyectable máximo 2 días.",
+      "dosisNinos": {
+        "contraindicado": "Menores de 6 meses. Oficialmente contraindicado en menores de 14 años para administración IM, aunque en la práctica clínica se usa off-label bajo supervisión especializada",
+        "dosis": [
+          { "edadMin": 0.5, "edadMax": 1, "unidad": "años", "cantidad": "Oral/Rectal: 0.5-1 mg/kg/dosis cada 8-12h (uso excepcional)", "afeccion": "Uso excepcional bajo supervisión especializada" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "Oral: 0.5-1 mg/kg/dosis cada 8h. Rectal: 0.5-1 mg/kg/dosis cada 8h. IM/IV (off-label): 0.3-0.5 mg/kg/dosis cada 12h", "afeccion": "Dolor postoperatorio, procesos inflamatorios" },
+          { "edadMin": 6, "edadMax": 14, "unidad": "años", "cantidad": "Oral: 0.5-1 mg/kg/dosis cada 8h (máx. 50 mg/dosis). Rectal: 1-2 mg/kg/dosis cada 8h. IM/IV (off-label): 0.5-1 mg/kg/dosis cada 12h (máx. 75 mg/día)", "afeccion": "Dolor moderado-severo, procesos inflamatorios" },
+          { "edadMin": 14, "edadMax": 18, "unidad": "años", "cantidad": "Oral: 25-50 mg/dosis cada 8h. IM: 75 mg/día. Rectal: 50-100 mg/dosis cada 8h. Máximo 150 mg/día", "afeccion": "Dolor moderado-severo, procesos inflamatorios" }
+        ]
+      },
+      "precaucionesNinos": "Monitorizar función renal y hepática al inicio y durante tratamientos prolongados. Mayor riesgo de sangrado gastrointestinal en población pediátrica con uso prolongado. Vigilar hidratación adecuada, especialmente en pacientes febriles. La administración IV debe ser lenta (mínimo 30 minutos) y la solución debe estar a temperatura ambiente. En población con riesgo cardiovascular o historia familiar de eventos cardíacos, considerar alternativas.",
+      "efectosAdversosNinos": "Efectos gastrointestinales: dolor abdominal, náuseas, vómitos (administrar con alimentos). Efectos cardiovasculares: riesgo de hipertensión y eventos cardíacos (raros pero graves). Efectos renales: disminución del flujo sanguíneo renal (asegurar hidratación). Hepatotoxicidad (rara pero grave). Riesgo de enmascarar infección cuando se usa como antipirético.",
+      "ajustesDosisEspeciales": "Insuficiencia renal: Evitar en insuficiencia moderada-severa. Insuficiencia hepática: Reducir dosis al 50% y extremar monitorización. Cardiopatías: Utilizar la dosis mínima eficaz con monitorización cardiovascular. Para adolescentes con bajo peso (<40 kg): Calcular dosis por peso, no por edad.",
+      "compatibilidadPediatrica": "No mezclar con otros medicamentos en la misma jeringa. No administrar simultáneamente con otros AINES.",
+      "tecnicasAdministracionPediatrica": "IM: En niños >6 años (uso off-label), usar exclusivamente el músculo vastolateral del muslo en niños pequeños o glúteo en adolescentes. IV: Diluir en 100-200 ml de solución salina o glucosada y administrar en 30-60 minutos; monitorizar constantes vitales. Rectal: Preferir esta vía a la IM en niños pequeños cuando la vía oral no esté disponible.",
+      "precauciones": "Riesgo elevado de eventos cardiovasculares y hemorragia digestiva. Usar la dosis más baja posible durante el menor tiempo. No recomendar en menores de 14 años para administración IM.",
+      "contraindicaciones": ["Úlcera gastroduodenal activa", "Insuficiencia renal o hepática grave", "Embarazo (tercer trimestre)"],
+      "interacciones": ["ketorolaco", "metamizol", "dexametasona"],
+      "viasAdministracion": ["IM profunda"],
+      "viasAlternativas": [
+        {"via": "rectal", "formato": "Supositorios rectales (50-100 mg)", "comentario": "Útil cuando la vía oral no es posible"},
+        {"via": "tópica", "formato": "Gel/parche tópico para aplicación local", "comentario": "Para dolor localizado, menor absorción sistémica"}
+      ],
+      "tecnicaAdministracion": {
+        "IM": "Administrar mediante inyección IM profunda en el cuadrante superior externo del glúteo. Técnica en Z recomendada para minimizar irritación cutánea."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 75, "dosisMaxMg": 75, "frecuenciaHoras": [24], "maxDosisDiaria": 150, "porPeso": false },
+          "ancianos": { "factorReduccion": 0.67, "dosisMinMg": 50, "dosisMaxMg": 50 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 6, "edadMaxMeses": 12, "dosisMinMgKg": 0.5, "dosisMaxMgKg": 1, "frecuenciaHoras": [8, 12], "vias": ["IM"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.5, "dosisMaxMgKg": 1, "frecuenciaHoras": [8], "maxDosisPorToma": 50, "vias": ["IM"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 168, "dosisMinMgKg": 0.5, "dosisMaxMgKg": 1, "frecuenciaHoras": [8], "maxDosisPorToma": 75, "vias": ["IM"] },
+          { "edadMinMeses": 168, "edadMaxMeses": 216, "dosisMinMgKg": 0.5, "dosisMaxMgKg": 1, "frecuenciaHoras": [8], "maxDosisPorToma": 75, "vias": ["IM"] }
+        ]
+      }
+    },
+    {
+      "id": "penicilina",
+      "nombre": "Penicilina G Benzatínica (Benzetacil)",
+      "tipoMedicamento": "Antibiótico betalactámico",
+      "descripcion": "Antibiótico betalactámico que inhibe la síntesis de la pared celular bacteriana.",
+      "usos": "Infecciones por bacterias sensibles, sífilis, fiebre reumática, infecciones respiratorias.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Frasco-ampolla 1.200.000 UI",
+          "concentracion": 1200000,
+          "unidad": "UI",
+          "volumenMl": 4,
+          "principal": true
+        },
+        {
+          "nombre": "Frasco-ampolla 2.400.000 UI",
+          "concentracion": 2400000,
+          "unidad": "UI",
+          "volumenMl": 5,
+          "principal": false
+        },
+        {
+          "nombre": "Frasco-ampolla 600.000 UI",
+          "concentracion": 600000,
+          "unidad": "UI",
+          "volumenMl": 2,
+          "principal": false
+        }
+      ],
+      "dosisAdultos": "Penicilina G benzatina: 1.200.000-2.400.000 UI dosis única IM para infecciones estreptocócicas o sífilis. Penicilina G sódica: 2-24 millones UI/día divididas en 4-6 dosis para infecciones graves.",
+      "dosisNinos": {
+        "contraindicado": "No específicamente contraindicado",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 0.23, "unidad": "meses", "cantidad": "Sepsis/Meningitis: 0-7 días, <2000g: 50,000-100,000 unidades/kg/día dividido c/12h", "afeccion": "Neonatos prematuros" },
+          { "edadMin": 0, "edadMax": 0.23, "unidad": "meses", "cantidad": "Sepsis/Meningitis: 0-7 días, >2000g: 75,000-150,000 unidades/kg/día dividido c/8h", "afeccion": "Neonatos a término" },
+          { "edadMin": 0.23, "edadMax": 1, "unidad": "meses", "cantidad": "Sepsis/Meningitis: 75,000-200,000 unidades/kg/día dividido c/6-8h. Enfermedad por estreptococo B (meningitis): 250,000-450,000 unidades/kg/día dividido c/4-6h", "afeccion": "Neonatos 8-28 días" },
+          { "edadMin": 1, "edadMax": 12, "unidad": "meses", "cantidad": "Infecciones graves: 250,000-400,000 unidades/kg/día dividido c/4-6h. Infecciones neumocócicas: 200,000-250,000 unidades/kg/día dividido c/4-6h" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "Infecciones graves: 250,000-400,000 unidades/kg/día dividido c/4-6h (máximo 24 millones unidades/día). Meningitis: 250,000-400,000 unidades/kg/día dividido c/4h" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "Infecciones graves: 250,000-400,000 unidades/kg/día dividido c/4-6h (máximo 24 millones unidades/día). Infecciones moderadas: 150,000-250,000 unidades/kg/día dividido c/4-6h" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "Infecciones graves: 250,000-400,000 unidades/kg/día (máximo 24 millones unidades/día). Neurosífilis: 18-24 millones unidades/día dividido c/4h por 10-14 días" },
+          { "edadMin": 0, "edadMax": 18, "unidad": "años", "afeccion": "Infecciones comunes", "cantidad": "Benzatina: 50.000 UI/kg (máximo 1.200.000 UI)" },
+          { "edadMin": 0, "edadMax": 18, "unidad": "años", "afeccion": "Infecciones graves", "cantidad": "Penicilina G sódica: 25.000-400.000 UI/kg/día según gravedad" }
+        ]
+      },
+      "precaucionesNinos": "Riesgo de convulsiones con dosis altas, particularmente en insuficiencia renal. Desequilibrio electrolítico: dosis altas de penicilina G contienen sodio significativo. Función renal: monitorizar en terapia prolongada de dosis alta. Reactividad cruzada en niños con alergia a cefalosporinas.",
+      "efectosAdversosNinos": "Reacciones alérgicas (menos comunes en niños que lo reportado, pero potencialmente graves). Efectos gastrointestinales: diarrea, náuseas, vómitos (considerar probióticos). Reacción de Jarisch-Herxheimer en tratamiento de infecciones por espiroquetas. Convulsiones con dosis altas que exceden capacidad de eliminación. Alteraciones electrolíticas con altas dosis de penicilina G sódica.",
+      "ajustesDosisEspeciales": "Insuficiencia renal grave (GFR <10 mL/min): reducir dosis en 25-50% o extender intervalo. Prematuros: dosis más bajas e intervalos extendidos debido a función renal inmadura.",
+      "compatibilidadPediatrica": "Puede reconstituirse con lidocaína al 1% para reducir dolor de inyección (solo en niños mayores). No mezclar con otros antibióticos en la misma jeringa o infusión.",
+      "tecnicasAdministracionPediatrica": "IM: Vastolateral del muslo en neonatos y lactantes, glúteo en niños mayores con suficiente masa muscular. Reconstituir con diluyente apropiado, agitar bien. Inyectar lentamente.",
+      "precauciones": "Las reacciones anafilácticas pueden ser graves y ocurrir sin antecedentes previos. La vía IM debe ser profunda, evitando nervios.",
+      "contraindicaciones": ["Hipersensibilidad a penicilinas"],
+      "interacciones": ["metoclopramida"],
+      "viasAdministracion": ["IM profunda"],
+      "viasAlternativas": [],
+      "tecnicaAdministracion": {
+        "IM": "Reconstituir con agua destilada o lidocaína al 1% (en adultos) para reducir el dolor. Agitar vigorosamente. Administrar en glúteo (adultos) o cara anterolateral de muslo (niños). Técnica en Z recomendada."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinUIKg": 50000, "dosisMaxUIKg": 50000, "maxDosisPorToma": 2400000, "porPeso": false, "dosisMinMg": 1200000, "dosisMaxMg": 2400000 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 216, "dosisMinUIKg": 50000, "dosisMaxUIKg": 50000, "maxDosisPorToma": 1200000, "vias": ["IM"] }
+        ]
+      }
+    },
+    {
+      "id": "lorazepam",
+      "nombre": "Lorazepam (Trapax)",
+      "tipoMedicamento": "Benzodiazepina",
+      "descripcion": "Benzodiazepina de acción intermedia que potencia la acción del GABA.",
+      "usos": "Ansiedad, sedación prequirúrgica, status epilepticus, sedación en UCI.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla",
+          "concentracion": 4,
+          "unidad": "mg",
+          "volumenMl": 1,
+          "principal": true
+        }
+      ],
+      "dosisAdultos": "Ansiedad: 4 mg IV. Status epilepticus: 4 mg IV lenta (2 mg/min).",
+      "dosisNinos": {
+        "contraindicado": "Menores de 12 años excepto para status epilepticus (oficialmente), pero se usa con precaución en todas las edades pediátricas para indicaciones específicas",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 1, "unidad": "meses", "cantidad": "IV: 0.05-0.1 mg/kg por dosis (dosis única máxima: 2 mg). Práctica clínica sugiere 0.05 mg/kg en neonatos", "afeccion": "Uso neonatal excepcional bajo supervisión especializada" },
+          { "edadMin": 1, "edadMax": 12, "unidad": "meses", "cantidad": "IV: 0.05-0.1 mg/kg por dosis (dosis única máxima: 2 mg)" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "IV: 0.05-0.1 mg/kg por dosis. Oral: 0.02-0.09 mg/kg/dosis cada 8 horas según necesidad para ansiedad. Dosis única máxima: 2-4 mg" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "IV: 0.05-0.1 mg/kg por dosis (máximo 4 mg). Oral: 0.02-0.09 mg/kg/dosis cada 8 horas según necesidad para ansiedad. Dosis diaria máxima: no exceder 10 mg/día" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "IV: 0.05-0.1 mg/kg con máximo 4 mg por dosis. Oral: Comenzando con 1-2 mg/dosis cada 8 horas según necesidad. Dosis diaria máxima: no exceder 10 mg/día" },
+          { "edadMin": 0, "edadMax": 18, "unidad": "años", "afeccion": "Status epilepticus", "cantidad": "0,1 mg/kg IV (máximo 4 mg)" }
+        ]
+      },
+      "precaucionesNinos": "Monitorización respiratoria con oximetría de pulso continua para administración IV. Monitorización ECG durante administración IV. Tener en cuenta que las formulaciones inyectables contienen alcohol bencílico. Riesgo de toxicidad por propilenglicol con dosis altas. Reducción gradual necesaria después de uso prolongado.",
+      "efectosAdversosNinos": "Depresión respiratoria (disponer de equipo de manejo de vías respiratorias). Agitación/excitación paradójica (más común en niños y adolescentes). Dependencia y síndrome de abstinencia con uso prolongado. Amnesia anterógrada (importante para sedación). Hipotensión (manejar con fluidos y posicionamiento).",
+      "ajustesDosisEspeciales": "Insuficiencia renal: no requiere ajuste significativo para dosis únicas. Insuficiencia hepática: reducir dosis en 25-50% en insuficiencia moderada a severa. Obesidad: calcular dosis basada en peso corporal ideal. Prematuros: usar con extrema precaución a la dosis efectiva más baja.",
+      "compatibilidadPediatrica": "Diluir con igual volumen de solución salina o agua para inyección. No mezclar con otros medicamentos en la misma jeringa o infusión.",
+      "tecnicasAdministracionPediatrica": "IV: administración muy lenta (2 mg/minuto en niños mayores, más lenta en lactantes). Evitar la administración IM por absorción errática.",
+      "precauciones": "Riesgo de depresión respiratoria y efectos paradójicos (agitación). Administración IV debe ser lenta.",
+      "contraindicaciones": ["Insuficiencia respiratoria severa", "Síndrome de apnea del sueño", "Miastenia gravis"],
+      "interacciones": ["diazepam", "metoclopramida"],
+      "viasAdministracion": ["IV"],
+      "viasAlternativas": [
+        {"via": "sublingual", "formato": "Comprimidos", "comentario": "Alternativa cuando no hay acceso IV"}
+      ],
+      "tecnicaAdministracion": {
+        "IV": "Administrar lentamente (2 mg/minuto). No mezclar con otros medicamentos. Diluir con igual volumen de solución salina o agua para inyección."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 4, "dosisMaxMg": 4, "porPeso": false },
+          "ancianos": { "factorReduccion": 0.5, "dosisMinMg": 2, "dosisMaxMg": 2 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 1, "dosisMinMgKg": 0.05, "dosisMaxMgKg": 0.1, "maxDosisPorToma": 2, "vias": ["IV"] },
+          { "edadMinMeses": 1, "edadMaxMeses": 12, "dosisMinMgKg": 0.05, "dosisMaxMgKg": 0.1, "maxDosisPorToma": 2, "vias": ["IV"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.05, "dosisMaxMgKg": 0.1, "maxDosisPorToma": 4, "vias": ["IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 0.05, "dosisMaxMgKg": 0.1, "maxDosisPorToma": 4, "vias": ["IV"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMgKg": 0.05, "dosisMaxMgKg": 0.1, "maxDosisPorToma": 4, "vias": ["IV"] },
+          { "edadMinMeses": 0, "edadMaxMeses": 216, "dosisMinMgKg": 0.1, "dosisMaxMgKg": 0.1, "maxDosisPorToma": 4, "vias": ["IV"] }
+        ]
+      }
+    },
+    {
+      "id": "ketorolaco",
+      "nombre": "Ketorolaco (Acantex)",
+      "tipoMedicamento": "Antiinflamatorio no esteroideo (AINE)",
+      "descripcion": "AINE con potente efecto analgésico y moderado efecto antiinflamatorio.",
+      "usos": "Dolor moderado-severo postoperatorio, cólico nefrítico.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla 30mg",
+          "concentracion": 30,
+          "unidad": "mg",
+          "volumenMl": 1,
+          "principal": true
+        },
+        {
+          "nombre": "Ampolla 60mg",
+          "concentracion": 60,
+          "unidad": "mg",
+          "volumenMl": 2,
+          "principal": false
+        }
+      ],
+      "dosisAdultos": "Dosis inicial 10-30 mg IM o IV, seguida de 10-30 mg cada 4-6 horas. Máximo 90 mg/día (60 mg en ancianos). Duración máxima: 2 días inyectable, 7 días en total.",
+      "dosisNinos": {
+        "contraindicado": "Menores de 16 años (oficialmente), aunque en práctica clínica se usa off-label en niños >1 año con precaución",
+        "dosis": [
+          { "edadMin": 1, "edadMax": 12, "unidad": "meses", "cantidad": "Generalmente evitado. Si se usa en >6 meses: 0.5 mg/kg IV/IM cada 6 horas, no exceder 30 mg/día. Duración máxima: 48 horas", "afeccion": "Uso excepcional bajo supervisión especializada" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "IV/IM: 0.5 mg/kg cada 6 horas. Dosis única máxima: 15 mg. Dosis diaria máxima: 60 mg. Limitado a máximo 5 días", "afeccion": "Uso off-label, dolor postoperatorio moderado-severo" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "IV/IM: 0.5 mg/kg cada 6 horas. Dosis única máxima: 30 mg. Dosis diaria máxima: 120 mg. Limitado a máximo 5 días", "afeccion": "Uso off-label, dolor postoperatorio moderado-severo" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "IV/IM: 0.5 mg/kg cada 6 horas o 30 mg cada 6 horas. Dosis única máxima: 30 mg. Dosis diaria máxima: 120 mg. Limitado a máximo 5 días de tratamiento total", "afeccion": "Uso off-label >13 años, aprobado ≥16 años" }
+        ]
+      },
+      "precaucionesNinos": "Limitar duración a máximo 5 días de tratamiento total (IM/IV y oral combinados). Monitorizar función renal (BUN/creatinina) antes y durante tratamiento. Controlar función hepática en uso prolongado. Vigilar sangrado digestivo. Monitorizar hemoglobina/hematocrito si hay sospecha de sangrado. Asegurar hidratación adecuada para reducir riesgo renal.",
+      "efectosAdversosNinos": "Sangrado/ulceración GI (suspender medicamento inmediatamente). Lesión renal aguda (discontinuar, hidratar, monitorizar función renal). Reacciones de hipersensibilidad (discontinuar permanentemente). Tiempo de sangrado prolongado (evitar en cirugías con alto riesgo de sangrado). Mayor riesgo de sangrado postoperatorio en ciertos procedimientos (amigdalectomía, adenoidectomía).",
+      "ajustesDosisEspeciales": "Insuficiencia renal: evitar uso en insuficiencia moderada a severa (CrCl <30 mL/min). Insuficiencia hepática: reducir dosis en 50% en insuficiencia moderada a severa. Niños de bajo peso: para niños <50 kg, la dosis máxima no debe exceder 60 mg/día total.",
+      "compatibilidadPediatrica": "No mezclar con otros medicamentos en la misma jeringa. Incompatible con numerosas soluciones en misma infusión IV.",
+      "tecnicasAdministracionPediatrica": "IV: administrar lentamente durante al menos 30 segundos en niños. IM: Vastolateral del muslo en niños pequeños, glúteo en niños mayores.",
+      "precauciones": "Riesgo muy elevado de sangrado gastrointestinal y complicaciones renales. Contraindicado en embarazo y durante cirugías por riesgo de sangrado.",
+      "contraindicaciones": ["Úlcera péptica activa", "Insuficiencia renal", "Riesgo de hemorragia", "Embarazo y lactancia"],
+      "interacciones": ["diclofenac", "metamizol", "dexametasona"],
+      "viasAdministracion": ["IM", "IV lenta"],
+      "viasAlternativas": [
+        {"via": "oral", "formato": "Gotas orales", "comentario": "Para continuación del tratamiento tras fase aguda"}
+      ],
+      "tecnicaAdministracion": {
+        "IM": "Administrar en glúteo. No administrar repetidamente en el mismo sitio.",
+        "IV": "Administrar lentamente durante al menos 15 segundos."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 10, "dosisMaxMg": 30, "frecuenciaHoras": [4, 6], "maxDosisDiaria": 90, "porPeso": false },
+          "ancianos": { "dosisMinMg": 15, "dosisMaxMg": 15, "maxDosisDiaria": 60 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 6, "edadMaxMeses": 12, "dosisMinMgKg": 0.5, "dosisMaxMgKg": 0.5, "frecuenciaHoras": [6], "maxDosisPorToma": 15, "maxDosisDiaria": 30, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.5, "dosisMaxMgKg": 0.5, "frecuenciaHoras": [6], "maxDosisPorToma": 15, "maxDosisDiaria": 60, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 0.5, "dosisMaxMgKg": 0.5, "frecuenciaHoras": [6], "maxDosisPorToma": 30, "maxDosisDiaria": 120, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMgKg": 0.5, "dosisMaxMgKg": 0.5, "frecuenciaHoras": [6], "maxDosisPorToma": 30, "maxDosisDiaria": 120, "vias": ["IM", "IV"] }
+        ]
+      }
+    },
+    {
+      "id": "ceftriaxona",
+      "nombre": "Ceftriaxona",
+      "tipoMedicamento": "Antibiótico cefalosporínico de tercera generación",
+      "descripcion": "La ceftriaxona es un antibiótico de amplio espectro perteneciente al grupo de las cefalosporinas de tercera generación. Tiene actividad bactericida contra bacterias gram-positivas, gram-negativas y algunos anaerobios. Su mecanismo de acción consiste en inhibir la síntesis de la pared celular bacteriana, uniéndose a proteínas específicas de unión a penicilina (PBPs). Es estable frente a muchas beta-lactamasas y posee una vida media prolongada que permite su administración cada 24 horas.",
+      "usos": "Infecciones del tracto respiratorio, infecciones de la piel y tejidos blandos, infecciones del tracto urinario, infecciones intraabdominales, septicemia bacteriana, meningitis bacteriana, gonorrea, enfermedad inflamatoria pélvica, infecciones osteoarticulares, endocarditis, otitis media, infecciones quirúrgicas, profilaxis preoperatoria, enfermedad de Lyme diseminada, y tratamiento de pacientes neutropénicos con fiebre.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Rocephin",
+          "concentracion": 250,
+          "unidad": "mg",
+          "volumenMl": 0,
+          "principal": false
+        },
+        {
+          "nombre": "Rocephin",
+          "concentracion": 500,
+          "unidad": "mg",
+          "volumenMl": 0,
+          "principal": false
+        },
+        {
+          "nombre": "Rocephin",
+          "concentracion": 1000,
+          "unidad": "mg",
+          "volumenMl": 0,
+          "principal": true
+        },
+        {
+          "nombre": "Rocephin",
+          "concentracion": 2000,
+          "unidad": "mg",
+          "volumenMl": 0,
+          "principal": false
+        },
+        {
+          "nombre": "Ceftriaxona premezclada",
+          "concentracion": 1000,
+          "unidad": "mg",
+          "volumenMl": 50,
+          "principal": false
+        },
+        {
+          "nombre": "Ceftriaxona premezclada",
+          "concentracion": 2000,
+          "unidad": "mg",
+          "volumenMl": 50,
+          "principal": false
+        }
+      ],
+      "dosisAdultos": "Infecciones comunes: 1-2 g/día IV o IM en dosis única o dividida en dos dosis. Infecciones graves: 2-4 g/día. Meningitis bacteriana: 2 g IV cada 12 horas. Gonorrea no complicada: 500 mg IM (o 1 g si peso >150 kg) dosis única. Profilaxis quirúrgica: 1-2 g IV 30-60 minutos antes del procedimiento. Endocarditis: 2 g IV cada 12-24 horas por 4 semanas. Enfermedad de Lyme diseminada: 2 g IV diarios por 14-21 días. La duración del tratamiento depende del tipo de infección y respuesta clínica, generalmente entre 4-14 días.",
+      "dosisNinos": {
+        "contraindicado": "Contraindicado en recién nacidos prematuros y neonatos (<28 días) con hiperbilirrubinemia. Contraindicado en neonatos que requieran (o se espera que requieran) tratamiento con soluciones IV que contengan calcio.",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 28, "unidad": "días", "cantidad": "50 mg/kg/día IV o IM en dosis única diaria; no exceder 125 mg en dosis única para profilaxis de transmisión gonocócica" },
+          { "edadMin": 29, "edadMax": 365, "unidad": "días", "cantidad": "50-75 mg/kg/día IV o IM en dosis única diaria para infecciones leves a moderadas; 100 mg/kg/día para infecciones graves; no exceder 4 g/día" },
+          { "edadMin": 1, "edadMax": 12, "unidad": "años", "cantidad": "50-75 mg/kg/día IV o IM en una o dos dosis para infecciones leves a moderadas; 100 mg/kg/día para infecciones graves o meningitis; no exceder 4 g/día" },
+          { "edadMin": 12, "edadMax": 18, "unidad": "años", "cantidad": "Dosis adulta para peso ≥50 kg. Para peso <50 kg, usar dosificación pediátrica" }
+        ]
+      },
+      "precaucionesNinos": "Riesgo de precipitación biliar (particularmente en neonatos). Posible desplazamiento de bilirrubina de la albúmina (evitar en neonatos con hiperbilirrubinemia). Monitorización de función renal y hepática en tratamientos prolongados. Vigilar signos de colitis pseudomembranosa. No administrar con soluciones que contengan calcio (incluso por distintas vías) en neonatos.",
+      "efectosAdversosNinos": "Intolerancia gastrointestinal: diarrea (vigilar por C. difficile), náuseas, vómitos. Reacciones de hipersensibilidad: desde exantema leve hasta anafilaxia. Alteraciones hematológicas: eosinofilia, leucopenia, anemia hemolítica (rara). Reacciones en el sitio de inyección: dolor, inflamación. Precipitación biliar: más común en neonatos y lactantes pequeños.",
+      "ajustesDosisEspeciales": "Insuficiencia renal grave (CrCl <10 mL/min): No exceder 2 g/día. Combinación de insuficiencia renal y hepática: monitorizar niveles séricos, no exceder 2 g/día. Recién nacidos (especialmente prematuros): ajustes específicos por riesgo de desplazamiento de bilirrubina.",
+      "compatibilidadPediatrica": "Incompatible con soluciones que contienen calcio, incluyendo Ringer lactato y Hartmann, aminoglucósidos (no mezclar en misma jeringa o infusión), vancomicina, fluconazol y soluciones con pH >7.5.",
+      "tecnicasAdministracionPediatrica": "IV: Diluir con solución compatible a concentración de 10-40 mg/ml. Administrar durante 30 minutos; en neonatos, infundir durante 60 minutos. IM: Usar lidocaína al 1% como diluyente para reducir dolor (solo en niños mayores); inyectar en glúteo en niños mayores o vastolateral del muslo en lactantes.",
+      "precauciones": "Usar con precaución en pacientes con historia de alergia a penicilinas, enfermedad gastrointestinal (especialmente colitis), insuficiencia renal o hepática. Puede causar anemia hemolítica inmunomediada. Puede provocar colitis pseudomembranosa por C. difficile. Puede aumentar el INR, especialmente en pacientes con déficit nutricional, enfermedad hepática o renal. Monitorizar la función renal en tratamientos prolongados. Las dosis altas en insuficiencia renal severa pueden causar toxicidad del SNC.",
+      "contraindicaciones": [
+        "Hipersensibilidad conocida a ceftriaxona o a otras cefalosporinas",
+        "Historia de reacción anafiláctica a penicilinas",
+        "Neonatos con hiperbilirrubinemia",
+        "Neonatos prematuros hasta 41 semanas de edad postmenstrual",
+        "Neonatos menores de 28 días que requieran tratamiento con soluciones IV que contengan calcio",
+        "Administración simultánea con soluciones que contengan calcio"
+      ],
+      "interacciones": ["penicilina"],
+      "viasAdministracion": ["IM", "IV lenta"],
+      "viasAlternativas": [],
+      "tecnicaAdministracion": {
+        "IM": "Reconstituir con agua estéril o lidocaína al 1% (en niños mayores) para reducir el dolor. Administrar en glúteo o vastolateral del muslo.",
+        "IV": "Diluir con agua estéril, solución salina o dextrosa. Administrar lentamente durante 30 minutos."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 1000, "dosisMaxMg": 2000, "frecuenciaHoras": [24], "porPeso": false }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 1, "dosisMinMgKg": 50, "dosisMaxMgKg": 50, "frecuenciaHoras": [24], "maxDosisPorToma": 500, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 1, "edadMaxMeses": 12, "dosisMinMgKg": 50, "dosisMaxMgKg": 75, "frecuenciaHoras": [24], "maxDosisPorToma": 1000, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 144, "dosisMinMgKg": 50, "dosisMaxMgKg": 75, "frecuenciaHoras": [24], "maxDosisPorToma": 2000, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 144, "edadMaxMeses": 216, "dosisMinMgKg": 50, "dosisMaxMgKg": 75, "frecuenciaHoras": [24], "maxDosisPorToma": 2000, "vias": ["IM", "IV"] }
+        ]
+      }
+    },
+    {
+      "id": "adrenalina",
+      "nombre": "Adrenalina/Epinefrina (Adrenalina Biol)",
+      "tipoMedicamento": "Simpaticomimético - Catecolamina",
+      "descripcion": "Catecolamina endógena con acción sobre receptores alfa y beta adrenérgicos. Medicamento de PRIMERA LÍNEA para anafilaxia y fármaco esencial en toda emergencia médica.",
+      "usos": "Anafilaxia (primera línea), broncoespasmo severo refractario, paro cardíaco, crup severo (nebulizado), shock anafiláctico.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla 1:1000 (1mg/ml)",
+          "concentracion": 1,
+          "unidad": "mg",
+          "volumenMl": 1,
+          "principal": true
+        }
+      ],
+      "dosisAdultos": "Anafilaxia: 0.3-0.5 mg IM en cara anterolateral del muslo. Repetir cada 5-15 min si necesario. Paro cardíaco: 1 mg IV cada 3-5 min. Broncoespasmo severo: 0.3-0.5 mg SC/IM.",
+      "dosisNinos": {
+        "contraindicado": "No hay contraindicación absoluta en situación de emergencia",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 12, "unidad": "meses", "cantidad": "0.01 mg/kg IM (máximo 0.15 mg). Usar solución 1:1000. Repetir cada 5-15 min si necesario", "afeccion": "Anafilaxia" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "0.01 mg/kg IM (máximo 0.15 mg). Usar solución 1:1000", "afeccion": "Anafilaxia" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "0.01 mg/kg IM (máximo 0.3 mg). Usar solución 1:1000", "afeccion": "Anafilaxia" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "0.01 mg/kg IM (máximo 0.5 mg). Usar solución 1:1000", "afeccion": "Anafilaxia" }
+        ]
+      },
+      "precaucionesNinos": "Administrar SIEMPRE por vía IM en cara anterolateral del muslo (mejor absorción que deltoides o SC). NUNCA IV en bolo en contexto prehospitalario (riesgo de arritmia fatal). Monitorizar frecuencia cardíaca y presión arterial tras cada dosis.",
+      "efectosAdversosNinos": "Taquicardia, palidez, temblor, ansiedad, cefalea, náuseas. Arritmias con sobredosis o administración IV inadecuada.",
+      "ajustesDosisEspeciales": "En niños <10 kg la dosis debe ser calculada con extrema precisión. Considerar uso de autoinyectores pediátricos (0.15 mg) cuando estén disponibles.",
+      "compatibilidadPediatrica": "No mezclar con soluciones alcalinas. Compatible con solución fisiológica para dilución.",
+      "tecnicasAdministracionPediatrica": "IM: Cara anterolateral del muslo (SIEMPRE este sitio). Usar aguja 25G para lactantes, 22G para niños mayores. Aspirar antes de inyectar.",
+      "precauciones": "La adrenalina es el ÚNICO tratamiento de primera línea para anafilaxia. NO retardar su administración. Los antihistamínicos y corticoides son tratamiento COMPLEMENTARIO, no sustituto.",
+      "contraindicaciones": ["No hay contraindicaciones absolutas en anafilaxia"],
+      "interacciones": [],
+      "viasAdministracion": ["IM", "SC", "IV"],
+      "viasAlternativas": [
+        {"via": "nebulizada", "formato": "1-5 mg en 3 ml SF nebulizado", "comentario": "Para crup severo o broncoespasmo"},
+        {"via": "endotraqueal", "formato": "0.1 mg/kg diluido en 5 ml SF", "comentario": "Solo si no hay acceso IV/IO en paro cardíaco"}
+      ],
+      "tecnicaAdministracion": {
+        "IM": "Administrar en cara ANTEROLATERAL del muslo. Solución 1:1000 (1mg/ml). Es el sitio con mejor y más rápida absorción.",
+        "SC": "Administrar subcutánea solo si IM no es posible. Absorción más lenta que IM.",
+        "IV": "SOLO en paro cardíaco o shock profundo. Diluir 1mg en 10ml SF (1:10.000). Administrar lentamente."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 0.3, "dosisMaxMg": 0.5, "frecuenciaHoras": [5, 15], "porPeso": false }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 12, "dosisMinMgKg": 0.01, "dosisMaxMgKg": 0.01, "maxDosisPorToma": 0.15, "vias": ["IM"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.01, "dosisMaxMgKg": 0.01, "maxDosisPorToma": 0.15, "vias": ["IM"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 0.01, "dosisMaxMgKg": 0.01, "maxDosisPorToma": 0.3, "vias": ["IM"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMgKg": 0.01, "dosisMaxMgKg": 0.01, "maxDosisPorToma": 0.5, "vias": ["IM"] }
+        ]
+      }
+    },
+    {
+      "id": "ondansetron",
+      "nombre": "Ondansetrón (Zofran/Ondanox)",
+      "tipoMedicamento": "Antiemético - Antagonista 5-HT3",
+      "descripcion": "Antagonista selectivo de receptores de serotonina 5-HT3 con potente efecto antiemético. Mucho más seguro que metoclopramida en población pediátrica por ausencia de efectos extrapiramidales.",
+      "usos": "Náuseas y vómitos (postoperatorios, por quimioterapia, gastroenteritis aguda). Preferido sobre metoclopramida en pediatría por la AAP.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla 4mg/2ml",
+          "concentracion": 4,
+          "unidad": "mg",
+          "volumenMl": 2,
+          "principal": true
+        },
+        {
+          "nombre": "Ampolla 8mg/4ml",
+          "concentracion": 8,
+          "unidad": "mg",
+          "volumenMl": 4,
+          "principal": false
+        }
+      ],
+      "dosisAdultos": "4-8 mg IV/IM dosis única. Puede repetir cada 8 horas. Máximo 24 mg/día.",
+      "dosisNinos": {
+        "contraindicado": "No específicamente contraindicado. Usar con precaución en menores de 6 meses",
+        "dosis": [
+          { "edadMin": 6, "edadMax": 12, "unidad": "meses", "cantidad": "0.1 mg/kg IV/IM dosis única (máximo 4 mg)", "afeccion": "Vómitos" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "0.15 mg/kg IV/IM dosis única (máximo 4 mg)", "afeccion": "Vómitos/Gastroenteritis" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "0.15 mg/kg IV/IM dosis única (máximo 4 mg)", "afeccion": "Vómitos/Gastroenteritis" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "4-8 mg IV/IM dosis única (máximo 16 mg/día)", "afeccion": "Vómitos" }
+        ]
+      },
+      "precaucionesNinos": "Perfil de seguridad muy superior a metoclopramida en pediatría. Monitorizar QTc en pacientes con factores de riesgo de prolongación QT. No administrar con otros medicamentos que prolonguen QT.",
+      "efectosAdversosNinos": "Cefalea (efecto adverso más común), constipación, mareo leve. Prolongación QT (raro, dosis-dependiente). Perfil de efectos adversos mucho mejor que metoclopramida.",
+      "ajustesDosisEspeciales": "Insuficiencia hepática severa: no exceder 8 mg/día. No requiere ajuste en insuficiencia renal.",
+      "compatibilidadPediatrica": "Compatible con solución fisiológica y dextrosa 5%. No mezclar con soluciones alcalinas.",
+      "tecnicasAdministracionPediatrica": "IV: Diluir en 50 ml SF, administrar en 15 minutos. IM: Administrar sin diluir en deltoides o muslo.",
+      "precauciones": "Precaución en pacientes con prolongación QT congénita o adquirida. Evitar uso concomitante con apomorfina (hipotensión severa).",
+      "contraindicaciones": ["Hipersensibilidad a ondansetrón", "Uso concomitante con apomorfina"],
+      "interacciones": ["tramadol"],
+      "viasAdministracion": ["IV", "IM"],
+      "viasAlternativas": [
+        {"via": "oral", "formato": "Comprimidos bucodispersables 4-8 mg", "comentario": "Preferir cuando tolera vía oral"},
+        {"via": "sublingual", "formato": "Comprimidos orodispersables", "comentario": "Se disuelve en la boca sin necesidad de agua"}
+      ],
+      "tecnicaAdministracion": {
+        "IV": "Diluir en 50 ml SF. Administrar en 15 minutos. Puede administrarse en bolo lento (>30 seg) para dosis ≤4mg.",
+        "IM": "Administrar sin diluir. Usar músculo deltoides o cara anterolateral del muslo."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 4, "dosisMaxMg": 8, "frecuenciaHoras": [8], "maxDosisDiaria": 24, "porPeso": false },
+          "ancianos": { "dosisMinMg": 4, "dosisMaxMg": 4, "frecuenciaHoras": [8] }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 6, "edadMaxMeses": 12, "dosisMinMgKg": 0.1, "dosisMaxMgKg": 0.1, "maxDosisPorToma": 4, "vias": ["IV", "IM"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.15, "dosisMaxMgKg": 0.15, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 4, "vias": ["IV", "IM"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 0.15, "dosisMaxMgKg": 0.15, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 4, "vias": ["IV", "IM"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMg": 4, "dosisMaxMg": 8, "frecuenciaHoras": [8], "maxDosisDiaria": 16, "vias": ["IV", "IM"] }
+        ]
+      }
+    },
+    {
+      "id": "hidrocortisona",
+      "nombre": "Hidrocortisona (Solucortef/Hidrocort)",
+      "tipoMedicamento": "Corticosteroide",
+      "descripcion": "Corticosteroide con actividad glucocorticoide y mineralocorticoide. Inicio de acción más rápido que dexametasona. Indicado cuando se necesita efecto corticoide inmediato.",
+      "usos": "Insuficiencia suprarrenal aguda, shock anafiláctico (complemento de adrenalina), asma severo, reacciones alérgicas graves, crisis addisoniana.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Frasco-ampolla 100mg",
+          "concentracion": 100,
+          "unidad": "mg",
+          "volumenMl": 2,
+          "principal": true
+        },
+        {
+          "nombre": "Frasco-ampolla 500mg",
+          "concentracion": 500,
+          "unidad": "mg",
+          "volumenMl": 4,
+          "principal": false
+        }
+      ],
+      "dosisAdultos": "Emergencia/anafilaxia: 200 mg IV. Insuficiencia suprarrenal: 100 mg IV cada 8h. Asma severo: 100-200 mg IV cada 6h.",
+      "dosisNinos": {
+        "contraindicado": "No específicamente contraindicado en emergencias",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 12, "unidad": "meses", "cantidad": "4 mg/kg IV dosis carga, luego 2 mg/kg cada 6h (máximo 100 mg)", "afeccion": "Emergencia/Anafilaxia" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "4 mg/kg IV dosis carga (máximo 100 mg), luego 2 mg/kg cada 6h", "afeccion": "Emergencia/Anafilaxia" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "4 mg/kg IV dosis carga (máximo 200 mg), luego 2 mg/kg cada 6h", "afeccion": "Emergencia/Anafilaxia" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "100-200 mg IV, luego 50-100 mg cada 6-8h", "afeccion": "Emergencia" }
+        ]
+      },
+      "precaucionesNinos": "Tiene actividad mineralocorticoide (retención de sodio/agua). Monitorizar glucemia y electrolitos. En insuficiencia suprarrenal, es el corticoide de elección por su perfil fisiológico.",
+      "efectosAdversosNinos": "Hiperglucemia (monitorizar), retención hídrica, hipertensión transitoria, alteraciones electrolíticas.",
+      "ajustesDosisEspeciales": "No requiere ajuste renal. En insuficiencia hepática severa reducir dosis.",
+      "compatibilidadPediatrica": "Compatible con SF y dextrosa 5%. Reconstituir con el diluyente provisto.",
+      "tecnicasAdministracionPediatrica": "IV: Reconstituir, administrar en bolo lento (30-60 seg) o diluido en 50-100 ml SF en 15-30 min. IM: Administrar reconstituido en deltoides o muslo.",
+      "precauciones": "No suspender bruscamente en uso prolongado. Puede enmascarar infecciones. Monitorizar glucemia.",
+      "contraindicaciones": ["Infecciones fúngicas sistémicas no tratadas"],
+      "interacciones": ["ketorolaco", "diclofenac"],
+      "viasAdministracion": ["IV", "IM"],
+      "viasAlternativas": [],
+      "tecnicaAdministracion": {
+        "IV": "Reconstituir con diluyente provisto. Administrar en bolo lento o diluido en SF para infusión.",
+        "IM": "Reconstituir y administrar en glúteo o deltoides. Absorción IM adecuada pero más lenta que IV."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 100, "dosisMaxMg": 200, "frecuenciaHoras": [6, 8], "porPeso": false }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 12, "dosisMinMgKg": 4, "dosisMaxMgKg": 4, "maxDosisPorToma": 100, "vias": ["IV"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 4, "dosisMaxMgKg": 4, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 100, "vias": ["IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 4, "dosisMaxMgKg": 4, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 200, "vias": ["IV", "IM"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMg": 100, "dosisMaxMg": 200, "frecuenciaHoras": [6, 8], "vias": ["IV", "IM"] }
+        ]
+      }
+    },
+    {
+      "id": "tramadol",
+      "nombre": "Tramadol (Calmador/Tramadol Roemmers)",
+      "tipoMedicamento": "Analgésico opioide débil",
+      "descripcion": "Analgésico opioide con doble mecanismo: agonista de receptores mu-opioides e inhibidor de recaptación de serotonina y noradrenalina. Eficaz para dolor moderado a severo cuando AINEs son insuficientes.",
+      "usos": "Dolor moderado a severo cuando AINEs son insuficientes o están contraindicados. Cólico renal refractario. Dolor postoperatorio.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla 100mg/2ml",
+          "concentracion": 100,
+          "unidad": "mg",
+          "volumenMl": 2,
+          "principal": true
+        }
+      ],
+      "dosisAdultos": "50-100 mg IV lenta (2-3 min) o IM cada 6-8h. Máximo 400 mg/día. Asociar antiemético por alta incidencia de náuseas.",
+      "dosisNinos": {
+        "contraindicado": "Menores de 1 año. Contraindicado en metabolizadores ultrarrápidos CYP2D6. Contraindicado post-amigdalectomía.",
+        "dosis": [
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "1-2 mg/kg IV lenta o IM cada 6-8h (máximo 8 mg/kg/día o 400 mg)", "afeccion": "Dolor moderado-severo" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "1-2 mg/kg IV lenta o IM cada 6-8h (máximo 8 mg/kg/día o 400 mg)", "afeccion": "Dolor moderado-severo" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "50-100 mg IV lenta o IM cada 6-8h (máximo 400 mg/día)", "afeccion": "Dolor moderado-severo" }
+        ]
+      },
+      "precaucionesNinos": "Riesgo de depresión respiratoria, especialmente combinado con benzodiazepinas. Reduce umbral convulsivo. Asociar SIEMPRE antiemético (ondansetrón preferido). No usar post-amigdalectomía en niños.",
+      "efectosAdversosNinos": "Náuseas/vómitos (muy frecuentes, 20-40%), mareo, somnolencia, constipación, cefalea. Riesgo de convulsiones en dosis altas o con medicamentos que bajan umbral convulsivo.",
+      "ajustesDosisEspeciales": "Insuficiencia renal (CrCl <30): reducir dosis 50% y extender intervalo a cada 12h. Insuficiencia hepática: reducir dosis 50%.",
+      "compatibilidadPediatrica": "Compatible con SF y dextrosa. No mezclar con diazepam en misma jeringa.",
+      "tecnicasAdministracionPediatrica": "IV: Administrar lentamente en 2-3 minutos o diluido en 50-100 ml SF en 15-30 min. IM: Administrar en glúteo o muslo.",
+      "precauciones": "NUNCA combinar con IMAO. Precaución con ISRS (riesgo de síndrome serotoninérgico). Reduce umbral convulsivo. Alta incidencia de náuseas (asociar antiemético).",
+      "contraindicaciones": ["Uso concomitante con IMAO", "Epilepsia no controlada", "Menores de 1 año", "Post-amigdalectomía en niños"],
+      "interacciones": ["diazepam", "lorazepam", "metoclopramida", "ondansetron"],
+      "viasAdministracion": ["IV lenta", "IM"],
+      "viasAlternativas": [
+        {"via": "oral", "formato": "Gotas orales (100mg/ml)", "comentario": "Para dolor crónico o continuación de tratamiento"}
+      ],
+      "tecnicaAdministracion": {
+        "IV": "Administrar lentamente en 2-3 minutos. Puede diluir en SF para infusión.",
+        "IM": "Administrar en glúteo. No requiere dilución."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 50, "dosisMaxMg": 100, "frecuenciaHoras": [6, 8], "maxDosisDiaria": 400, "porPeso": false },
+          "ancianos": { "factorReduccion": 0.5, "dosisMinMg": 25, "dosisMaxMg": 50 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 1, "dosisMaxMgKg": 2, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 50, "maxDosisDiaria": 400, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 1, "dosisMaxMgKg": 2, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 100, "maxDosisDiaria": 400, "vias": ["IM", "IV"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMg": 50, "dosisMaxMg": 100, "frecuenciaHoras": [6, 8], "maxDosisDiaria": 400, "vias": ["IM", "IV"] }
+        ]
+      }
+    },
+    {
+      "id": "difenhidramina",
+      "nombre": "Difenhidramina (Benadryl)",
+      "tipoMedicamento": "Antihistamínico H1",
+      "descripcion": "Antihistamínico H1 de primera generación con propiedades sedantes y anticolinérgicas. Tratamiento COMPLEMENTARIO en reacciones alérgicas (siempre DESPUÉS de adrenalina en anafilaxia). Útil para reacciones extrapiramidales por metoclopramida.",
+      "usos": "Reacciones alérgicas, urticaria, angioedema, complemento en anafilaxia, reacciones extrapiramidales por metoclopramida, prurito severo.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla 50mg/5ml",
+          "concentracion": 50,
+          "unidad": "mg",
+          "volumenMl": 5,
+          "principal": true
+        }
+      ],
+      "dosisAdultos": "25-50 mg IV lenta o IM cada 6-8h. Máximo 400 mg/día. Para reacciones extrapiramidales: 50 mg IV.",
+      "dosisNinos": {
+        "contraindicado": "Menores de 2 años (uso excepcional bajo supervisión en emergencias)",
+        "dosis": [
+          { "edadMin": 2, "edadMax": 5, "unidad": "años", "cantidad": "1 mg/kg IV/IM cada 6-8h (máximo 25 mg)", "afeccion": "Reacción alérgica" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "1 mg/kg IV/IM cada 6-8h (máximo 50 mg)", "afeccion": "Reacción alérgica" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "25-50 mg IV/IM cada 6-8h (máximo 400 mg/día)", "afeccion": "Reacción alérgica" }
+        ]
+      },
+      "precaucionesNinos": "Efecto sedante pronunciado. Puede causar excitación paradójica en niños pequeños. Monitorizar nivel de conciencia. Precaución en pacientes asmáticos (efecto anticolinérgico puede espesar secreciones).",
+      "efectosAdversosNinos": "Sedación (el más frecuente), boca seca, retención urinaria, visión borrosa, excitación paradójica en niños pequeños.",
+      "ajustesDosisEspeciales": "No requiere ajuste renal. Reducir dosis en insuficiencia hepática.",
+      "compatibilidadPediatrica": "Compatible con SF. No mezclar con fenobarbital o fenitoína en misma infusión.",
+      "tecnicasAdministracionPediatrica": "IV: Administrar lentamente en 1-2 minutos. IM: Administrar en glúteo o muslo. Puede causar irritación local.",
+      "precauciones": "Es tratamiento COMPLEMENTARIO en anafilaxia, NUNCA sustituto de adrenalina. No retardar adrenalina para dar antihistamínico.",
+      "contraindicaciones": ["Menores de 2 años (excepto emergencia)", "Glaucoma de ángulo cerrado", "Retención urinaria"],
+      "interacciones": ["diazepam", "lorazepam", "tramadol"],
+      "viasAdministracion": ["IV lenta", "IM"],
+      "viasAlternativas": [
+        {"via": "oral", "formato": "Jarabe 12.5mg/5ml", "comentario": "Para reacciones alérgicas leves"}
+      ],
+      "tecnicaAdministracion": {
+        "IV": "Administrar lentamente en 1-2 minutos sin diluir o diluido en SF.",
+        "IM": "Administrar en glúteo o muslo. Puede causar dolor en sitio de inyección."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 25, "dosisMaxMg": 50, "frecuenciaHoras": [6, 8], "maxDosisDiaria": 400, "porPeso": false },
+          "ancianos": { "factorReduccion": 0.5, "dosisMinMg": 12.5, "dosisMaxMg": 25 }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 24, "edadMaxMeses": 60, "dosisMinMgKg": 1, "dosisMaxMgKg": 1, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 25, "vias": ["IV", "IM"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 1, "dosisMaxMgKg": 1, "frecuenciaHoras": [6, 8], "maxDosisPorToma": 50, "vias": ["IV", "IM"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMg": 25, "dosisMaxMg": 50, "frecuenciaHoras": [6, 8], "maxDosisDiaria": 400, "vias": ["IV", "IM"] }
+        ]
+      }
+    },
+    {
+      "id": "atropina",
+      "nombre": "Atropina (Atropina Sulfato)",
+      "tipoMedicamento": "Anticolinérgico/Antimuscarínico",
+      "descripcion": "Agente anticolinérgico que bloquea los receptores muscarínicos. Esencial en bradicardia sintomática e intoxicación por organofosforados/carbamatos.",
+      "usos": "Bradicardia sintomática, intoxicación por organofosforados/carbamatos, premedicación antes de intubación, bradicardia durante RCP.",
+      "presentacionesComerciales": [
+        {
+          "nombre": "Ampolla 1mg/ml",
+          "concentracion": 1,
+          "unidad": "mg",
+          "volumenMl": 1,
+          "principal": true
+        }
+      ],
+      "dosisAdultos": "Bradicardia: 0.5-1 mg IV cada 3-5 min (máx 3 mg total). Intoxicación organofosforados: 2-4 mg IV, repetir cada 5-10 min hasta resolución de secreciones.",
+      "dosisNinos": {
+        "contraindicado": "No hay contraindicación absoluta en emergencias",
+        "dosis": [
+          { "edadMin": 0, "edadMax": 12, "unidad": "meses", "cantidad": "0.02 mg/kg IV (mínimo 0.1 mg, máximo 0.5 mg). Repetir cada 5 min si necesario", "afeccion": "Bradicardia/Intoxicación" },
+          { "edadMin": 1, "edadMax": 5, "unidad": "años", "cantidad": "0.02 mg/kg IV (mínimo 0.1 mg, máximo 0.5 mg). Repetir cada 5 min si necesario", "afeccion": "Bradicardia/Intoxicación" },
+          { "edadMin": 6, "edadMax": 12, "unidad": "años", "cantidad": "0.02 mg/kg IV (mínimo 0.1 mg, máximo 1 mg). Repetir cada 5 min si necesario", "afeccion": "Bradicardia/Intoxicación" },
+          { "edadMin": 13, "edadMax": 18, "unidad": "años", "cantidad": "0.02 mg/kg IV (máximo 1 mg). Repetir cada 5 min (máx total 3 mg)", "afeccion": "Bradicardia/Intoxicación" }
+        ]
+      },
+      "precaucionesNinos": "Dosis MÍNIMA de 0.1 mg (dosis menores pueden causar bradicardia paradójica). Monitorizar frecuencia cardíaca. En intoxicación por organofosforados, la dosis puede ser mucho mayor que la estándar - titular según respuesta clínica.",
+      "efectosAdversosNinos": "Taquicardia, midriasis, sequedad de mucosas, retención urinaria, fiebre (por inhibición de sudoración), alucinaciones en sobredosis.",
+      "ajustesDosisEspeciales": "En intoxicación por organofosforados no hay dosis máxima - titular según resolución de secreciones y bradicardia.",
+      "compatibilidadPediatrica": "Compatible con SF y dextrosa. Puede mezclarse con adrenalina para administración endotraqueal.",
+      "tecnicasAdministracionPediatrica": "IV: Administrar en bolo rápido (bradicardia) o cada 5 min (intoxicación). IM: Solo si no hay acceso IV.",
+      "precauciones": "Dosis menores a 0.1 mg pueden causar bradicardia PARADÓJICA. No usar en bloqueo AV de tercer grado (indicar marcapasos). En intoxicación por organofosforados la dosis es titulada y puede ser mucho mayor.",
+      "contraindicaciones": ["Glaucoma de ángulo cerrado", "Obstrucción del tracto urinario", "Taquiarritmias"],
+      "interacciones": [],
+      "viasAdministracion": ["IV", "IM"],
+      "viasAlternativas": [
+        {"via": "endotraqueal", "formato": "2-3x la dosis IV diluida en 5-10 ml SF", "comentario": "Solo si no hay acceso IV ni IO"}
+      ],
+      "tecnicaAdministracion": {
+        "IV": "Administrar en bolo rápido sin diluir para bradicardia. Para intoxicación, puede administrarse cada 5 min.",
+        "IM": "Administrar en muslo o glúteo si no hay acceso IV."
+      },
+      "dosisEstructurada": {
+        "adultos": {
+          "estandar": { "dosisMinMg": 0.5, "dosisMaxMg": 1, "frecuenciaHoras": [3, 5], "maxDosisDiaria": 3, "porPeso": false }
+        },
+        "pediatricos": [
+          { "edadMinMeses": 0, "edadMaxMeses": 12, "dosisMinMgKg": 0.02, "dosisMaxMgKg": 0.02, "maxDosisPorToma": 0.5, "vias": ["IV"] },
+          { "edadMinMeses": 12, "edadMaxMeses": 60, "dosisMinMgKg": 0.02, "dosisMaxMgKg": 0.02, "maxDosisPorToma": 0.5, "vias": ["IV"] },
+          { "edadMinMeses": 72, "edadMaxMeses": 144, "dosisMinMgKg": 0.02, "dosisMaxMgKg": 0.02, "maxDosisPorToma": 1, "vias": ["IV"] },
+          { "edadMinMeses": 156, "edadMaxMeses": 216, "dosisMinMgKg": 0.02, "dosisMaxMgKg": 0.02, "maxDosisPorToma": 1, "vias": ["IV"] }
+        ]
+      }
+    }
+  ],
+
+  "interaccionesPeligrosas": [
+    {
+      "medicamentos": ["metamizol", "ketorolaco"],
+      "nivel": "precaucion",
+      "descripcion": "Aumento del riesgo de sangrado y efectos renales adversos",
+      "consejos": "Evitar combinación si es posible, usar la menor dosis por el menor tiempo si no hay alternativa"
+    },
+    {
+      "medicamentos": ["metamizol", "diclofenac"],
+      "nivel": "precaucion",
+      "descripcion": "Aumento del riesgo de sangrado y efectos renales adversos",
+      "consejos": "Evitar combinación si es posible, monitorizar función renal"
+    },
+    {
+      "medicamentos": ["dexametasona", "ketorolaco"],
+      "nivel": "precaucion",
+      "descripcion": "Mayor riesgo de hemorragia digestiva y úlcera",
+      "consejos": "Considerar protección gástrica con inhibidor de bomba de protones"
+    },
+    {
+      "medicamentos": ["dexametasona", "diclofenac"],
+      "nivel": "precaucion",
+      "descripcion": "Mayor riesgo de hemorragia digestiva y úlcera",
+      "consejos": "Considerar protección gástrica, usar menor dosis posible"
+    },
+    {
+      "medicamentos": ["ketorolaco", "diclofenac"],
+      "nivel": "peligrosa",
+      "descripcion": "Combinación de dos AINES con alto riesgo de hemorragia digestiva, insuficiencia renal y eventos cardiovasculares",
+      "consejos": "Evitar esta combinación, usar solo uno de los dos medicamentos"
+    },
+    {
+      "medicamentos": ["diazepam", "lorazepam"],
+      "nivel": "precaucion",
+      "descripcion": "Potenciación de efectos sedantes y depresores respiratorios",
+      "consejos": "Evitar la combinación, o reducir dosis de ambos si es absolutamente necesario"
+    },
+    {
+      "medicamentos": ["metoclopramida", "diazepam"],
+      "nivel": "precaucion",
+      "descripcion": "Efectos contrapuestos - sedación vs. estimulación",
+      "consejos": "Monitorizar al paciente por efectos adversos y reducción de la eficacia"
+    },
+    {
+      "medicamentos": ["metoclopramida", "lorazepam"],
+      "nivel": "precaucion",
+      "descripcion": "Efectos contrapuestos - sedación vs. estimulación",
+      "consejos": "Monitorizar al paciente por efectos adversos y reducción de la eficacia"
+    },
+    {
+      "medicamentos": ["tramadol", "diazepam"],
+      "nivel": "peligrosa",
+      "descripcion": "Riesgo de depresión respiratoria severa por combinación de opioide con benzodiazepina",
+      "consejos": "Evitar combinación. Si es absolutamente necesario, reducir dosis de ambos al 50% y monitorizar oximetría continuamente"
+    },
+    {
+      "medicamentos": ["tramadol", "lorazepam"],
+      "nivel": "peligrosa",
+      "descripcion": "Riesgo de depresión respiratoria severa por combinación de opioide con benzodiazepina",
+      "consejos": "Evitar combinación. Si es absolutamente necesario, reducir dosis de ambos al 50% y monitorizar oximetría continuamente"
+    },
+    {
+      "medicamentos": ["tramadol", "metoclopramida"],
+      "nivel": "precaucion",
+      "descripcion": "Ambos medicamentos reducen el umbral convulsivo. Mayor riesgo de convulsiones",
+      "consejos": "Preferir ondansetrón como antiemético con tramadol. Si se usa metoclopramida, monitorizar por actividad convulsiva"
+    },
+    {
+      "medicamentos": ["tramadol", "ondansetron"],
+      "nivel": "precaucion",
+      "descripcion": "Ondansetrón puede reducir la eficacia analgésica del tramadol (interacción serotoninérgica). Sin embargo, es el antiemético más seguro con tramadol",
+      "consejos": "Combinación aceptable y preferida sobre tramadol + metoclopramida. Puede necesitar ajuste de dosis de tramadol"
+    },
+    {
+      "medicamentos": ["difenhidramina", "diazepam"],
+      "nivel": "precaucion",
+      "descripcion": "Sedación aditiva significativa por combinación de antihistamínico sedante con benzodiazepina",
+      "consejos": "Reducir dosis de ambos si se combinan. Monitorizar nivel de conciencia y función respiratoria"
+    },
+    {
+      "medicamentos": ["difenhidramina", "lorazepam"],
+      "nivel": "precaucion",
+      "descripcion": "Sedación aditiva significativa por combinación de antihistamínico sedante con benzodiazepina",
+      "consejos": "Reducir dosis de ambos si se combinan. Monitorizar nivel de conciencia y función respiratoria"
+    },
+    {
+      "medicamentos": ["difenhidramina", "tramadol"],
+      "nivel": "precaucion",
+      "descripcion": "Sedación aditiva y riesgo de depresión del SNC",
+      "consejos": "Reducir dosis si se combinan. Monitorizar nivel de conciencia"
+    },
+    {
+      "medicamentos": ["hidrocortisona", "ketorolaco"],
+      "nivel": "precaucion",
+      "descripcion": "Mayor riesgo de hemorragia digestiva y úlcera por combinación de corticoide con AINE",
+      "consejos": "Considerar protección gástrica con inhibidor de bomba de protones"
+    },
+    {
+      "medicamentos": ["hidrocortisona", "diclofenac"],
+      "nivel": "precaucion",
+      "descripcion": "Mayor riesgo de hemorragia digestiva y úlcera por combinación de corticoide con AINE",
+      "consejos": "Considerar protección gástrica, usar menor dosis posible"
+    }
+  ],
+
+  "interaccionesPediatricasEspeciales": [
+    {
+      "medicamentos": ["ceftriaxona", "calcio"],
+      "descripcion": "Riesgo de precipitación fatal de sales de ceftriaxona-calcio en neonatos y lactantes pequeños",
+      "gruposEdad": [
+        {"edadMin": 0, "edadMax": 28, "unidad": "días", "nivel": "contraindicado"},
+        {"edadMin": 29, "edadMax": 90, "unidad": "días", "nivel": "peligrosa"},
+        {"edadMin": 91, "edadMax": 365, "unidad": "días", "nivel": "precaucion"},
+        {"edadMin": 1, "edadMax": 18, "unidad": "años", "nivel": "precaucion"}
+      ],
+      "consejos": "En neonatos (<28 días) contraindicación absoluta incluso por vías separadas. En lactantes pequeños (29-90 días) separar administración por al menos 48h. En mayores, administrar por vías diferentes separadas por al menos 30 minutos."
+    },
+    {
+      "medicamentos": ["diazepam", "metoclopramida"],
+      "descripcion": "Mayor riesgo de efectos extrapiramidales y sedación excesiva en niños",
+      "gruposEdad": [
+        {"edadMin": 0, "edadMax": 2, "unidad": "años", "nivel": "peligrosa"},
+        {"edadMin": 3, "edadMax": 12, "unidad": "años", "nivel": "precaucion"},
+        {"edadMin": 13, "edadMax": 18, "unidad": "años", "nivel": "precaucion"}
+      ],
+      "consejos": "Evitar esta combinación en menores de 2 años. En mayores, monitorizar estrechamente por efectos extrapiramidales y considerar reducción de dosis de ambos medicamentos."
+    },
+    {
+      "medicamentos": ["metamizol", "ketorolaco"],
+      "descripcion": "Mayor riesgo de sangrado y nefrotoxicidad en niños que en adultos por menor volumen sanguíneo y capacidad renal",
+      "gruposEdad": [
+        {"edadMin": 0, "edadMax": 2, "unidad": "años", "nivel": "peligrosa"},
+        {"edadMin": 3, "edadMax": 12, "unidad": "años", "nivel": "peligrosa"},
+        {"edadMin": 13, "edadMax": 18, "unidad": "años", "nivel": "precaucion"}
+      ],
+      "consejos": "Combinación contraindicada en menores de 13 años. En adolescentes, usar solo en casos excepcionales con monitorización estrecha de función renal y signos de sangrado."
+    },
+    {
+      "medicamentos": ["diazepam", "lorazepam"],
+      "descripcion": "Mayor sensibilidad a efectos depresores respiratorios en población pediátrica",
+      "gruposEdad": [
+        {"edadMin": 0, "edadMax": 2, "unidad": "años", "nivel": "peligrosa"},
+        {"edadMin": 3, "edadMax": 12, "unidad": "años", "nivel": "peligrosa"},
+        {"edadMin": 13, "edadMax": 18, "unidad": "años", "nivel": "precaucion"}
+      ],
+      "consejos": "Evitar combinación de benzodiazepinas en menores de 13 años. En adolescentes, considerar solo en entorno de cuidados intensivos con monitorización respiratoria continua."
+    },
+    {
+      "medicamentos": ["dexametasona", "ketorolaco"],
+      "descripcion": "Mayor riesgo de sangrado gastrointestinal en niños que en adultos",
+      "gruposEdad": [
+        {"edadMin": 0, "edadMax": 5, "unidad": "años", "nivel": "peligrosa"},
+        {"edadMin": 6, "edadMax": 12, "unidad": "años", "nivel": "precaucion"},
+        {"edadMin": 13, "edadMax": 18, "unidad": "años", "nivel": "precaucion"}
+      ],
+      "consejos": "En menores de 6 años, evitar la combinación. En mayores, usar protección gástrica y monitorizar por signos de sangrado."
+    },
+    {
+      "medicamentos": ["tramadol", "diazepam"],
+      "descripcion": "Riesgo extremo de depresión respiratoria en niños por combinación opioide + benzodiazepina",
+      "gruposEdad": [
+        {"edadMin": 0, "edadMax": 5, "unidad": "años", "nivel": "contraindicado"},
+        {"edadMin": 6, "edadMax": 12, "unidad": "años", "nivel": "peligrosa"},
+        {"edadMin": 13, "edadMax": 18, "unidad": "años", "nivel": "peligrosa"}
+      ],
+      "consejos": "CONTRAINDICADO en menores de 6 años. En mayores, usar solo en entorno con monitorización respiratoria continua y equipamiento de reanimación."
+    },
+    {
+      "medicamentos": ["tramadol", "lorazepam"],
+      "descripcion": "Riesgo extremo de depresión respiratoria en niños por combinación opioide + benzodiazepina",
+      "gruposEdad": [
+        {"edadMin": 0, "edadMax": 5, "unidad": "años", "nivel": "contraindicado"},
+        {"edadMin": 6, "edadMax": 12, "unidad": "años", "nivel": "peligrosa"},
+        {"edadMin": 13, "edadMax": 18, "unidad": "años", "nivel": "peligrosa"}
+      ],
+      "consejos": "CONTRAINDICADO en menores de 6 años. En mayores, usar solo en entorno con monitorización respiratoria continua y equipamiento de reanimación."
+    }
+  ],
+
+  "dilucionesEspeciales": [
+    {
+      "medicamento": "ceftriaxona",
+      "diluyentes": [
+        {
+          "nombre": "lidocaina",
+          "nombreCompleto": "Lidocaína al 1% sin epinefrina",
+          "paraAdministracionIM": true,
+          "proporciones": [
+            {"dosis": 250, "volumenMl": 0.9, "unidad": "mg"},
+            {"dosis": 500, "volumenMl": 1.8, "unidad": "mg"},
+            {"dosis": 1000, "volumenMl": 3.5, "unidad": "mg"},
+            {"dosis": 2000, "volumenMl": 7.0, "unidad": "mg", "instruccion": "Dividir en dos sitios de inyección"}
+          ],
+          "edadMinima": 1,
+          "unidadEdadMinima": "años",
+          "concentracionResultante": "250-350 mg/ml",
+          "comentarios": "La lidocaína utilizada debe ser siempre al 1% sin epinefrina. Seleccionada automáticamente por su efecto indoloro."
+        },
+        {
+          "nombre": "agua_esteril",
+          "nombreCompleto": "Agua estéril para inyección",
+          "paraAdministracionIM": true,
+          "proporciones": [
+            {"dosis": 250, "volumenMl": 0.9, "unidad": "mg"},
+            {"dosis": 500, "volumenMl": 1.5, "unidad": "mg"},
+            {"dosis": 1000, "volumenMl": 2.5, "unidad": "mg"},
+            {"dosis": 2000, "volumenMl": 5.0, "unidad": "mg"}
+          ],
+          "edadMinima": 0,
+          "unidadEdadMinima": "meses",
+          "concentracionResultante": "350-400 mg/ml",
+          "comentarios": "Para neonatos y lactantes menores de 1 año, se debe usar agua estéril o solución salina en lugar de lidocaína."
+        }
+      ]
+    },
+    {
+      "medicamento": "penicilina",
+      "diluyentes": [
+        {
+          "nombre": "lidocaina",
+          "nombreCompleto": "Lidocaína al 1% sin epinefrina",
+          "paraAdministracionIM": true,
+          "proporciones": [
+            {"dosis": 600000, "volumenMl": 2.0, "unidad": "UI"},
+            {"dosis": 1200000, "volumenMl": 3.5, "unidad": "UI"},
+            {"dosis": 2400000, "volumenMl": 7.0, "unidad": "UI", "instruccion": "Puede dividirse en dos sitios de inyección"}
+          ],
+          "edadMinima": 1,
+          "unidadEdadMinima": "años",
+          "concentracionResultante": "300.000-340.000 UI/ml",
+          "comentarios": "Lidocaína al 1% sin epinefrina para adultos y niños mayores de 1 año. Reduce significativamente el dolor de la inyección."
+        },
+        {
+          "nombre": "agua_esteril",
+          "nombreCompleto": "Agua estéril para inyección",
+          "paraAdministracionIM": true,
+          "proporciones": [
+            {"dosis": 600000, "volumenMl": 1.8, "unidad": "UI"},
+            {"dosis": 1200000, "volumenMl": 3.5, "unidad": "UI"},
+            {"dosis": 2400000, "volumenMl": 7.0, "unidad": "UI"}
+          ],
+          "edadMinima": 0,
+          "unidadEdadMinima": "meses",
+          "concentracionResultante": "340.000-360.000 UI/ml",
+          "comentarios": "Exclusivamente para neonatos y lactantes menores de 1 año. NUNCA usar lidocaína en este grupo etario."
+        }
+      ]
+    }
+  ],
+
+  "mezclasCompatibilidad": [
+    {
+      "medicamento1": "metamizol",
+      "medicamento2": "lidocaina",
+      "compatibilidadAdultos": "compatible",
+      "compatibilidadPediatrica": "compatible",
+      "comentarioPediatrico": "Válido en todas las edades pediátricas. Útil para reducir dolor en inyección IM."
+    },
+    {
+      "medicamento1": "ceftriaxona",
+      "medicamento2": "lidocaina",
+      "compatibilidadAdultos": "compatible",
+      "compatibilidadPediatrica": "precaucion",
+      "comentarioPediatrico": "No usar en menores de 2 años. En mayores, solo para administración IM, nunca para IV."
+    },
+    {
+      "medicamento1": "ceftriaxona",
+      "medicamento2": "calcio",
+      "compatibilidadAdultos": "precaucion",
+      "compatibilidadPediatrica": "contraindicado",
+      "limitesEdad": [
+        {"edadMin": 0, "edadMax": 28, "unidad": "días", "compatibilidad": "contraindicado"},
+        {"edadMin": 29, "edadMax": 90, "unidad": "días", "compatibilidad": "peligrosa"},
+        {"edadMin": 91, "edadMax": 18, "unidad": "años", "compatibilidad": "precaucion"}
+      ],
+      "comentarioPediatrico": "Contraindicado en neonatos, incluso por vías separadas. En lactantes, separar 48h. En niños mayores, administrar por vías separadas con intervalo mínimo de 30 minutos."
+    },
+    {
+      "medicamento1": "metamizol",
+      "medicamento2": "metoclopramida",
+      "compatibilidadAdultos": "compatible",
+      "compatibilidadPediatrica": "compatible",
+      "comentarioPediatrico": "Mezcla segura en población pediátrica, útil para dolor y vómitos postoperatorios."
+    },
+    {
+      "medicamento1": "diazepam",
+      "medicamento2": "metamizol",
+      "compatibilidadAdultos": "compatible",
+      "compatibilidadPediatrica": "precaucion",
+      "comentarioPediatrico": "Mayor riesgo de hipotensión en niños. Administrar por separado o con intervalo mínimo de 30 minutos."
+    }
+  ],
+
+  "combinacionesComunes": [
+    {
+      "condicion": "Dolor postoperatorio moderado a severo",
+      "medicamentos": ["metamizol", "ketorolaco"],
+      "descripcion": "Combinación de analgésicos para manejo del dolor postoperatorio",
+      "advertencia": "En adultos usar con precaución. En niños <13 años evitar esta combinación por mayor riesgo de efectos adversos.",
+      "alternativa": "En niños, considerar metamizol + dexametasona o metamizol solo a dosis adecuada"
+    },
+    {
+      "condicion": "Dolor con componente inflamatorio",
+      "medicamentos": ["diclofenac", "dexametasona"],
+      "descripcion": "Combinación de AINE con corticoide para dolor con inflamación severa",
+      "advertencia": "Mayor riesgo de sangrado gastrointestinal, especialmente en niños menores de 6 años",
+      "alternativa": "Usar solo uno de los medicamentos a dosis óptima. Considerar paracetamol en niños pequeños."
+    },
+    {
+      "condicion": "Crisis convulsiva aguda",
+      "medicamentos": ["diazepam", "lorazepam"],
+      "descripcion": "Secuencia de benzodiazepinas en caso de status epilepticus refractario",
+      "advertencia": "Alto riesgo de depresión respiratoria en niños. Usar solo en entorno hospitalario con equipamiento de reanimación.",
+      "alternativa": "Usar una sola benzodiazepina a dosis adecuada. Considerar levetiracetam IV como alternativa más segura en niños."
+    },
+    {
+      "condicion": "Náuseas y dolor postoperatorio",
+      "medicamentos": ["metamizol", "metoclopramida"],
+      "descripcion": "Combinación para manejo simultáneo de dolor y náuseas postoperatorias",
+      "advertencia": "Monitorizar por efectos extrapiramidales, especialmente en niños menores de 6 años.",
+      "alternativa": "En niños pequeños, considerar ondansetrón como antiemético"
+    },
+    {
+      "condicion": "Anafilaxia",
+      "medicamentos": ["adrenalina", "dexametasona", "difenhidramina"],
+      "descripcion": "Protocolo de anafilaxia: adrenalina IM PRIMERO (tratamiento esencial), luego corticoide y antihistamínico como complemento",
+      "advertencia": "NUNCA retrasar la adrenalina para dar corticoides o antihistamínicos. La adrenalina IM es el ÚNICO tratamiento de primera línea.",
+      "alternativa": "Si no hay adrenalina: hidrocortisona 200 mg IV + difenhidramina 50 mg IV. INFERIOR a adrenalina."
+    },
+    {
+      "condicion": "Convulsión febril pediátrica",
+      "medicamentos": ["diazepam", "metamizol"],
+      "descripcion": "Manejo de convulsión febril: benzodiacepina para controlar convulsión + antipirético. Diazepam rectal 0.5 mg/kg si no hay acceso IV.",
+      "advertencia": "La convulsión febril simple (<15 min, generalizada) tiene pronóstico excelente. La mayoría NO requiere antibióticos. Monitorizar función respiratoria tras diazepam.",
+      "alternativa": "Midazolam intranasal 0.2 mg/kg si disponible. Metamizol puede reemplazarse por paracetamol rectal."
+    },
+    {
+      "condicion": "Cólico renal agudo",
+      "medicamentos": ["ketorolaco", "metamizol"],
+      "descripcion": "AINEs son PRIMERA LÍNEA para cólico renal (Cochrane: superiores a opioides). El metamizol aporta efecto espasmolítico adicional especialmente útil en cólico ureteral.",
+      "advertencia": "Riesgo renal aditivo con ketorolaco + metamizol. Asegurar hidratación ANTES de administrar. Si hay fiebre + dolor lumbar = litiasis infectada (EMERGENCIA UROLÓGICA).",
+      "alternativa": "Diclofenac 75 mg IM como alternativa a ketorolaco. Tramadol si refractario a AINEs."
+    },
+    {
+      "condicion": "Asma severo / Broncoespasmo",
+      "medicamentos": ["dexametasona", "adrenalina"],
+      "descripcion": "Dexametasona 0.6 mg/kg (máx 16 mg) como antiinflamatorio sistémico + adrenalina SC solo si amenaza vital o no hay acceso a nebulización.",
+      "advertencia": "Dosis de dexametasona para asma es 0.6 mg/kg (NO 0.15 mg/kg). La adrenalina SC es rescate para amenaza vital cuando no hay salbutamol nebulizado.",
+      "alternativa": "Hidrocortisona 4 mg/kg IV como alternativa a dexametasona. Salbutamol nebulizado es la primera línea (no disponible en esta app)."
+    },
+    {
+      "condicion": "Infección severa de partes blandas",
+      "medicamentos": ["ceftriaxona", "metamizol"],
+      "descripcion": "Antibiótico empírico de amplio espectro IM (una vez al día) + analgésico. Ideal para manejo ambulatorio en ámbito rural.",
+      "advertencia": "Si hay crepitación, progresión rápida o necrosis cutánea = fascitis necrotizante (EMERGENCIA QUIRÚRGICA, trasladar inmediatamente).",
+      "alternativa": "Ampicilina-sulbactam si disponible. Agregar metronidazol si infección mixta/anaeróbica."
+    },
+    {
+      "condicion": "Gastroenteritis pediátrica con vómitos",
+      "medicamentos": ["ondansetron", "metamizol"],
+      "descripcion": "Ondansetrón es MUY SUPERIOR a metoclopramida en pediatría (AAP). Sin riesgo de efectos extrapiramidales. Dosis única suele ser suficiente.",
+      "advertencia": "La rehidratación oral es el PILAR del tratamiento. El ondansetrón permite tolerar las sales de rehidratación oral. Metamizol IV está CONTRAINDICADO en niño deshidratado (hidratar PRIMERO).",
+      "alternativa": "Metoclopramida solo si no hay ondansetrón disponible (precaución: 4-25% de efectos extrapiramidales en niños)."
+    },
+    {
+      "condicion": "Reacción alérgica severa con dolor",
+      "medicamentos": ["adrenalina", "dexametasona", "difenhidramina", "metamizol"],
+      "descripcion": "Protocolo completo para anafilaxia con componente doloroso: adrenalina IM primero, luego corticoide, antihistamínico y analgésico.",
+      "advertencia": "Administrar adrenalina ANTES que cualquier otro medicamento. Observar mínimo 4-6 horas post-tratamiento por riesgo de respuesta bifásica.",
+      "alternativa": "Si no hay adrenalina: hidrocortisona IV + difenhidramina IV (tratamiento inferior pero puede salvar la vida)."
+    }
+  ],
+
+  "pautasPediatricasEspeciales": [
+    {
+      "titulo": "Consideraciones para neonatos (0-28 días)",
+      "recomendaciones": [
+        "Verificar SIEMPRE el cálculo de dosis basado en peso exacto del paciente",
+        "Evitar mezclas de medicamentos por mayor riesgo de incompatibilidades",
+        "Nunca administrar ceftriaxona con soluciones de calcio (ni siquiera por vías separadas)",
+        "Usar velocidades de infusión más lentas que en otras edades pediátricas",
+        "Considerar mayor riesgo de acumulación por inmadurez renal y hepática"
+      ]
+    },
+    {
+      "titulo": "Consideraciones para lactantes (1-12 meses)",
+      "recomendaciones": [
+        "Mayor riesgo de metahemoglobinemia con ciertos medicamentos",
+        "Administrar IV muy lentamente para evitar cambios bruscos en hemodinamia",
+        "Preferir vastolateral del muslo para inyecciones IM",
+        "Separar administración de ceftriaxona y calcio por al menos 48 horas",
+        "Vigilar estado de hidratación con uso de AINES"
+      ]
+    },
+    {
+      "titulo": "Consideraciones para preescolares (1-5 años)",
+      "recomendaciones": [
+        "Mayor riesgo de reacciones paradójicas con benzodiazepinas",
+        "Monitorizar estrechamente efectos extrapiramidales con metoclopramida",
+        "Evitar combinaciones de AINES o AINES+corticoides por mayor riesgo de sangrado",
+        "Utilizar protección gástrica con uso prolongado de corticoides o AINES",
+        "Considerar alternativas más seguras a ketorolaco y diclofenac"
+      ]
+    }
+  ]
+}
