@@ -3,10 +3,11 @@ import Switch from './switch-component';
 import { JeringaMejorada } from './jeringa-mejorada';
 import { FrascoMedicamento } from './FrascoMedicamento';
 import DiluyenteSelector from './DiluyenteSelector';
-import LidocainaSelector from './LidocainaSelector';
+import LidocainaSyringePanel from './LidocainaSelector';
 import medicamentosData from './medicamentosData.json';
 import { calcularDosisEstructurada } from './utils/calcularDosisEstructurada';
 import { getSnapInfo } from './utils/snapGrid';
+import { evaluarCompatibilidadLidocaina, calcularVolumenLidocaina, obtenerNotasClinicas } from './utils/lidocainaService';
 import PresetPanel from './PresetPanel';
 import CondicionesPaciente from './CondicionesPaciente';
 import { buscarTodasInteracciones, getEstadoPorCondiciones } from './utils/ddinterService';
@@ -53,8 +54,9 @@ const App = () => {
   // Estado para diluyentes seleccionados
   const [diluyentesSeleccionados, setDiluyentesSeleccionados] = useState({});
 
-  // Estado para volúmenes de lidocaína
-  const [lidocainaVolumenes, setLidocainaVolumenes] = useState({});
+  // Estado para lidocaína a nivel de jeringa
+  const [lidocainaActiva, setLidocainaActiva] = useState(false);
+  const [lidocainaOpcion, setLidocainaOpcion] = useState('recomendado');
 
   // Actualizar cálculos cuando cambien los datos relevantes
   useEffect(() => {
@@ -89,7 +91,37 @@ const App = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [medicamentosSeleccionados, peso, edad, unidadEdad, viaAdministracion, presentacionSeleccionada, condicionesPaciente]);
-  
+
+  // Evaluación automática de lidocaína a nivel de jeringa
+  const lidocainaEvaluacion = useMemo(() => {
+    if (viaAdministracion !== "IM" || medicamentosSeleccionados.length === 0) {
+      return { compatibilidad: { disponible: false, razones: [], resumen: '' }, calculo: null, notas: [] };
+    }
+    const compatibilidad = evaluarCompatibilidadLidocaina(
+      medicamentosSeleccionados, peso, edadEnMeses, condicionesPaciente
+    );
+    const calculo = compatibilidad.disponible
+      ? calcularVolumenLidocaina(medicamentosSeleccionados, dosisCalculadas, peso, edadEnMeses)
+      : null;
+    const notas = obtenerNotasClinicas(medicamentosSeleccionados);
+    return { compatibilidad, calculo, notas };
+  }, [medicamentosSeleccionados, dosisCalculadas, peso, edadEnMeses, condicionesPaciente, viaAdministracion]);
+
+  // Volumen activo de lidocaína derivado de la evaluación
+  const lidocainaVolumenActual = useMemo(() => {
+    if (!lidocainaActiva || !lidocainaEvaluacion.calculo) return 0;
+    return lidocainaOpcion === 'reducido' && lidocainaEvaluacion.calculo.volumenReducido
+      ? lidocainaEvaluacion.calculo.volumenReducido
+      : lidocainaEvaluacion.calculo.volumenRecomendado;
+  }, [lidocainaActiva, lidocainaOpcion, lidocainaEvaluacion]);
+
+  // Auto-desactivar lidocaína si cambia la compatibilidad
+  useEffect(() => {
+    if (!lidocainaEvaluacion.compatibilidad.disponible) {
+      setLidocainaActiva(false);
+    }
+  }, [lidocainaEvaluacion.compatibilidad.disponible]);
+
   // Obtener presentación principal del medicamento
   const getPresentacionPrincipal = (medicamentoId) => {
     const med = medicamentos.find(m => m.id === medicamentoId);
@@ -496,14 +528,6 @@ const App = () => {
         });
       }
 
-      // Eliminar volumen de lidocaína asociado
-      if (lidocainaVolumenes[id]) {
-        setLidocainaVolumenes(prev => {
-          const nuevos = { ...prev };
-          delete nuevos[id];
-          return nuevos;
-        });
-      }
       return;
     }
 
@@ -838,13 +862,11 @@ const App = () => {
         } else {
           volumenTotal += parseFloat(dosis.volumenMl);
         }
-
-        // Añadir volumen de lidocaína si está seleccionada
-        if (lidocainaVolumenes[medId] && lidocainaVolumenes[medId] > 0) {
-          volumenTotal += parseFloat(lidocainaVolumenes[medId]);
-        }
       }
     });
+
+    // Sumar lidocaína una sola vez (nivel de jeringa)
+    volumenTotal += lidocainaVolumenActual;
 
     return volumenTotal;
   };
@@ -1166,21 +1188,14 @@ const App = () => {
                           color: getColorMedicamento()
                         };
                       }).filter(med => parseFloat(med.volumenMl) > 0).concat(
-                        // Agregar volúmenes de lidocaína
-                        Object.entries(lidocainaVolumenes).map(([medId, vol]) => {
-                          if (vol > 0) {
-                            // eslint-disable-next-line no-unused-vars
-                            const med = medicamentos.find(m => m.id === medId);
-                            return {
-                              id: 'lidocaina_' + medId,
-                              nombre: 'Lidocaína 1%',
-                              tipoMedicamento: 'Anestésico local tipo amida',
-                              volumenMl: vol.toFixed(1),
-                              color: '#AC92EC'
-                            };
-                          }
-                          return null;
-                        }).filter(item => item !== null)
+                        // Agregar lidocaína como capa única si está activa
+                        lidocainaVolumenActual > 0 ? [{
+                          id: 'lidocaina_syringe',
+                          nombre: 'Lidocaína 1%',
+                          tipoMedicamento: 'Anestésico local',
+                          volumenMl: lidocainaVolumenActual.toFixed(1),
+                          color: '#AC92EC'
+                        }] : []
                       )}
                       capacidadMaxima={getCapacidadJeringaRecomendada(calcularVolumenTotal())}
                       darkMode={darkMode}
@@ -1190,8 +1205,40 @@ const App = () => {
                         Volumen total: {calcularVolumenTotal().toFixed(1)} ml
                       </span>
                     </div>
+
+                    {/* Frasco de lidocaína junto a la jeringa */}
+                    {lidocainaVolumenActual > 0 && (
+                      <div className="flex justify-center mt-2">
+                        <FrascoMedicamento
+                          volumenMl={lidocainaVolumenActual}
+                          medicamento={{
+                            nombre: "Lidocaína 1%",
+                            tipoMedicamento: "Anestésico local"
+                          }}
+                          darkMode={darkMode}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
+
+                {/* Panel de lidocaína a nivel de jeringa */}
+                {viaAdministracion === "IM" && (
+                  <div className="mt-3">
+                    <LidocainaSyringePanel
+                      compatibilidad={lidocainaEvaluacion.compatibilidad}
+                      calculo={lidocainaEvaluacion.calculo}
+                      notasClinicas={lidocainaEvaluacion.notas}
+                      lidocainaActiva={lidocainaActiva}
+                      volumenSeleccionado={lidocainaVolumenActual}
+                      onToggle={setLidocainaActiva}
+                      onOpcionChange={setLidocainaOpcion}
+                      opcionActual={lidocainaOpcion}
+                      darkMode={darkMode}
+                      pesoKg={peso}
+                    />
+                  </div>
+                )}
               </div>
             )}
 
@@ -1298,23 +1345,6 @@ const App = () => {
                                   return null;
                                 })()}
 
-                                {/* Selector de lidocaína si es IM */}
-                                {viaAdministracion === "IM" && (
-                                  <LidocainaSelector
-                                    valorActual={lidocainaVolumenes[medId] || 0}
-                                    medicamento={med}
-                                    peso={peso}
-                                    edadEnMeses={edadEnMeses}
-                                    onChange={(volumen) => {
-                                      setLidocainaVolumenes(prev => ({
-                                        ...prev,
-                                        [medId]: volumen
-                                      }));
-                                    }}
-                                    darkMode={darkMode}
-                                  />
-                                )}
-
                                 {/* Fase 5: Panel de información FDA */}
                                 <FdaInfoPanel medicamentoId={medId} darkMode={darkMode} />
                               </div>
@@ -1343,27 +1373,13 @@ const App = () => {
                                   />
                                 </div>
                               ) : (
-                                <div className="flex gap-2">
-                                  <FrascoMedicamento
+                                <FrascoMedicamento
                                     volumenMl={dosis.volumenMl}
                                     concentracion={dosis.dosisCalculada}
                                     unidadMedida={dosis.unidad}
                                     medicamento={med}
                                     darkMode={darkMode}
                                   />
-
-                                  {/* Mostrar lidocaína si está seleccionada */}
-                                  {lidocainaVolumenes[medId] && lidocainaVolumenes[medId] > 0 && (
-                                    <FrascoMedicamento
-                                      volumenMl={lidocainaVolumenes[medId]}
-                                      medicamento={{
-                                        nombre: "Lidocaína 1%",
-                                        tipoMedicamento: "Anestésico local tipo amida"
-                                      }}
-                                      darkMode={darkMode}
-                                    />
-                                  )}
-                                </div>
                               )}
                             </div>
                           )}

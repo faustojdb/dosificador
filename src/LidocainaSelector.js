@@ -1,274 +1,192 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-// Guías clínicas basadas en evidencia para lidocaína 1% en inyecciones IM
-const GUIAS_LIDOCAINA = {
-  ceftriaxona: {
-    recomendado: true,
-    evidencia: 'alta',
-    nota: 'Diluyente aprobado por FDA. Lidocaína 1% sin epinefrina.',
-    volumenesSegunDosis: [
-      { dosis: 250, volumenMl: 0.9 },
-      { dosis: 500, volumenMl: 1.0 },
-      { dosis: 1000, volumenMl: 2.1 },
-      { dosis: 2000, volumenMl: 3.5 }
-    ],
-    restriccionPeso: 5, // kg mínimo
-    restriccionNota: 'Solo en pacientes >5 kg. Menores usar agua estéril.',
-    advertencia: 'La solución con lidocaína NO debe administrarse IV.'
-  },
-  penicilina: {
-    recomendado: true,
-    evidencia: 'alta',
-    nota: 'Revisión sistemática Lancet confirma reducción significativa del dolor sin alterar farmacocinética.',
-    volumenesSegunDosis: [
-      { dosis: 600000, volumenMl: 1.5 },
-      { dosis: 1200000, volumenMl: 2.5 },
-      { dosis: 2400000, volumenMl: 3.0 }
-    ],
-    edadMinMeses: 12,
-    restriccionNota: 'Menores de 1 año: reconstituir con agua estéril para inyectables.'
-  },
-  diclofenac: {
-    recomendado: true,
-    evidencia: 'moderada',
-    nota: 'Existen presentaciones comerciales premezcladas (ej: Rispain Plus: 75mg diclofenac + 20mg lidocaína).',
-    volumenesSegunDosis: [
-      { dosis: 75, volumenMl: 2.0 }
-    ],
-    restriccionNota: 'Preferir presentaciones comerciales premezcladas cuando estén disponibles.'
-  },
-  metamizol: {
-    recomendado: true,
-    evidencia: 'moderada',
-    nota: 'Existen presentaciones comerciales premezcladas. No mezclar con otros medicamentos en la misma jeringa.',
-    volumenesSegunDosis: [
-      { dosis: 1000, volumenMl: 1.0 },
-      { dosis: 500, volumenMl: 0.5 }
-    ]
-  },
-  ketorolaco: {
-    recomendado: true,
-    evidencia: 'moderada',
-    nota: 'Estudio clínico demostró buena tolerancia. Lidocaína no está entre las incompatibilidades conocidas.',
-    volumenesSegunDosis: [
-      { dosis: 30, volumenMl: 1.0 },
-      { dosis: 60, volumenMl: 1.5 }
-    ],
-    advertencia: 'NO mezclar con morfina, meperidina, prometazina o hidroxizina.'
-  },
-  hidrocortisona: {
-    recomendado: false,
-    evidencia: 'alta',
-    nota: 'Contraindicado por fabricante (Solu-Cortef). No debe diluirse ni mezclarse con otras soluciones.',
-    motivoNoRecomendado: 'Incompatibilidad física según ficha técnica del fabricante (Pfizer).'
-  },
-  tramadol: {
-    recomendado: false,
-    evidencia: 'moderada',
-    nota: 'Ambos reducen el umbral convulsivo. Riesgo aditivo de convulsiones.',
-    motivoNoRecomendado: 'Interacción farmacodinámica: riesgo aumentado de convulsiones.'
-  },
-  difenhidramina: {
-    recomendado: false,
-    evidencia: 'moderada',
-    nota: 'La difenhidramina tiene propiedades anestésicas locales propias (bloqueo de canales de sodio similar a lidocaína).',
-    motivoNoRecomendado: 'Redundante: el medicamento ya tiene efecto anestésico local.'
-  },
-  // Medicamentos sin guía específica de lidocaína IM
-  adrenalina: { recomendado: false, motivoNoRecomendado: 'No aplica para adrenalina IM.' },
-  ondansetron: { recomendado: false, motivoNoRecomendado: 'No hay evidencia de beneficio.' },
-  atropina: { recomendado: false, motivoNoRecomendado: 'No aplica para atropina.' },
-  dexametasona: { recomendado: false, motivoNoRecomendado: 'No hay evidencia de beneficio para dexametasona IM.' },
-  metoclopramida: { recomendado: false, motivoNoRecomendado: 'No hay evidencia de beneficio.' },
-  diazepam: { recomendado: false, motivoNoRecomendado: 'Incompatible con otros medicamentos en la misma jeringa.' },
-  lorazepam: { recomendado: false, motivoNoRecomendado: 'Lorazepam se administra preferentemente IV, no IM.' }
-};
-
-const LidocainaSelector = ({
-  valorActual,
-  medicamento,
-  peso,
-  edadEnMeses,
-  onChange,
-  darkMode
+/**
+ * Panel único de lidocaína a nivel de jeringa.
+ * Reemplaza el selector per-medicamento anterior.
+ * NO tiene input numérico libre — solo checkbox + opción recomendado/reducido.
+ */
+const LidocainaSyringePanel = ({
+  compatibilidad,
+  calculo,
+  notasClinicas,
+  lidocainaActiva,
+  volumenSeleccionado,
+  onToggle,
+  onOpcionChange,
+  opcionActual,
+  darkMode,
+  pesoKg
 }) => {
-  const [volumenPersonalizado, setVolumenPersonalizado] = useState(
-    valorActual?.toString() || '1.0'
-  );
-  const [error, setError] = useState('');
-  const [mostrarSelector, setMostrarSelector] = useState(valorActual > 0);
+  const [mostrarNotas, setMostrarNotas] = useState(false);
 
-  useEffect(() => {
-    setVolumenPersonalizado(valorActual?.toString() || '1.0');
-    setMostrarSelector(valorActual > 0);
-  }, [valorActual]);
+  // Si no hay compatibilidad data, no renderizar
+  if (!compatibilidad) return null;
 
-  const guia = GUIAS_LIDOCAINA[medicamento?.id] || null;
-
-  // Si no es recomendado, mostrar motivo y no permitir selección
-  if (guia && !guia.recomendado) {
+  // NO compatible: caja roja con razones
+  if (!compatibilidad.disponible) {
     return (
-      <div className={`mt-2 p-2 rounded text-xs ${darkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-50 text-gray-500'}`}>
-        <span className="font-medium">Lidocaína 1%: </span>
-        <span className={darkMode ? 'text-red-400' : 'text-red-600'}>No recomendado. </span>
-        {guia.motivoNoRecomendado}
-        {guia.nota && <span className="block mt-1 italic">{guia.nota}</span>}
+      <div className={`rounded-lg p-3 ${darkMode ? 'bg-red-900 bg-opacity-30 border border-red-800' : 'bg-red-50 border border-red-200'}`}>
+        <div className="flex items-center gap-2 mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${darkMode ? 'text-red-400' : 'text-red-500'}`} viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+          </svg>
+          <span className={`font-medium text-sm ${darkMode ? 'text-red-300' : 'text-red-700'}`}>
+            Lidocaína no disponible para esta combinación
+          </span>
+        </div>
+        <ul className={`text-xs space-y-1 ml-7 ${darkMode ? 'text-red-400' : 'text-red-600'}`}>
+          {compatibilidad.razones.map((razon, idx) => (
+            <li key={idx}>{razon}</li>
+          ))}
+        </ul>
       </div>
     );
   }
 
-  // Si no hay guía, no mostrar nada
-  if (!guia) return null;
+  // Compatible pero sin cálculo (edge case)
+  if (!calculo) return null;
 
-  // Obtener volumen recomendado según la dosis/presentación
-  const getVolumenRecomendado = () => {
-    if (!guia.volumenesSegunDosis || !medicamento) return null;
-    const match = guia.volumenesSegunDosis.find(v => {
-      // Para penicilina, la concentración es en UI (números grandes)
-      if (medicamento.presentacionesComerciales) {
-        const pres = medicamento.presentacionesComerciales.find(p => p.principal) || medicamento.presentacionesComerciales[0];
-        return pres && v.dosis === pres.concentracion;
-      }
-      return false;
-    });
-    return match || guia.volumenesSegunDosis[0];
-  };
-
-  // Verificar restricciones de edad/peso
-  const getRestriccion = () => {
-    if (guia.restriccionPeso && peso && peso < guia.restriccionPeso) {
-      return guia.restriccionNota || `Paciente < ${guia.restriccionPeso} kg: no usar lidocaína.`;
-    }
-    if (guia.edadMinMeses && edadEnMeses !== undefined && edadEnMeses < guia.edadMinMeses) {
-      return guia.restriccionNota || `Menor de ${guia.edadMinMeses} meses: no usar lidocaína.`;
-    }
-    return null;
-  };
-
-  const restriccion = getRestriccion();
-  const volRecomendado = getVolumenRecomendado();
-
-  // Colores según nivel de evidencia
-  const evidenciaColor = guia.evidencia === 'alta'
-    ? darkMode ? 'text-green-400' : 'text-green-600'
-    : darkMode ? 'text-yellow-400' : 'text-yellow-600';
-
-  const handleVolumenChange = (e) => {
-    const valor = e.target.value;
-    setVolumenPersonalizado(valor);
-
-    const volumen = parseFloat(valor);
-    if (isNaN(volumen) || volumen <= 0) {
-      setError('El volumen debe ser un número positivo');
-      return;
-    }
-    if (volumen > 5) {
-      setError('Volumen máximo recomendado: 5 ml');
-      return;
-    }
-    setError('');
-    onChange(volumen);
-  };
+  // Notas de evidencia para medicamentos recomendados
+  const notasRecomendadas = notasClinicas.filter(n => n.recomendado && n.nota);
 
   return (
-    <div className="mt-2">
-      <div className="flex items-center mb-1 justify-between">
-        <div className="flex items-center">
-          <input
-            type="checkbox"
-            checked={mostrarSelector}
-            onChange={(e) => {
-              setMostrarSelector(e.target.checked);
-              if (!e.target.checked) {
-                onChange(0);
-              } else {
-                const vol = volRecomendado ? volRecomendado.volumenMl : 1.0;
-                setVolumenPersonalizado(vol.toString());
-                onChange(vol);
-              }
-            }}
-            className="mr-2 h-4 w-4"
-            disabled={!!restriccion}
-          />
-          <label className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-            Lidocaína 1%
-          </label>
-          <span className={`ml-2 text-xs ${evidenciaColor}`}>
-            (Evidencia {guia.evidencia})
-          </span>
-        </div>
+    <div className={`rounded-lg p-3 ${darkMode ? 'bg-gray-700 border border-gray-600' : 'bg-purple-50 border border-purple-200'}`}>
+      {/* Toggle principal */}
+      <label className="flex items-center gap-2 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={lidocainaActiva}
+          onChange={(e) => onToggle(e.target.checked)}
+          className="h-4 w-4 rounded"
+        />
+        <span className={`font-medium text-sm ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+          Agregar Lidocaína 1%
+        </span>
+        <span className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+          (anestésico local)
+        </span>
+      </label>
 
-        {mostrarSelector && (
-          <div className={`text-xs py-0.5 px-2 rounded ${darkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'}`}>
-            +{volumenPersonalizado} ml
-          </div>
-        )}
-      </div>
-
-      {restriccion && (
-        <div className={`text-xs p-1.5 rounded mb-1 ${darkMode ? 'bg-red-900 bg-opacity-30 text-red-300' : 'bg-red-50 text-red-600'}`}>
-          {restriccion}
-        </div>
-      )}
-
-      {mostrarSelector && !restriccion && (
-        <>
-          {/* Volúmenes según guía clínica */}
-          <div className="flex gap-2 mb-1">
-            {guia.volumenesSegunDosis?.map((v, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setVolumenPersonalizado(v.volumenMl.toString());
-                  setError('');
-                  onChange(v.volumenMl);
-                }}
-                className={`px-2 py-1 text-xs rounded ${
-                  parseFloat(volumenPersonalizado) === v.volumenMl
-                    ? darkMode ? 'bg-blue-600 text-white' : 'bg-blue-500 text-white'
-                    : darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-700'
-                }`}
-              >
-                {v.volumenMl} ml
-                {v.dosis ? ` (${v.dosis >= 10000 ? (v.dosis / 1000).toLocaleString() + 'K' : v.dosis}${medicamento?.presentacionesComerciales?.[0]?.unidad || 'mg'})` : ''}
-              </button>
-            ))}
+      {/* Contenido cuando está activada */}
+      {lidocainaActiva && (
+        <div className="mt-3 space-y-2">
+          {/* Volumen recomendado */}
+          <div className={`text-sm font-medium ${darkMode ? 'text-purple-300' : 'text-purple-700'}`}>
+            Volumen recomendado: {calculo.volumenRecomendado} ml
           </div>
 
-          {/* Input personalizado */}
-          <div className="flex items-center gap-2">
-            <input
-              type="number"
-              min="0.5"
-              max="5"
-              step="0.1"
-              value={volumenPersonalizado}
-              onChange={handleVolumenChange}
-              className={`block w-20 px-2 py-1 text-sm rounded-md ${
-                darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
-              } border focus:outline-none focus:ring-1 focus:ring-blue-500`}
-            />
-            <span className="text-xs">ml</span>
-          </div>
-
-          {error && (
-            <p className={`text-xs mt-1 ${darkMode ? 'text-red-400' : 'text-red-500'}`}>{error}</p>
-          )}
-
-          {/* Guía clínica */}
-          <div className={`text-xs mt-1.5 p-1.5 rounded ${darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-50 text-gray-600'}`}>
-            <strong>Guía: </strong>{guia.nota}
-          </div>
-
-          {guia.advertencia && (
-            <div className={`text-xs mt-1 p-1.5 rounded font-medium ${darkMode ? 'bg-yellow-900 bg-opacity-30 text-yellow-300' : 'bg-yellow-50 text-yellow-700'}`}>
-              {guia.advertencia}
+          {/* Desglose */}
+          {calculo.desglose.length > 0 && (
+            <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              {calculo.desglose
+                .filter(d => d.volumenMl > 0)
+                .map((d, idx) => (
+                  <span key={d.medId}>
+                    {idx > 0 && ' + '}
+                    {d.medId}: {d.volumenMl} ml
+                  </span>
+                ))}
+              {calculo.desglose.filter(d => d.volumenMl > 0).length > 1 && (
+                <span> = {calculo.desglose.reduce((sum, d) => sum + d.volumenMl, 0).toFixed(1)} ml</span>
+              )}
             </div>
           )}
-        </>
+
+          {/* Advertencia de capeo */}
+          {calculo.fueCapado && (
+            <div className={`text-xs p-2 rounded ${darkMode ? 'bg-yellow-900 bg-opacity-40 text-yellow-300' : 'bg-yellow-50 text-yellow-700'}`}>
+              Ajustado por límite de seguridad: 4.5 mg/kg = {calculo.volumenMaxSeguro} ml para {pesoKg} kg
+            </div>
+          )}
+
+          {/* Opción reducida si disponible */}
+          {calculo.volumenReducido && (
+            <div className="space-y-1 mt-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="lidocaina-opcion"
+                  checked={opcionActual === 'recomendado'}
+                  onChange={() => onOpcionChange('recomendado')}
+                  className="h-3.5 w-3.5"
+                />
+                <span className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Recomendado: {calculo.volumenRecomendado} ml
+                </span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="lidocaina-opcion"
+                  checked={opcionActual === 'reducido'}
+                  onChange={() => onOpcionChange('reducido')}
+                  className="h-3.5 w-3.5"
+                />
+                <span className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Reducido: {calculo.volumenReducido} ml
+                </span>
+              </label>
+            </div>
+          )}
+
+          {/* Info de seguridad */}
+          <div className={`text-xs ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+            Dosis máxima: 4.5 mg/kg = {calculo.volumenMaxSeguro} ml
+          </div>
+
+          {/* Advertencias del cálculo */}
+          {calculo.advertencias.length > 0 && (
+            <div className="space-y-1">
+              {calculo.advertencias.map((adv, idx) => (
+                <div key={idx} className={`text-xs p-1.5 rounded ${darkMode ? 'bg-yellow-900 bg-opacity-30 text-yellow-300' : 'bg-yellow-50 text-yellow-700'}`}>
+                  {adv}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Notas clínicas expandibles */}
+          {notasRecomendadas.length > 0 && (
+            <div>
+              <button
+                onClick={() => setMostrarNotas(!mostrarNotas)}
+                className={`text-xs flex items-center gap-1 ${darkMode ? 'text-purple-400 hover:text-purple-300' : 'text-purple-600 hover:text-purple-700'}`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className={`h-3 w-3 transition-transform ${mostrarNotas ? 'rotate-90' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+                Notas clínicas ({notasRecomendadas.length})
+              </button>
+              {mostrarNotas && (
+                <div className={`mt-1 space-y-1 ml-4`}>
+                  {notasRecomendadas.map(n => (
+                    <div key={n.medId} className={`text-xs p-1.5 rounded ${darkMode ? 'bg-gray-600 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+                      <span className="font-medium">{n.medId}: </span>
+                      {n.nota}
+                      {n.advertencia && (
+                        <span className={`block mt-0.5 font-medium ${darkMode ? 'text-yellow-300' : 'text-yellow-700'}`}>
+                          {n.advertencia}
+                        </span>
+                      )}
+                      {n.evidencia && (
+                        <span className={`ml-1 ${
+                          n.evidencia === 'alta'
+                            ? darkMode ? 'text-green-400' : 'text-green-600'
+                            : darkMode ? 'text-yellow-400' : 'text-yellow-600'
+                        }`}>
+                          (Evidencia {n.evidencia})
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
 };
 
-export default LidocainaSelector;
+export default LidocainaSyringePanel;
