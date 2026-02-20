@@ -12,6 +12,11 @@ import PresetPanel from './PresetPanel';
 import CondicionesPaciente from './CondicionesPaciente';
 import { buscarTodasInteracciones, getEstadoPorCondiciones } from './utils/ddinterService';
 import FdaInfoPanel from './FdaInfoPanel';
+import SintomasSelector from './SintomasSelector';
+import CuadroClinicoPanel from './CuadroClinicoPanel';
+import AlertaEpidemiologica from './AlertaEpidemiologica';
+import { evaluarCuadrosClinicos } from './utils/sintomasService';
+import { evaluarAlertasEpidemiologicas, verificarProhibicionEpidemiologica } from './utils/alertaEpidemiologicaService';
 
 // Componente principal
 const App = () => {
@@ -39,6 +44,9 @@ const App = () => {
   // Estado para condiciones del paciente (Fase 4: DDInter)
   const [condicionesPaciente, setCondicionesPaciente] = useState([]);
   const [alertasDrogaEnfermedad, setAlertasDrogaEnfermedad] = useState([]);
+
+  // Estado para síntomas del paciente (Selector de síntomas)
+  const [sintomasPaciente, setSintomasPaciente] = useState([]);
   
   // Extraer datos del JSON
   const {
@@ -79,18 +87,19 @@ const App = () => {
     // Fase 4: Detectar interacciones droga-enfermedad
     setAlertasDrogaEnfermedad(buscarTodasInteracciones(medicamentosSeleccionados, condicionesPaciente));
 
-    // Auto-deseleccionar medicamentos bloqueados por condiciones del paciente
-    if (condicionesPaciente.length > 0) {
-      const medsARemover = medicamentosSeleccionados.filter(medId =>
-        getEstadoPorCondiciones(medId, condicionesPaciente) === 'bloqueado'
-      );
-      if (medsARemover.length > 0) {
-        setMedicamentosSeleccionados(prev => prev.filter(id => !medsARemover.includes(id)));
-      }
+    // Auto-deseleccionar medicamentos bloqueados por condiciones del paciente o alertas epidemiológicas
+    const alertasEpiActuales = evaluarAlertasEpidemiologicas(sintomasPaciente);
+    const medsARemover = medicamentosSeleccionados.filter(medId => {
+      if (getEstadoPorCondiciones(medId, condicionesPaciente) === 'bloqueado') return true;
+      if (verificarProhibicionEpidemiologica(medId, alertasEpiActuales).prohibido) return true;
+      return false;
+    });
+    if (medsARemover.length > 0) {
+      setMedicamentosSeleccionados(prev => prev.filter(id => !medsARemover.includes(id)));
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [medicamentosSeleccionados, peso, edad, unidadEdad, viaAdministracion, presentacionSeleccionada, condicionesPaciente]);
+  }, [medicamentosSeleccionados, peso, edad, unidadEdad, viaAdministracion, presentacionSeleccionada, condicionesPaciente, sintomasPaciente]);
 
   // Evaluación automática de lidocaína a nivel de jeringa
   const lidocainaEvaluacion = useMemo(() => {
@@ -121,6 +130,12 @@ const App = () => {
       setLidocainaActiva(false);
     }
   }, [lidocainaEvaluacion.compatibilidad.disponible]);
+
+  // Evaluar cuadros clínicos coincidentes según síntomas
+  const cuadrosCoincidentes = useMemo(() => evaluarCuadrosClinicos(sintomasPaciente), [sintomasPaciente]);
+
+  // Evaluar alertas epidemiológicas según síntomas
+  const alertasEpidemiologicas = useMemo(() => evaluarAlertasEpidemiologicas(sintomasPaciente), [sintomasPaciente]);
 
   // Obtener presentación principal del medicamento
   const getPresentacionPrincipal = (medicamentoId) => {
@@ -539,6 +554,15 @@ const App = () => {
       return;
     }
 
+    // Verificar bloqueo por alerta epidemiológica
+    const prohibicionEpi = verificarProhibicionEpidemiologica(id, alertasEpidemiologicas);
+    if (prohibicionEpi.prohibido) {
+      const medData = medicamentos.find(m => m.id === id);
+      const razones = prohibicionEpi.alertas.map(a => `${a.nombre}: ${a.razon}`).join('; ');
+      alert(`No se puede seleccionar ${medData?.nombre || id}: ${razones}`);
+      return;
+    }
+
     // Verificar si hay interacciones que bloqueen la selección
     for (const medExistente of medExistentes) {
       const interaccion = interaccionesPeligrosas.find(item =>
@@ -647,6 +671,12 @@ const App = () => {
     const estadoCondicion = getEstadoPorCondiciones(id, condicionesPaciente);
     if (estadoCondicion === 'bloqueado') {
       return "bloqueado_condicion";
+    }
+
+    // Verificar bloqueo por alerta epidemiológica
+    const prohibicionEpi = verificarProhibicionEpidemiologica(id, alertasEpidemiologicas);
+    if (prohibicionEpi.prohibido) {
+      return "bloqueado_epidemiologico";
     }
 
     if (medicamentosSeleccionados.includes(id)) {
@@ -769,6 +799,23 @@ const App = () => {
     if (preset.viaAdministracion) setViaAdministracion(preset.viaAdministracion);
     if (preset.medicamentosSeleccionados) setMedicamentosSeleccionados(preset.medicamentosSeleccionados);
     if (preset.condicionesPaciente) setCondicionesPaciente(preset.condicionesPaciente);
+    if (preset.sintomasPaciente) setSintomasPaciente(preset.sintomasPaciente);
+  };
+
+  // Aplicar recomendación de un cuadro clínico (auto-seleccionar medicamentos no bloqueados)
+  const aplicarRecomendacion = (cuadro) => {
+    const medsAAgregar = cuadro.medicamentosRecomendados
+      .map(m => m.id)
+      .filter(medId => {
+        const status = getMedicamentoStatus(medId);
+        return status !== 'bloqueado' && status !== 'bloqueado_condicion' && status !== 'bloqueado_epidemiologico';
+      });
+
+    // Limpiar selección actual y aplicar la recomendación
+    setMedicamentosSeleccionados([]);
+    setTimeout(() => {
+      setMedicamentosSeleccionados(medsAAgregar);
+    }, 100);
   };
 
   // Cambiar la presentación comercial seleccionada
@@ -1066,6 +1113,13 @@ const App = () => {
               onChange={setCondicionesPaciente}
             />
 
+            {/* Selector de síntomas */}
+            <SintomasSelector
+              darkMode={darkMode}
+              sintomasActivos={sintomasPaciente}
+              onChange={setSintomasPaciente}
+            />
+
             {/* Fase 3: Presets guardados */}
             <PresetPanel
               darkMode={darkMode}
@@ -1075,7 +1129,8 @@ const App = () => {
                 unidadEdad,
                 viaAdministracion,
                 medicamentosSeleccionados,
-                condicionesPaciente
+                condicionesPaciente,
+                sintomasPaciente
               }}
               onCargarPreset={cargarPreset}
             />
@@ -1106,13 +1161,20 @@ const App = () => {
                   textColor = "text-white";
                   bgColor += " opacity-50";
                 }
-                
+                else if (status === "bloqueado_epidemiologico") {
+                  bgColor = darkMode ? "bg-orange-700" : "bg-orange-500";
+                  textColor = "text-white";
+                  bgColor += " opacity-60";
+                }
+
+                const esBloqueado = status === "bloqueado" || status === "bloqueado_condicion" || status === "bloqueado_epidemiologico";
+
                 return (
                   <div key={med.id} className="flex">
                     <button
-                      onClick={() => status !== "bloqueado" && status !== "bloqueado_condicion" && toggleMedicamento(med.id)}
+                      onClick={() => !esBloqueado && toggleMedicamento(med.id)}
                       className={`flex-grow p-3 rounded-l-md ${bgColor} ${textColor} transition-all hover:shadow-md text-left`}
-                      disabled={status === "bloqueado" || status === "bloqueado_condicion"}
+                      disabled={esBloqueado}
                     >
                       <div className="font-medium">{med.nombre}</div>
                       <div className="text-sm opacity-80">{med.tipoMedicamento}</div>
@@ -1134,6 +1196,23 @@ const App = () => {
           
           {/* Panel derecho: resultados */}
           <div className="w-full md:w-1/3">
+            {/* Alertas epidemiológicas */}
+            <AlertaEpidemiologica
+              darkMode={darkMode}
+              alertas={alertasEpidemiologicas}
+              medicamentosSeleccionados={medicamentosSeleccionados}
+              onQuitarMedicamento={(medId) => setMedicamentosSeleccionados(prev => prev.filter(id => id !== medId))}
+            />
+
+            {/* Cuadros clínicos sugeridos por síntomas */}
+            <CuadroClinicoPanel
+              darkMode={darkMode}
+              cuadrosCoincidentes={cuadrosCoincidentes}
+              medicamentosSeleccionados={medicamentosSeleccionados}
+              getMedicamentoStatus={getMedicamentoStatus}
+              onAplicarRecomendacion={aplicarRecomendacion}
+            />
+
             {/* Visualización de jeringa única con volumen total */}
             {medicamentosSeleccionados.length > 0 && (
               <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md p-4 mb-4`}>
@@ -1720,340 +1799,7 @@ const App = () => {
         </div>
       )}
 
-      {/* Cuadros Clínicos Comunes */}
-      <div className={`mt-12 ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} rounded-lg p-6`}>
-        <h2 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-          Cuadros Clínicos Comunes
-        </h2>
-        <p className={`mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-          Seleccione un cuadro clínico para cargar automáticamente los medicamentos recomendados:
-        </p>
-
-        <div className="grid gap-4">
-          {/* Gastroenteritis Aguda */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                1. Gastroenteritis Aguda con Dolor y Vómitos
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['metamizol', 'metoclopramida']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Dolor abdominal tipo cólico, vómitos, posible fiebre, deshidratación leve-moderada.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Dipirona (dolor/fiebre) + Metoclopramida (vómitos/náuseas)
-            </p>
-          </div>
-
-          {/* Cuadro Respiratorio */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                2. Cuadro Respiratorio Inflamatorio/Infeccioso
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['dexametasona', 'penicilina', 'metamizol']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Fiebre, tos, dificultad respiratoria leve-moderada, posible componente obstructivo.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Dexametasona (inflamación) + Penicilina G (infección bacteriana) + Dipirona (fiebre)
-            </p>
-          </div>
-
-          {/* Trauma Musculoesquelético */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                3. Trauma Musculoesquelético Agudo
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['ketorolaco', 'diazepam', 'metamizol']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Dolor intenso, inflamación, espasmo muscular tras lesión traumática.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Ketorolaco/Diclofenac (antiinflamatorio) + Diazepam (espasmo) + Dipirona (dolor)
-            </p>
-          </div>
-
-          {/* Cuadro Migrañoso */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                4. Cuadro Migrañoso Severo
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['metamizol', 'metoclopramida', 'diazepam']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Cefalea intensa, fotofobia, náuseas, posible vómito, tensión cervical.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Dipirona (dolor) + Metoclopramida (náuseas/absorción) + Diazepam (tensión muscular)
-            </p>
-          </div>
-
-          {/* Reacción Alérgica */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                5. Reacción Alérgica Moderada con Dolor
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['dexametasona', 'metamizol', 'diazepam']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Urticaria, prurito, angioedema leve, dolor asociado, ansiedad.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Dexametasona (reacción alérgica) + Dipirona (dolor/fiebre) + Diazepam (ansiedad)
-            </p>
-          </div>
-
-          {/* Anafilaxia */}
-          <div className={`border-2 ${darkMode ? 'border-red-700' : 'border-red-400'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-red-300' : 'text-red-700'}`}>
-                6. ANAFILAXIA (EMERGENCIA)
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['adrenalina', 'dexametasona', 'difenhidramina']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-red-600 hover:bg-red-700 text-white'
-                    : 'bg-red-500 hover:bg-red-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Urticaria generalizada, angioedema, broncoespasmo, hipotensión, taquicardia, disnea. Puede ser fatal.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-red-400' : 'text-red-600'} font-medium mb-1`}>
-              ADRENALINA IM es el PRIMER medicamento a administrar. NUNCA retrasarla.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Adrenalina IM 0.01mg/kg (PRIMERO) + Dexametasona (complemento) + Difenhidramina (complemento)
-            </p>
-          </div>
-
-          {/* Convulsión Febril */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                7. Convulsión Febril Pediátrica
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['diazepam', 'metamizol']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Convulsión en niño febril (6 meses - 5 años). Generalizada, tónico-clónica, duración variable.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-1`}>
-              Diazepam rectal 0.5 mg/kg si no hay acceso IV. Convulsión febril simple tiene excelente pronóstico.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Diazepam (anticonvulsivante) + Dipirona (antipirético)
-            </p>
-          </div>
-
-          {/* Cólico Renal */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                8. Cólico Renal Agudo
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['ketorolaco', 'metamizol']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Dolor súbito severo en flanco irradiado a ingle, náuseas/vómitos, hematuria, inquietud.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-1`}>
-              AINEs son PRIMERA LÍNEA (Cochrane). Si fiebre + dolor lumbar = litiasis infectada (EMERGENCIA).
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Ketorolaco (analgésico) + Dipirona (espasmolítico). Tramadol si refractario.
-            </p>
-          </div>
-
-          {/* Gastroenteritis Pediátrica */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                9. Gastroenteritis Pediátrica con Vómitos
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['ondansetron', 'metamizol']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Vómitos, diarrea, deshidratación en niños. Ondansetrón permite tolerar rehidratación oral.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-1`}>
-              Ondansetrón es MUY SUPERIOR a metoclopramida en niños (AAP). Sin efectos extrapiramidales.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Ondansetrón (antiemético seguro) + Dipirona (antipirético/analgésico)
-            </p>
-          </div>
-
-          {/* Infección con ATB IM */}
-          <div className={`border ${darkMode ? 'border-gray-700' : 'border-gray-300'} rounded-lg p-4`}>
-            <div className="flex justify-between items-start mb-3">
-              <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                10. Infección Bacteriana (ATB IM ambulatorio)
-              </h3>
-              <button
-                onClick={() => {
-                  setMedicamentosSeleccionados([]);
-                  setTimeout(() => {
-                    setMedicamentosSeleccionados(['ceftriaxona', 'metamizol']);
-                  }, 100);
-                }}
-                className={`px-6 py-3 sm:px-4 sm:py-2 text-base sm:text-sm rounded ${
-                  darkMode
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-blue-500 hover:bg-blue-600 text-white'
-                } transition-colors`}
-              >
-                Cargar Combo
-              </button>
-            </div>
-            <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-              Presentación: Infección bacteriana (celulitis, pielonefritis, neumonía, OMA complicada) para manejo IM ambulatorio rural.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-1`}>
-              Ceftriaxona IM 1x/día ideal para ámbito rural. Reevaluar a las 48-72h.
-            </p>
-            <p className={`text-sm ${darkMode ? 'text-green-400' : 'text-green-600'}`}>
-              Medicamentos: Ceftriaxona IM (antibiótico 1x/día) + Dipirona (dolor/fiebre)
-            </p>
-          </div>
-        </div>
-
-        <div className={`mt-6 p-4 ${darkMode ? 'bg-yellow-900/30' : 'bg-yellow-100'} rounded-lg`}>
-          <p className={`text-sm ${darkMode ? 'text-yellow-200' : 'text-yellow-800'}`}>
-            <strong>Importante:</strong> Estas combinaciones reflejan prácticas comunes pero deben ser prescritas y supervisadas por profesionales médicos.
-            La administración parenteral requiere capacitación específica. Algunas combinaciones presentan interacciones que requieren precaución,
-            especialmente en población pediátrica.
-          </p>
-        </div>
-      </div>
+      {/* Nota: Los cuadros clínicos ahora se sugieren dinámicamente en el panel derecho según los síntomas seleccionados */}
 
       <footer className={`mt-8 py-4 text-center ${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
         <p>ADVERTENCIA: Esta herramienta es solo educativa. Siempre busque atención médica profesional.</p>

@@ -1,0 +1,216 @@
+{
+  "grupos": [
+    {
+      "id": "generales",
+      "nombre": "Generales",
+      "sintomas": [
+        { "id": "fiebre", "nombre": "Fiebre" },
+        { "id": "malestar_general", "nombre": "Malestar general" },
+        { "id": "escalofrios", "nombre": "Escalofríos" }
+      ]
+    },
+    {
+      "id": "neurologicos",
+      "nombre": "Neurológicos",
+      "sintomas": [
+        { "id": "cefalea", "nombre": "Cefalea" },
+        { "id": "dolor_retroorbital", "nombre": "Dolor retroorbital" },
+        { "id": "convulsiones", "nombre": "Convulsiones" },
+        { "id": "alteracion_sensorio", "nombre": "Alteración del sensorio" }
+      ]
+    },
+    {
+      "id": "digestivos",
+      "nombre": "Digestivos",
+      "sintomas": [
+        { "id": "dolor_abdominal", "nombre": "Dolor abdominal" },
+        { "id": "nauseas_vomitos", "nombre": "Náuseas/Vómitos" },
+        { "id": "diarrea", "nombre": "Diarrea" },
+        { "id": "odinofagia", "nombre": "Odinofagia" }
+      ]
+    },
+    {
+      "id": "respiratorios",
+      "nombre": "Respiratorios",
+      "sintomas": [
+        { "id": "disnea", "nombre": "Disnea" },
+        { "id": "sibilancias", "nombre": "Sibilancias" },
+        { "id": "tos", "nombre": "Tos" }
+      ]
+    },
+    {
+      "id": "cardiovasculares",
+      "nombre": "Cardiovasculares",
+      "sintomas": [
+        { "id": "hipotension", "nombre": "Hipotensión" },
+        { "id": "taquicardia", "nombre": "Taquicardia" }
+      ]
+    },
+    {
+      "id": "dermatologicos",
+      "nombre": "Dermatológicos / Alérgicos",
+      "sintomas": [
+        { "id": "exantema_rash", "nombre": "Exantema / Rash" },
+        { "id": "prurito", "nombre": "Prurito" },
+        { "id": "urticaria", "nombre": "Urticaria" },
+        { "id": "angioedema", "nombre": "Angioedema" }
+      ]
+    },
+    {
+      "id": "urinarios",
+      "nombre": "Urinarios",
+      "sintomas": [
+        { "id": "dolor_lumbar", "nombre": "Dolor lumbar" },
+        { "id": "disuria", "nombre": "Disuria" }
+      ]
+    },
+    {
+      "id": "musculoesqueleticos",
+      "nombre": "Musculoesqueléticos",
+      "sintomas": [
+        { "id": "mialgias", "nombre": "Mialgias" },
+        { "id": "artralgias", "nombre": "Artralgias" },
+        { "id": "dolor_postraumatico", "nombre": "Dolor postraumático" }
+      ]
+    }
+  ],
+  "cuadrosClinicos": [
+    {
+      "id": "gastroenteritis",
+      "nombre": "Gastroenteritis Aguda",
+      "descripcion": "Dolor abdominal tipo cólico, vómitos, posible fiebre, deshidratación leve-moderada.",
+      "sintomasRequeridos": ["nauseas_vomitos", "dolor_abdominal"],
+      "sintomasOpcionales": ["fiebre", "diarrea", "malestar_general"],
+      "umbralMinimo": 2,
+      "medicamentosRecomendados": [
+        { "id": "metamizol", "prioridad": 1, "rol": "Analgésico/Antipirético" },
+        { "id": "metoclopramida", "prioridad": 2, "rol": "Antiemético" }
+      ],
+      "notasClinicas": "Hidratación oral es prioritaria. Evaluar signos de deshidratación."
+    },
+    {
+      "id": "respiratorio_infeccioso",
+      "nombre": "Cuadro Respiratorio Infeccioso",
+      "descripcion": "Fiebre, tos, dificultad respiratoria leve-moderada, posible componente obstructivo.",
+      "sintomasRequeridos": ["fiebre", "tos"],
+      "sintomasOpcionales": ["disnea", "sibilancias", "malestar_general", "escalofrios"],
+      "umbralMinimo": 2,
+      "medicamentosRecomendados": [
+        { "id": "dexametasona", "prioridad": 1, "rol": "Antiinflamatorio" },
+        { "id": "penicilina", "prioridad": 2, "rol": "Antibiótico" },
+        { "id": "metamizol", "prioridad": 3, "rol": "Antipirético" }
+      ],
+      "notasClinicas": "Evaluar saturación si es posible. Derivar si hay signos de insuficiencia respiratoria."
+    },
+    {
+      "id": "trauma_musculoesqueletico",
+      "nombre": "Trauma Musculoesquelético",
+      "descripcion": "Dolor intenso, inflamación, espasmo muscular tras lesión traumática.",
+      "sintomasRequeridos": ["dolor_postraumatico"],
+      "sintomasOpcionales": ["mialgias", "artralgias", "malestar_general"],
+      "umbralMinimo": 1,
+      "medicamentosRecomendados": [
+        { "id": "ketorolaco", "prioridad": 1, "rol": "Antiinflamatorio/Analgésico" },
+        { "id": "diazepam", "prioridad": 2, "rol": "Relajante muscular" },
+        { "id": "metamizol", "prioridad": 3, "rol": "Analgésico complementario" }
+      ],
+      "notasClinicas": "Descartar fracturas. Inmovilizar si sospecha de fractura."
+    },
+    {
+      "id": "migrana_severa",
+      "nombre": "Migraña Severa",
+      "descripcion": "Cefalea intensa, fotofobia, náuseas, posible vómito, tensión cervical.",
+      "sintomasRequeridos": ["cefalea", "nauseas_vomitos"],
+      "sintomasOpcionales": ["malestar_general", "alteracion_sensorio"],
+      "umbralMinimo": 2,
+      "medicamentosRecomendados": [
+        { "id": "metamizol", "prioridad": 1, "rol": "Analgésico" },
+        { "id": "metoclopramida", "prioridad": 2, "rol": "Antiemético/Procinético" },
+        { "id": "diazepam", "prioridad": 3, "rol": "Tensión muscular/Ansiedad" }
+      ],
+      "notasClinicas": "Metoclopramida mejora absorción de analgésicos. Ambiente oscuro y silencioso."
+    },
+    {
+      "id": "reaccion_alergica",
+      "nombre": "Reacción Alérgica",
+      "descripcion": "Urticaria, prurito, angioedema leve, posible dolor asociado.",
+      "sintomasRequeridos": ["urticaria"],
+      "sintomasOpcionales": ["prurito", "angioedema", "exantema_rash", "malestar_general"],
+      "umbralMinimo": 1,
+      "medicamentosRecomendados": [
+        { "id": "dexametasona", "prioridad": 1, "rol": "Antiinflamatorio/Antialérgico" },
+        { "id": "difenhidramina", "prioridad": 2, "rol": "Antihistamínico" },
+        { "id": "metamizol", "prioridad": 3, "rol": "Analgésico si dolor" }
+      ],
+      "notasClinicas": "Vigilar progresión a anafilaxia. Identificar alérgeno si es posible."
+    },
+    {
+      "id": "anafilaxia",
+      "nombre": "ANAFILAXIA (EMERGENCIA)",
+      "descripcion": "Urticaria generalizada, angioedema, broncoespasmo, hipotensión, taquicardia, disnea. Puede ser fatal.",
+      "sintomasRequeridos": ["angioedema"],
+      "sintomasOpcionales": ["hipotension", "disnea", "sibilancias", "urticaria", "taquicardia", "prurito"],
+      "umbralMinimo": 1,
+      "medicamentosRecomendados": [
+        { "id": "adrenalina", "prioridad": 1, "rol": "PRIMERA LÍNEA - NO RETRASAR" },
+        { "id": "dexametasona", "prioridad": 2, "rol": "Complemento antiinflamatorio" },
+        { "id": "difenhidramina", "prioridad": 3, "rol": "Antihistamínico complementario" }
+      ],
+      "notasClinicas": "ADRENALINA IM es el PRIMER medicamento. NUNCA retrasarla. Posición Trendelenburg si hipotensión.",
+      "esEmergencia": true
+    },
+    {
+      "id": "convulsion_febril",
+      "nombre": "Convulsión Febril",
+      "descripcion": "Convulsión en niño febril (6 meses - 5 años). Generalizada, tónico-clónica.",
+      "sintomasRequeridos": ["convulsiones", "fiebre"],
+      "sintomasOpcionales": ["alteracion_sensorio", "malestar_general"],
+      "umbralMinimo": 2,
+      "medicamentosRecomendados": [
+        { "id": "diazepam", "prioridad": 1, "rol": "Anticonvulsivante" },
+        { "id": "metamizol", "prioridad": 2, "rol": "Antipirético" }
+      ],
+      "notasClinicas": "Diazepam rectal 0.5 mg/kg si no hay acceso IV. Convulsión febril simple tiene excelente pronóstico."
+    },
+    {
+      "id": "colico_renal",
+      "nombre": "Cólico Renal Agudo",
+      "descripcion": "Dolor súbito severo en flanco irradiado a ingle, náuseas/vómitos, hematuria.",
+      "sintomasRequeridos": ["dolor_lumbar", "dolor_abdominal"],
+      "sintomasOpcionales": ["nauseas_vomitos", "disuria", "malestar_general"],
+      "umbralMinimo": 2,
+      "medicamentosRecomendados": [
+        { "id": "ketorolaco", "prioridad": 1, "rol": "AINE primera línea (Cochrane)" },
+        { "id": "metamizol", "prioridad": 2, "rol": "Espasmolítico/Analgésico" },
+        { "id": "atropina", "prioridad": 3, "rol": "Antiespasmódico" }
+      ],
+      "notasClinicas": "AINEs son PRIMERA LÍNEA. Si fiebre + dolor lumbar = litiasis infectada (EMERGENCIA)."
+    },
+    {
+      "id": "gastroenteritis_pediatrica",
+      "nombre": "Gastroenteritis Pediátrica",
+      "descripcion": "Vómitos, diarrea, deshidratación en niños. Ondansetrón permite tolerar rehidratación oral.",
+      "sintomasRequeridos": ["nauseas_vomitos"],
+      "sintomasOpcionales": ["fiebre", "diarrea", "dolor_abdominal", "malestar_general"],
+      "umbralMinimo": 1,
+      "medicamentosRecomendados": [
+        { "id": "ondansetron", "prioridad": 1, "rol": "Antiemético seguro en pediatría" },
+        { "id": "metamizol", "prioridad": 2, "rol": "Antipirético/Analgésico" }
+      ],
+      "notasClinicas": "Ondansetrón es MUY SUPERIOR a metoclopramida en niños (AAP). Sin efectos extrapiramidales."
+    },
+    {
+      "id": "infeccion_bacteriana",
+      "nombre": "Infección Bacteriana (ATB IM)",
+      "descripcion": "Infección bacteriana para manejo IM ambulatorio rural: celulitis, pielonefritis, neumonía, OMA.",
+      "sintomasRequeridos": ["fiebre"],
+      "sintomasOpcionales": ["odinofagia", "disuria", "dolor_lumbar", "tos", "escalofrios", "malestar_general"],
+      "umbralMinimo": 1,
+      "medicamentosRecomendados": [
+        { "id": "ceftriaxona", "prioridad": 1, "rol": "Antibiótico IM 1x/día" },
+        { "id": "metamizol", "prioridad": 2, "rol": "Antipirético/Analgésico" }
+      ],
+      "notasClinicas": "Ceftriaxona IM 1x/día ideal para ámbito rural. Reevaluar a las 48-72h."
+    }
+  ]
+}

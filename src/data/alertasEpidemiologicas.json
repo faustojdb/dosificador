@@ -1,0 +1,80 @@
+{
+  "enfermedades": [
+    {
+      "id": "dengue",
+      "nombre": "DENGUE",
+      "color": "orange",
+      "sintomasCardinales": ["fiebre", "cefalea", "dolor_retroorbital", "mialgias", "artralgias"],
+      "umbralCardinales": 3,
+      "sintomasApoyo": ["nauseas_vomitos", "exantema_rash", "malestar_general", "escalofrios"],
+      "banderasRojas": [
+        { "sintoma": "dolor_abdominal", "mensaje": "Dolor abdominal intenso: posible dengue grave" },
+        { "sintoma": "hipotension", "mensaje": "Hipotensión: shock por dengue, DERIVAR URGENTE" },
+        { "sintoma": "alteracion_sensorio", "mensaje": "Alteración del sensorio: dengue grave, DERIVAR" }
+      ],
+      "medicamentosPermitidos": ["metamizol", "metoclopramida", "ondansetron", "difenhidramina"],
+      "medicamentosProhibidos": [
+        { "id": "diclofenac", "razon": "AINE: riesgo de sangrado por trombocitopenia" },
+        { "id": "ketorolaco", "razon": "AINE: riesgo de sangrado por trombocitopenia" },
+        { "id": "dexametasona", "razon": "Corticoide: puede agravar el cuadro en fase aguda" },
+        { "id": "hidrocortisona", "razon": "Corticoide: puede agravar el cuadro en fase aguda" }
+      ],
+      "guiaDiferencial": "Dengue vs Gripe: dolor retroorbital y exantema orientan a dengue. Dengue vs Hantavirus: hantavirus tiene más disnea y exposición a roedores.",
+      "conducta": "1. NO administrar AINEs ni aspirina. 2. Hidratación oral abundante. 3. Metamizol para fiebre. 4. Hemograma + plaquetas si es posible. 5. Signos de alarma = derivación urgente."
+    },
+    {
+      "id": "covid19",
+      "nombre": "COVID-19",
+      "color": "blue",
+      "sintomasCardinales": ["fiebre", "tos", "disnea", "malestar_general"],
+      "umbralCardinales": 2,
+      "sintomasApoyo": ["cefalea", "mialgias", "odinofagia", "diarrea", "escalofrios"],
+      "banderasRojas": [
+        { "sintoma": "disnea", "mensaje": "Disnea: evaluar saturación, posible neumonía COVID" },
+        { "sintoma": "alteracion_sensorio", "mensaje": "Alteración del sensorio: COVID grave, DERIVAR" },
+        { "sintoma": "hipotension", "mensaje": "Hipotensión: shock séptico, DERIVAR URGENTE" }
+      ],
+      "medicamentosPermitidos": ["metamizol", "dexametasona", "ceftriaxona", "ondansetron", "metoclopramida"],
+      "medicamentosProhibidos": [],
+      "guiaDiferencial": "COVID vs Gripe: anosmia/ageusia orientan a COVID, pero ya es menos específico. Ambos tienen fiebre + tos. PCR o test rápido si disponible.",
+      "conducta": "1. Aislamiento respiratorio. 2. Metamizol para fiebre. 3. Dexametasona si hipoxemia (sat <94%). 4. Oxígeno si disponible. 5. Derivar si disnea progresiva."
+    },
+    {
+      "id": "hantavirus",
+      "nombre": "HANTAVIRUS",
+      "color": "red",
+      "sintomasCardinales": ["fiebre", "mialgias", "cefalea", "disnea"],
+      "umbralCardinales": 3,
+      "sintomasApoyo": ["malestar_general", "escalofrios", "nauseas_vomitos", "dolor_abdominal", "taquicardia"],
+      "banderasRojas": [
+        { "sintoma": "disnea", "mensaje": "Disnea: síndrome pulmonar por hantavirus, DERIVAR URGENTE" },
+        { "sintoma": "hipotension", "mensaje": "Hipotensión: shock cardiogénico por hantavirus, EMERGENCIA" },
+        { "sintoma": "taquicardia", "mensaje": "Taquicardia: fallo cardiopulmonar inminente" }
+      ],
+      "medicamentosPermitidos": ["metamizol", "ondansetron", "metoclopramida", "adrenalina", "atropina"],
+      "medicamentosProhibidos": [
+        { "id": "diclofenac", "razon": "AINE: nefrotoxicidad, hantavirus causa daño renal" },
+        { "id": "ketorolaco", "razon": "AINE: nefrotoxicidad, hantavirus causa daño renal" }
+      ],
+      "guiaDiferencial": "Hantavirus vs Dengue: hantavirus tiene más disnea y progresión rápida a fallo pulmonar. Preguntar por exposición a roedores (ámbito rural Tucumán).",
+      "conducta": "1. Notificación OBLIGATORIA inmediata. 2. NO AINEs por nefrotoxicidad. 3. Soporte hemodinámico. 4. DERIVACIÓN URGENTE a centro de mayor complejidad. 5. Alta letalidad: hasta 40%."
+    },
+    {
+      "id": "gripe_a",
+      "nombre": "GRIPE A (H1N1)",
+      "color": "teal",
+      "sintomasCardinales": ["fiebre", "tos", "malestar_general", "mialgias"],
+      "umbralCardinales": 3,
+      "sintomasApoyo": ["cefalea", "odinofagia", "escalofrios", "artralgias", "diarrea"],
+      "banderasRojas": [
+        { "sintoma": "disnea", "mensaje": "Disnea: posible neumonía gripal, DERIVAR" },
+        { "sintoma": "alteracion_sensorio", "mensaje": "Alteración del sensorio: complicación grave, DERIVAR" },
+        { "sintoma": "hipotension", "mensaje": "Hipotensión: sepsis gripal, DERIVAR URGENTE" }
+      ],
+      "medicamentosPermitidos": ["metamizol", "dexametasona", "ceftriaxona", "ondansetron", "difenhidramina"],
+      "medicamentosProhibidos": [],
+      "guiaDiferencial": "Gripe vs COVID: clínicamente indistinguibles sin test. Gripe vs Dengue: gripe tiene más síntomas respiratorios, dengue más dolor retroorbital y exantema.",
+      "conducta": "1. Aislamiento respiratorio. 2. Metamizol para fiebre/mialgias. 3. Oseltamivir si <48h de síntomas (si disponible). 4. Derivar si disnea o comorbilidades. 5. Vacunación del entorno."
+    }
+  ]
+}

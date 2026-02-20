@@ -5,12 +5,20 @@
  */
 
 const STORAGE_KEY = 'dosificador_presets';
-const MAX_SLOTS = 4;
+const MAX_SLOTS = 10;
 
 function getAll() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : Array(MAX_SLOTS).fill(null);
+    if (!raw) return Array(MAX_SLOTS).fill(null);
+    const parsed = JSON.parse(raw);
+    // Migración: si el array tiene menos de MAX_SLOTS, padear con null
+    if (parsed.length < MAX_SLOTS) {
+      const migrated = [...parsed, ...Array(MAX_SLOTS - parsed.length).fill(null)];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+      return migrated;
+    }
+    return parsed;
   } catch {
     return Array(MAX_SLOTS).fill(null);
   }
@@ -21,7 +29,7 @@ function saveAll(presets) {
 }
 
 /**
- * Guarda un preset en el slot indicado (0-3).
+ * Guarda un preset en el slot indicado (0-9).
  */
 export function guardarPreset(slot, datos) {
   if (slot < 0 || slot >= MAX_SLOTS) return false;
@@ -56,7 +64,7 @@ export function eliminarPreset(slot) {
 }
 
 /**
- * Retorna todos los presets (array de 4 elementos, null si vacío).
+ * Retorna todos los presets (array de 10 elementos, null si vacío).
  */
 export function listarPresets() {
   return getAll();

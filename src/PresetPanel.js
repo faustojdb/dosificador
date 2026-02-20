@@ -19,7 +19,8 @@ const PresetPanel = ({ darkMode, datosActuales, onCargarPreset }) => {
       unidadEdad: datosActuales.unidadEdad,
       viaAdministracion: datosActuales.viaAdministracion,
       medicamentosSeleccionados: datosActuales.medicamentosSeleccionados,
-      condicionesPaciente: datosActuales.condicionesPaciente || []
+      condicionesPaciente: datosActuales.condicionesPaciente || [],
+      sintomasPaciente: datosActuales.sintomasPaciente || []
     });
     setPresets(listarPresets());
     setEditandoNombre(null);
@@ -49,7 +50,7 @@ const PresetPanel = ({ darkMode, datosActuales, onCargarPreset }) => {
       <h3 className={`text-lg font-medium mb-2 ${darkMode ? 'text-blue-400' : 'text-blue-700'}`}>
         Presets guardados
       </h3>
-      <div className="space-y-2">
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
         {Array.from({ length: MAX_SLOTS }).map((_, slot) => {
           const preset = presets[slot];
 
@@ -86,28 +87,28 @@ const PresetPanel = ({ darkMode, datosActuales, onCargarPreset }) => {
           }
 
           return (
-            <div key={slot} className={`flex items-center gap-1 p-2 rounded-md ${darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-              <div className="flex-grow min-w-0">
+            <div key={slot} className={`p-2 rounded-md ${darkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+              <div className="min-w-0 mb-1">
                 {preset ? (
                   <div>
-                    <div className={`text-sm font-medium truncate ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    <div className={`text-xs font-medium truncate ${darkMode ? 'text-white' : 'text-gray-900'}`}>
                       {preset.nombre}
                     </div>
-                    <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                      {preset.peso}kg, {preset.edad} {preset.unidadEdad}, {preset.medicamentosSeleccionados?.length || 0} med.
+                    <div className={`text-xs truncate ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                      {preset.peso}kg, {preset.medicamentosSeleccionados?.length || 0} med.
                     </div>
                   </div>
                 ) : (
-                  <span className={`text-sm ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+                  <span className={`text-xs ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
                     Slot {slot + 1} vacío
                   </span>
                 )}
               </div>
-              <div className="flex gap-1 flex-shrink-0">
+              <div className="flex gap-1">
                 {preset && (
                   <button
                     onClick={() => handleCargar(slot)}
-                    className="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600"
+                    className="flex-1 px-1 py-0.5 bg-blue-500 text-white text-xs rounded hover:bg-blue-600"
                     title="Cargar preset"
                   >
                     Cargar
@@ -115,17 +116,17 @@ const PresetPanel = ({ darkMode, datosActuales, onCargarPreset }) => {
                 )}
                 <button
                   onClick={() => iniciarGuardado(slot)}
-                  className={`px-2 py-1 text-xs rounded ${
+                  className={`flex-1 px-1 py-0.5 text-xs rounded ${
                     darkMode ? 'bg-gray-600 text-gray-200 hover:bg-gray-500' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                   title="Guardar en este slot"
                 >
-                  {preset ? 'Sobreescr.' : 'Guardar'}
+                  {preset ? 'Sobr.' : 'Guardar'}
                 </button>
                 {preset && (
                   <button
                     onClick={() => handleEliminar(slot)}
-                    className="px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600"
+                    className="px-1 py-0.5 bg-red-500 text-white text-xs rounded hover:bg-red-600"
                     title="Eliminar preset"
                   >
                     X
