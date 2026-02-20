@@ -9,7 +9,7 @@ import { calcularDosisEstructurada } from './utils/calcularDosisEstructurada';
 import { getSnapInfo } from './utils/snapGrid';
 import PresetPanel from './PresetPanel';
 import CondicionesPaciente from './CondicionesPaciente';
-import { buscarTodasInteracciones } from './utils/ddinterService';
+import { buscarTodasInteracciones, getEstadoPorCondiciones } from './utils/ddinterService';
 import FdaInfoPanel from './FdaInfoPanel';
 
 // Componente principal
@@ -76,6 +76,16 @@ const App = () => {
 
     // Fase 4: Detectar interacciones droga-enfermedad
     setAlertasDrogaEnfermedad(buscarTodasInteracciones(medicamentosSeleccionados, condicionesPaciente));
+
+    // Auto-deseleccionar medicamentos bloqueados por condiciones del paciente
+    if (condicionesPaciente.length > 0) {
+      const medsARemover = medicamentosSeleccionados.filter(medId =>
+        getEstadoPorCondiciones(medId, condicionesPaciente) === 'bloqueado'
+      );
+      if (medsARemover.length > 0) {
+        setMedicamentosSeleccionados(prev => prev.filter(id => !medsARemover.includes(id)));
+      }
+    }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [medicamentosSeleccionados, peso, edad, unidadEdad, viaAdministracion, presentacionSeleccionada, condicionesPaciente]);
@@ -497,6 +507,14 @@ const App = () => {
       return;
     }
 
+    // Verificar bloqueo por condiciones del paciente
+    const estadoCondicion = getEstadoPorCondiciones(id, condicionesPaciente);
+    if (estadoCondicion === 'bloqueado') {
+      const medData = medicamentos.find(m => m.id === id);
+      alert(`No se puede seleccionar ${medData?.nombre || id}: contraindicado por condición del paciente.`);
+      return;
+    }
+
     // Verificar si hay interacciones que bloqueen la selección
     for (const medExistente of medExistentes) {
       const interaccion = interaccionesPeligrosas.find(item =>
@@ -601,9 +619,18 @@ const App = () => {
   
   // Función para obtener el estado de un medicamento
   const getMedicamentoStatus = (id) => {
+    // Verificar bloqueo por condiciones del paciente (Fase 4 mejorada)
+    const estadoCondicion = getEstadoPorCondiciones(id, condicionesPaciente);
+    if (estadoCondicion === 'bloqueado') {
+      return "bloqueado_condicion";
+    }
+
     if (medicamentosSeleccionados.includes(id)) {
       return "seleccionado";
     }
+
+    // Precaución por condición (pero no bloqueo total)
+    let precaucionCondicion = estadoCondicion === 'precaucion';
 
     const esPacientePediatrico = unidadEdad === "años" ? edad < 18 : true;
     const edadEnMeses = unidadEdad === "años" ? edad * 12 : edad;
@@ -689,6 +716,10 @@ const App = () => {
       if (interaccion) {
         return "precaucion";
       }
+    }
+
+    if (precaucionCondicion) {
+      return "precaucion";
     }
 
     return "disponible";
@@ -1001,7 +1032,7 @@ const App = () => {
                 </div>
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-red-500 rounded mr-2"></div>
-                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Bloqueado: interacción peligrosa</span>
+                  <span className={darkMode ? 'text-gray-300' : 'text-gray-700'}>Bloqueado: interacción o condición</span>
                 </div>
               </div>
             </div>
@@ -1048,7 +1079,7 @@ const App = () => {
                   bgColor = darkMode ? "bg-yellow-600" : "bg-yellow-400";
                   textColor = darkMode ? "text-white" : "text-gray-800";
                 }
-                else if (status === "bloqueado") {
+                else if (status === "bloqueado" || status === "bloqueado_condicion") {
                   bgColor = "bg-red-500";
                   textColor = "text-white";
                   bgColor += " opacity-50";
@@ -1057,9 +1088,9 @@ const App = () => {
                 return (
                   <div key={med.id} className="flex">
                     <button
-                      onClick={() => status !== "bloqueado" && toggleMedicamento(med.id)}
+                      onClick={() => status !== "bloqueado" && status !== "bloqueado_condicion" && toggleMedicamento(med.id)}
                       className={`flex-grow p-3 rounded-l-md ${bgColor} ${textColor} transition-all hover:shadow-md text-left`}
-                      disabled={status === "bloqueado"}
+                      disabled={status === "bloqueado" || status === "bloqueado_condicion"}
                     >
                       <div className="font-medium">{med.nombre}</div>
                       <div className="text-sm opacity-80">{med.tipoMedicamento}</div>
@@ -1067,7 +1098,7 @@ const App = () => {
                     <button 
                       onClick={() => abrirDetalles(med)}
                       className={`p-3 sm:p-2 rounded-r-md ${bgColor} ${textColor} transition-all hover:shadow-md flex items-center justify-center active:scale-95`}
-                      disabled={status === "bloqueado"}
+                      disabled={status === "bloqueado" || status === "bloqueado_condicion"}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 sm:h-5 sm:w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
@@ -1272,6 +1303,8 @@ const App = () => {
                                   <LidocainaSelector
                                     valorActual={lidocainaVolumenes[medId] || 0}
                                     medicamento={med}
+                                    peso={peso}
+                                    edadEnMeses={edadEnMeses}
                                     onChange={(volumen) => {
                                       setLidocainaVolumenes(prev => ({
                                         ...prev,

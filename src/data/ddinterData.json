@@ -1,25 +1,34 @@
 {
   "condiciones": [
-    { "id": "renal", "label": "Insuficiencia renal" },
-    { "id": "hepatica", "label": "Insuficiencia hepática" },
     { "id": "embarazo", "label": "Embarazo" },
     { "id": "lactancia", "label": "Lactancia" },
+    { "id": "renal", "label": "Insuficiencia renal" },
+    { "id": "hepatica", "label": "Insuficiencia hepática" },
     { "id": "asma", "label": "Asma" },
     { "id": "ulcera", "label": "Úlcera gástrica" },
     { "id": "hipertension", "label": "Hipertensión" },
     { "id": "diabetes", "label": "Diabetes" },
     { "id": "epilepsia", "label": "Epilepsia" },
-    { "id": "porfiria", "label": "Porfiria" }
+    { "id": "porfiria", "label": "Porfiria" },
+    { "id": "cardiopatia", "label": "Cardiopatía / arritmia" },
+    { "id": "coagulopatia", "label": "Coagulopatía / anticoagulantes" },
+    { "id": "alergia_aines", "label": "Alergia a AINEs" },
+    { "id": "alergia_penicilina", "label": "Alergia a penicilinas" },
+    { "id": "alergia_anestesicos", "label": "Alergia a anestésicos locales" },
+    { "id": "g6pd", "label": "Déficit de G6PD" }
   ],
   "medicamentos": {
     "metamizol": {
       "interacciones": [
         { "condicion": "renal", "severidad": "alta", "mensaje": "Reducir dosis al 50% en insuficiencia renal severa. Riesgo de acumulación.", "recomendacion": "Monitorizar función renal. Considerar paracetamol como alternativa." },
         { "condicion": "hepatica", "severidad": "media", "mensaje": "Precaución en insuficiencia hepática. Metabolismo hepático alterado.", "recomendacion": "Reducir dosis y monitorizar enzimas hepáticas." },
-        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Contraindicado en primer y tercer trimestre. Riesgo de cierre prematuro del ductus arterioso.", "recomendacion": "No administrar. Usar paracetamol como alternativa." },
+        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Contraindicado en primer y tercer trimestre. Riesgo de cierre prematuro del ductus arterioso.", "recomendacion": "No administrar. Usar paracetamol como alternativa.", "bloquear": true },
         { "condicion": "lactancia", "severidad": "media", "mensaje": "Se excreta en leche materna. Riesgo de agranulocitosis en el lactante.", "recomendacion": "Evitar o suspender lactancia 48h tras la dosis." },
         { "condicion": "asma", "severidad": "alta", "mensaje": "Riesgo de broncoespasmo severo en pacientes con intolerancia a AINEs.", "recomendacion": "Contraindicado si hay antecedente de asma por AINEs. Usar con extrema precaución." },
-        { "condicion": "porfiria", "severidad": "alta", "mensaje": "Contraindicado. Puede desencadenar crisis de porfiria aguda.", "recomendacion": "No administrar. Usar opioides como alternativa analgésica." }
+        { "condicion": "porfiria", "severidad": "alta", "mensaje": "Contraindicado. Puede desencadenar crisis de porfiria aguda.", "recomendacion": "No administrar. Usar opioides como alternativa analgésica.", "bloquear": true },
+        { "condicion": "alergia_aines", "severidad": "alta", "mensaje": "Contraindicado. Metamizol es un derivado pirazolónico con reactividad cruzada con AINEs.", "recomendacion": "No administrar. Usar opioides o paracetamol.", "bloquear": true },
+        { "condicion": "g6pd", "severidad": "alta", "mensaje": "Contraindicado. Riesgo de anemia hemolítica.", "recomendacion": "No administrar.", "bloquear": true },
+        { "condicion": "coagulopatia", "severidad": "media", "mensaje": "Puede prolongar el tiempo de sangrado.", "recomendacion": "Usar con precaución. Monitorizar coagulación." }
       ]
     },
     "metoclopramida": {
@@ -28,7 +37,8 @@
         { "condicion": "hepatica", "severidad": "media", "mensaje": "Reducir dosis al 50% en insuficiencia hepática.", "recomendacion": "Monitorizar efectos extrapiramidales con mayor frecuencia." },
         { "condicion": "embarazo", "severidad": "media", "mensaje": "Categoría B. Usar solo si el beneficio justifica el riesgo.", "recomendacion": "Preferir ondansetrón si está disponible." },
         { "condicion": "lactancia", "severidad": "baja", "mensaje": "Se excreta en leche materna en pequeñas cantidades.", "recomendacion": "Puede usarse con precaución en dosis bajas y por tiempo limitado." },
-        { "condicion": "epilepsia", "severidad": "alta", "mensaje": "Puede disminuir el umbral convulsivo.", "recomendacion": "Evitar en pacientes con epilepsia no controlada. Usar ondansetrón como alternativa." }
+        { "condicion": "epilepsia", "severidad": "alta", "mensaje": "Puede disminuir el umbral convulsivo.", "recomendacion": "Evitar en pacientes con epilepsia no controlada. Usar ondansetrón como alternativa." },
+        { "condicion": "cardiopatia", "severidad": "media", "mensaje": "Riesgo de prolongación del QT con dosis altas IV.", "recomendacion": "Monitorizar ECG si se administra IV." }
       ]
     },
     "dexametasona": {
@@ -46,20 +56,23 @@
       "interacciones": [
         { "condicion": "hepatica", "severidad": "alta", "mensaje": "Metabolismo hepático reducido. Riesgo de acumulación y sedación excesiva.", "recomendacion": "Reducir dosis 50% en insuficiencia moderada. Evitar en insuficiencia severa." },
         { "condicion": "renal", "severidad": "baja", "mensaje": "No requiere ajuste significativo para dosis únicas.", "recomendacion": "Precaución con dosis repetidas." },
-        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Categoría D. Riesgo de malformaciones congénitas (labio leporino) en primer trimestre. Síndrome de abstinencia neonatal.", "recomendacion": "Contraindicado. Usar alternativas no benzodiazepínicas." },
-        { "condicion": "lactancia", "severidad": "alta", "mensaje": "Se excreta en leche materna. Sedación y dificultad de alimentación en el lactante.", "recomendacion": "Evitar. Si es imprescindible, suspender lactancia." },
+        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Categoría D. Riesgo de malformaciones congénitas (labio leporino) en primer trimestre. Síndrome de abstinencia neonatal.", "recomendacion": "Contraindicado. Usar alternativas no benzodiazepínicas.", "bloquear": true },
+        { "condicion": "lactancia", "severidad": "alta", "mensaje": "Se excreta en leche materna. Sedación y dificultad de alimentación en el lactante.", "recomendacion": "Evitar. Si es imprescindible, suspender lactancia.", "bloquear": true },
         { "condicion": "epilepsia", "severidad": "baja", "mensaje": "Útil en crisis convulsivas pero precaución con uso crónico por tolerancia.", "recomendacion": "Reservar para crisis agudas. No usar como antiepiléptico de mantenimiento." }
       ]
     },
     "diclofenac": {
       "interacciones": [
-        { "condicion": "renal", "severidad": "alta", "mensaje": "Puede causar lesión renal aguda. Contraindicado en insuficiencia moderada-severa.", "recomendacion": "No administrar con CrCl < 30 mL/min. Asegurar hidratación." },
+        { "condicion": "renal", "severidad": "alta", "mensaje": "Puede causar lesión renal aguda. Contraindicado en insuficiencia moderada-severa.", "recomendacion": "No administrar con CrCl < 30 mL/min. Asegurar hidratación.", "bloquear": true },
         { "condicion": "hepatica", "severidad": "alta", "mensaje": "Hepatotoxicidad. Reducir dosis al 50% en insuficiencia moderada.", "recomendacion": "Monitorizar enzimas hepáticas. Evitar en insuficiencia severa." },
-        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Contraindicado en tercer trimestre. Riesgo de cierre del ductus arterioso y oligohidramnios.", "recomendacion": "No administrar. Usar paracetamol." },
+        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Contraindicado en tercer trimestre. Riesgo de cierre del ductus arterioso y oligohidramnios.", "recomendacion": "No administrar. Usar paracetamol.", "bloquear": true },
         { "condicion": "lactancia", "severidad": "baja", "mensaje": "Se excreta en leche materna en cantidades mínimas.", "recomendacion": "Compatible con lactancia en dosis bajas y tratamiento corto." },
-        { "condicion": "asma", "severidad": "alta", "mensaje": "Puede desencadenar broncoespasmo en pacientes con asma sensible a AINEs.", "recomendacion": "Contraindicado si hay tríada de Samter. Usar paracetamol." },
-        { "condicion": "ulcera", "severidad": "alta", "mensaje": "Alto riesgo de hemorragia digestiva y perforación gástrica.", "recomendacion": "Contraindicado con úlcera activa. Si es necesario, asociar omeprazol." },
-        { "condicion": "hipertension", "severidad": "media", "mensaje": "Retención de sodio y líquidos. Puede antagonizar antihipertensivos.", "recomendacion": "Monitorizar presión arterial. Usar dosis mínima efectiva." }
+        { "condicion": "asma", "severidad": "alta", "mensaje": "Puede desencadenar broncoespasmo en pacientes con asma sensible a AINEs.", "recomendacion": "Contraindicado si hay tríada de Samter. Usar paracetamol.", "bloquear": true },
+        { "condicion": "ulcera", "severidad": "alta", "mensaje": "Alto riesgo de hemorragia digestiva y perforación gástrica.", "recomendacion": "Contraindicado con úlcera activa. Si es necesario, asociar omeprazol.", "bloquear": true },
+        { "condicion": "hipertension", "severidad": "media", "mensaje": "Retención de sodio y líquidos. Puede antagonizar antihipertensivos.", "recomendacion": "Monitorizar presión arterial. Usar dosis mínima efectiva." },
+        { "condicion": "alergia_aines", "severidad": "alta", "mensaje": "Contraindicado. Riesgo de reacción anafiláctica.", "recomendacion": "No administrar.", "bloquear": true },
+        { "condicion": "coagulopatia", "severidad": "alta", "mensaje": "Riesgo elevado de hemorragia.", "recomendacion": "No administrar con anticoagulantes.", "bloquear": true },
+        { "condicion": "cardiopatia", "severidad": "alta", "mensaje": "Riesgo cardiovascular elevado. Contraindicado post-IAM.", "recomendacion": "Evitar en cardiopatía isquémica.", "bloquear": true }
       ]
     },
     "penicilina": {
@@ -67,26 +80,29 @@
         { "condicion": "renal", "severidad": "media", "mensaje": "Ajustar dosis en insuficiencia renal severa (GFR <10 mL/min). Riesgo de convulsiones con dosis altas.", "recomendacion": "Reducir dosis 25-50% o extender intervalo." },
         { "condicion": "embarazo", "severidad": "baja", "mensaje": "Categoría B. Generalmente segura en embarazo.", "recomendacion": "Puede usarse. Es el antibiótico de elección en sífilis gestacional." },
         { "condicion": "lactancia", "severidad": "baja", "mensaje": "Se excreta en leche materna en cantidades mínimas.", "recomendacion": "Compatible con lactancia." },
-        { "condicion": "epilepsia", "severidad": "media", "mensaje": "Dosis altas pueden causar convulsiones, especialmente con insuficiencia renal.", "recomendacion": "Monitorizar. Reducir dosis si hay antecedente convulsivo." }
+        { "condicion": "epilepsia", "severidad": "media", "mensaje": "Dosis altas pueden causar convulsiones, especialmente con insuficiencia renal.", "recomendacion": "Monitorizar. Reducir dosis si hay antecedente convulsivo." },
+        { "condicion": "alergia_penicilina", "severidad": "alta", "mensaje": "Contraindicado. Riesgo de anafilaxia.", "recomendacion": "No administrar. Usar macrólidos o alternativas.", "bloquear": true }
       ]
     },
     "lorazepam": {
       "interacciones": [
         { "condicion": "hepatica", "severidad": "media", "mensaje": "Reducir dosis 25-50% en insuficiencia moderada a severa.", "recomendacion": "Lorazepam es preferible a diazepam en hepatopatía por no requerir oxidación hepática." },
         { "condicion": "renal", "severidad": "baja", "mensaje": "No requiere ajuste significativo para dosis únicas.", "recomendacion": "Precaución con dosis repetidas." },
-        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Categoría D. Riesgo teratogénico. Síndrome de abstinencia neonatal.", "recomendacion": "Contraindicado. Usar alternativas no benzodiazepínicas." },
-        { "condicion": "lactancia", "severidad": "alta", "mensaje": "Se excreta en leche materna. Riesgo de sedación neonatal.", "recomendacion": "Evitar. Si es imprescindible, suspender lactancia." }
+        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Categoría D. Riesgo teratogénico. Síndrome de abstinencia neonatal.", "recomendacion": "Contraindicado. Usar alternativas no benzodiazepínicas.", "bloquear": true },
+        { "condicion": "lactancia", "severidad": "alta", "mensaje": "Se excreta en leche materna. Riesgo de sedación neonatal.", "recomendacion": "Evitar. Si es imprescindible, suspender lactancia.", "bloquear": true }
       ]
     },
     "ketorolaco": {
       "interacciones": [
-        { "condicion": "renal", "severidad": "alta", "mensaje": "Contraindicado en insuficiencia renal moderada-severa. Nefrotóxico.", "recomendacion": "No administrar con CrCl < 30 mL/min." },
+        { "condicion": "renal", "severidad": "alta", "mensaje": "Contraindicado en insuficiencia renal moderada-severa. Nefrotóxico.", "recomendacion": "No administrar con CrCl < 30 mL/min.", "bloquear": true },
         { "condicion": "hepatica", "severidad": "alta", "mensaje": "Reducir dosis al 50% en insuficiencia moderada. Contraindicado en severa.", "recomendacion": "Monitorizar función hepática." },
-        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Contraindicado. Riesgo de cierre prematuro del ductus arterioso y hemorragia.", "recomendacion": "No administrar en ningún trimestre." },
-        { "condicion": "lactancia", "severidad": "alta", "mensaje": "Contraindicado durante lactancia.", "recomendacion": "No administrar. Usar paracetamol." },
-        { "condicion": "asma", "severidad": "alta", "mensaje": "Puede desencadenar broncoespasmo severo.", "recomendacion": "Contraindicado en asma sensible a AINEs." },
-        { "condicion": "ulcera", "severidad": "alta", "mensaje": "Riesgo muy elevado de hemorragia digestiva. Contraindicado con úlcera activa.", "recomendacion": "No administrar. Usar opioides o paracetamol." },
-        { "condicion": "hipertension", "severidad": "media", "mensaje": "Puede elevar presión arterial y antagonizar antihipertensivos.", "recomendacion": "Usar dosis mínima. Monitorizar PA." }
+        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Contraindicado. Riesgo de cierre prematuro del ductus arterioso y hemorragia.", "recomendacion": "No administrar en ningún trimestre.", "bloquear": true },
+        { "condicion": "lactancia", "severidad": "alta", "mensaje": "Contraindicado durante lactancia.", "recomendacion": "No administrar. Usar paracetamol.", "bloquear": true },
+        { "condicion": "asma", "severidad": "alta", "mensaje": "Puede desencadenar broncoespasmo severo.", "recomendacion": "Contraindicado en asma sensible a AINEs.", "bloquear": true },
+        { "condicion": "ulcera", "severidad": "alta", "mensaje": "Riesgo muy elevado de hemorragia digestiva. Contraindicado con úlcera activa.", "recomendacion": "No administrar. Usar opioides o paracetamol.", "bloquear": true },
+        { "condicion": "hipertension", "severidad": "media", "mensaje": "Puede elevar presión arterial y antagonizar antihipertensivos.", "recomendacion": "Usar dosis mínima. Monitorizar PA." },
+        { "condicion": "alergia_aines", "severidad": "alta", "mensaje": "Contraindicado. Riesgo de reacción anafiláctica.", "recomendacion": "No administrar. Usar opioides o paracetamol.", "bloquear": true },
+        { "condicion": "coagulopatia", "severidad": "alta", "mensaje": "Prolonga tiempo de sangrado. Contraindicado con anticoagulantes.", "recomendacion": "No administrar.", "bloquear": true }
       ]
     },
     "ceftriaxona": {
@@ -94,7 +110,8 @@
         { "condicion": "renal", "severidad": "baja", "mensaje": "No requiere ajuste en insuficiencia renal aislada. Precaución si coexiste insuficiencia hepática.", "recomendacion": "Monitorizar si hay insuficiencia renal + hepática combinada." },
         { "condicion": "hepatica", "severidad": "media", "mensaje": "Puede causar pseudolitiasis biliar. Precaución en insuficiencia hepática.", "recomendacion": "Monitorizar función hepática y signos biliares." },
         { "condicion": "embarazo", "severidad": "baja", "mensaje": "Categoría B. Generalmente segura.", "recomendacion": "Puede usarse cuando esté indicada." },
-        { "condicion": "lactancia", "severidad": "baja", "mensaje": "Se excreta en leche materna en cantidades mínimas.", "recomendacion": "Compatible con lactancia. Vigilar diarrea en el lactante." }
+        { "condicion": "lactancia", "severidad": "baja", "mensaje": "Se excreta en leche materna en cantidades mínimas.", "recomendacion": "Compatible con lactancia. Vigilar diarrea en el lactante." },
+        { "condicion": "alergia_penicilina", "severidad": "media", "mensaje": "Reactividad cruzada con penicilinas (1-10%). Precaución.", "recomendacion": "Evaluar tipo de alergia. Si fue anafilaxia a penicilina, evitar cefalosporinas." }
       ]
     },
     "adrenalina": {
@@ -126,9 +143,9 @@
       "interacciones": [
         { "condicion": "renal", "severidad": "media", "mensaje": "Prolongar intervalo a cada 12h en insuficiencia renal severa.", "recomendacion": "Ajustar intervalo. Monitorizar efectos adversos." },
         { "condicion": "hepatica", "severidad": "alta", "mensaje": "Metabolismo hepático. Riesgo de acumulación en insuficiencia hepática.", "recomendacion": "Reducir dosis al 50%. Evitar en insuficiencia severa." },
-        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Riesgo de síndrome de abstinencia neonatal. Depresión respiratoria en el neonato.", "recomendacion": "Evitar, especialmente en tercer trimestre y periparto." },
+        { "condicion": "embarazo", "severidad": "alta", "mensaje": "Riesgo de síndrome de abstinencia neonatal. Depresión respiratoria en el neonato.", "recomendacion": "Evitar, especialmente en tercer trimestre y periparto.", "bloquear": true },
         { "condicion": "lactancia", "severidad": "media", "mensaje": "Se excreta en leche materna.", "recomendacion": "Evitar o usar dosis únicas con monitorización del lactante." },
-        { "condicion": "epilepsia", "severidad": "alta", "mensaje": "Disminuye significativamente el umbral convulsivo.", "recomendacion": "Contraindicado en epilepsia no controlada. Usar alternativas analgésicas." }
+        { "condicion": "epilepsia", "severidad": "alta", "mensaje": "Disminuye significativamente el umbral convulsivo.", "recomendacion": "Contraindicado en epilepsia no controlada. Usar alternativas analgésicas.", "bloquear": true }
       ]
     },
     "difenhidramina": {

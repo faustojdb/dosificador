@@ -61,3 +61,34 @@ export function buscarTodasInteracciones(medicamentosIds, condiciones) {
 export function getCondicionesDisponibles() {
   return ddinterData.condiciones || [];
 }
+
+/**
+ * Verifica si un medicamento debe estar BLOQUEADO por las condiciones del paciente.
+ * Retorna 'bloqueado' si hay al menos una interacción con bloquear:true,
+ * 'precaucion' si hay severidad 'alta' sin bloquear, o null si no hay conflicto.
+ * @param {string} medicamentoId
+ * @param {string[]} condiciones - condiciones activas del paciente
+ * @returns {'bloqueado'|'precaucion'|null}
+ */
+export function getEstadoPorCondiciones(medicamentoId, condiciones) {
+  if (!condiciones || condiciones.length === 0) return null;
+
+  const medData = ddinterData.medicamentos[medicamentoId];
+  if (!medData || !medData.interacciones) return null;
+
+  let tienePrecaucion = false;
+
+  for (const condicion of condiciones) {
+    const interaccion = medData.interacciones.find(i => i.condicion === condicion);
+    if (interaccion) {
+      if (interaccion.bloquear) {
+        return 'bloqueado';
+      }
+      if (interaccion.severidad === 'alta') {
+        tienePrecaucion = true;
+      }
+    }
+  }
+
+  return tienePrecaucion ? 'precaucion' : null;
+}
